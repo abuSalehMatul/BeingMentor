@@ -20,9 +20,12 @@
             <li class="dropdown">
                 <a href="" class="dropdown-toggle no-after peers fxw-nw ai-c lh-1" data-toggle="dropdown">
                     <div class="peer mR-10">
-                        <img class="w-2r bdrs-50p"
-                             src=""
-                             alt="">
+                        @auth
+                            <img class="w-2r bdrs-50p"
+                            src="{{ auth()->user()->profile_image }}"
+                            alt="">
+                        @endauth
+
                     </div>
                     <div class="peer">
                         @auth

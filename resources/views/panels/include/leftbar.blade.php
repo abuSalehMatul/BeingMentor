@@ -31,7 +31,7 @@
         <ul class="sidebar-menu scrollable pos-r">
             @role('admin')
             <li class="nav-item">
-                <a class='sidebar-link {{ request()->is('admin/home*') ? 'highlight' : '' }}'
+                <a class='sidebar-link {{ request()->is('admin/profile*') ? 'highlight' : '' }}'
                    href="{{ route('panels.admin.index') }}">
                     <span class="icon-holder">
                         <i class="c-brown-500 ti-id-badge"></i>
@@ -40,10 +40,10 @@
                 </a>
             </li>
                 <li class="nav-item mT-30 active">
-                    <a class="sidebar-link {{ request()->is('admin/trainee') ? 'highlight' : '' }}"
-                        href="{{route('panels.admin.trainee.index')}}">
+                    <a class="sidebar-link {{ request()->is('admin/trainee*') ? 'highlight' : '' }}"
+                        href="{{route('panels.admin.trainee')}}">
                         <span class="icon-holder">
-                            <i class="c-blue-500 ti-home"></i>
+                            <i class="c-blue-500 ti-user"></i>
                         </span>
                         <span class="title">Trainee</span>
                     </a>
@@ -55,14 +55,14 @@
                     <a class='sidebar-link {{ request()->is('admin/mentor*') ? 'highlight' : '' }}'
                        href="{{ route('panels.admin.mentor.index') }}">
                         <span class="icon-holder">
-                            <i class="c-blue-500 ti-package"></i>
+                            <i class="c-blue-500 ti-user"></i>
                         </span>
                         <span class="title">Mentors</span>
                     </a>
                 </li>
 
                 <li class="nav-item">
-                    <a class='sidebar-link {{ request()->is('admin/contact-us') ? 'highlight' : '' }}'
+                    <a class='sidebar-link {{ request()->is('admin/contact-us*') ? 'highlight' : '' }}'
                        href="{{ route('panels.admin.contact_us.index')  }}">
                         <span class="icon-holder">
                             <i class="c-blue-500 ti-support"></i>
@@ -71,10 +71,10 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class='sidebar-link {{ request()->is('admin/forum') ? 'highlight' : '' }}'
+                    <a class='sidebar-link {{ request()->is('admin/forum*') ? 'highlight' : '' }}'
                        href="{{ route('panels.admin.forum.index')  }}">
                         <span class="icon-holder">
-                            <i class="c-blue-500 ti-support"></i>
+                            <i class="c-blue-500 ti-layers-alt"></i>
                         </span>
                         <span class="title">Forum</span>
                     </a>

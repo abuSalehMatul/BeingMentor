@@ -17,7 +17,7 @@ Route::get('profile-show', 'HomeController@showProfile')->middleware('auth')->na
 
 Route::namespace('Admin')->prefix('admin')->middleware(['auth', 'role:admin'])->group(function(){
     Route::get('profile', 'AdminHomeController@index')->name('panels.admin.index');
-    Route::get('trainee', 'AdminHomeController@index')->name('panels.admin.trainee.index');
+    Route::get('trainee', 'AdminHomeController@trainee')->name('panels.admin.trainee');
     Route::get('mentor', 'AdminHomeController@index')->name('panels.admin.mentor.index');
     Route::get('contact-us', 'AdminHomeController@index')->name('panels.admin.contact_us.index');
     Route::get('forum', 'AdminHomeController@index')->name('panels.admin.forum.index');

@@ -15,10 +15,6 @@ class TraineeController extends BaseController
 
     public function __construct()
     {
-        // $user= auth()->user();
-        // $roles = $user->getRoleNames();
-        // if(!in_array('trainee', $roles->toArray())){
-        //     return 'you are not permited';
-        // }
+        
     }
 }

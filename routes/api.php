@@ -15,3 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('get-profile-users', 'HomeController@getProfile')->name('api.panel.profile.index');
+Route::middleware('auth')->group(function () {
+    Route::post('update-profile', 'HomeController@updateProfile')->name('api.panel.profile.update');
+    Route::get('get-trainee/{userId}', 'Trainee\TraineeHomeController@getTrainees')->name('api.get.trainee');
+});

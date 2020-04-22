@@ -23,6 +23,7 @@ class CreateUsersTable extends Migration
             $table->string('mobile')->nullable();
             $table->string('address')->nullable();
             $table->integer('status')->default(0);
+            $table->string('profile_image')->default(env('APP_URL').'/profileImage/defaultUserImageSystem.jpg');
             $table->rememberToken();
             $table->timestamps();
         });

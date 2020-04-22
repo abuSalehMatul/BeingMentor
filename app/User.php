@@ -3,7 +3,9 @@
 namespace App;
 
 use App\Model\Mentor;
+use App\Model\Tag;
 use App\Model\Trainee;
+use App\Model\UserTag;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -19,7 +21,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'first_name', 'last_name', 'address', 'mobile', 'status', 'email', 'password',
+        'first_name', 'last_name', 'address', 'mobile', 'status', 'email', 'password', 'profile_image'
     ];
 
     /**
@@ -40,6 +42,8 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    //relationss
+
     public function mentor()
     {
         return $this->hasOne(Mentor::class);
@@ -49,4 +53,26 @@ class User extends Authenticatable
     {
         return $this->hasOne(Trainee::class);
     }
+
+    public function userTags()
+    {
+        return $this->hasMany(UserTag::class);
+    }
+
+
+    //static method ...
+    public static function updateUserById($userData, $userId)
+    {
+        return User::where('id', $userId)->update($userData);
+    }
+
+    public static function updateProfileImageById($userId, $file)
+    {
+        $extension = $file->getClientOriginalExtension(); // getting image extension
+        $filename =env('APP_URL').'/profileImage'.'/'. rand(100, 30000).time().'.'.$extension;
+        $file->move('profileImage/', $filename);
+        return User::where('id', $userId)->update(['profile_image' => $filename]);
+    }
+    //end of static methods
+
 }

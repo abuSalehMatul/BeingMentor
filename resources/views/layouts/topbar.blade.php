@@ -11,17 +11,20 @@
                 <ul id="top-menu" class="nav">
                     <li
                         class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home current-menu-item page_item page-item-9 current_page_item menu-item-49">
-                        <a href="index.html" aria-current="page">Home</a></li>
+                        <a href="{{ url('/') }}" aria-current="page">Home</a></li>
                     <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-52"><a
                             href="http://mentors/">Mentors</a></li>
                     <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-50"><a
                             href="contact-us/index.html">Contact</a></li>
                     <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-51"><a
                             href="about/index.html">About</a></li>
+                    @guest
                     <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-141"><a href="#"><i
                                 class="fab fa-instagram"></i></a></li>
                     <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-142"><a href="#"><i
                                 class="fab fa-facebook"></i></a></li>
+                    @endguest
+
                     <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-143"><a href="#"><i
                                 class="fab fa-linkedin"></i></a></li>
                     <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-144"><a href="#"><i
@@ -47,7 +50,7 @@
 </header>
 
 <script type="application/javascript">
-window.onload = function(){
+    window.onload = function(){
     let header = document.getElementById('main-header');
     let logo = document.getElementById('logo');
     let topNavigation = document.getElementById('et-top-navigation');

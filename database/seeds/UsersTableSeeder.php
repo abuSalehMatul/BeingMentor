@@ -71,5 +71,49 @@ class UsersTableSeeder extends Seeder
         ];
         $admin = App\User::create($data);
         $admin->assignRole('admin');
+
+
+        $data = [];
+        $data = [
+            'first_name' => 'Mentor',
+            'last_name' => '',
+            'mobile' => '01717190072',
+            'email' => 'mentor@example.com',
+            'password' => $password,
+            'address' => $faker->address,
+            'status' => 1,
+            'created_at' => now(),
+            'updated_at' => now()
+        ];
+        $user = App\User::create($data);
+        $user->assignRole('mentor');
+        $user->mentor()->create([
+            'title' => $faker->title,
+            'description' => $faker->text,
+            'barcode' => '#'. rand(100234,300456),
+            'created_at' => now(),
+            'updated_at' => now()
+        ]);
+
+        $data = [];
+        $data = [
+            'first_name' => 'Trainee',
+            'last_name' => '',
+            'mobile' => '01717190072',
+            'email' => 'trainee@example.com',
+            'password' => $password,
+            'address' => $faker->address,
+            'status' => 1,
+            'created_at' => now(),
+            'updated_at' => now()
+        ];
+        $user = App\User::create($data);
+        $user->assignRole('trainee');
+        $user->trainee()->create([
+            'title' => $faker->title,
+            'description' => $faker->text,
+            'created_at' => now(),
+            'updated_at' => now()
+        ]);
     }
 }
