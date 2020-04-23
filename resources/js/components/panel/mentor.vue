@@ -1,39 +1,63 @@
 <template>
   <div class="bgc-white bd bdrs-3 p-20 mB-20 mT-15">
-    <h4>Trainees</h4>
+    <h4>Mentors</h4>
     <input type="date" v-model="dateRange.fromDate" @change="dateFilter" />
     To
     <input type="date" v-model="dateRange.toDate" @change="dateFilter" />
     <br />
+    <hr />
+    <span>
+      <i
+        class="badge badge-danger"
+      >Deactivate mentors will not shown in user search and also they can't perfom regular mentor action</i>
+    </span>
 
-    <table class="table">
+    <table class="table table-striped">
       <thead class="thead-dark">
         <th>Image</th>
+        <th>Status</th>
         <th>First Name</th>
         <th>Last Name</th>
         <th>Title</th>
+        <th>Tags</th>
         <th>Mobile</th>
         <th>Address</th>
         <th>Description</th>
         <th>Created at</th>
+        <th>Action</th>
       </thead>
       <tbody>
-        <tr v-for="trainee in trainees">
+        <tr v-for="mentor in mentors">
           <td>
             <img
-              :src="trainee.user.profile_image"
+              :src="mentor.user.profile_image"
               class="img-fluid img-thumbnail rounded mx-auto d-block"
             />
           </td>
-          <td>{{trainee.user.first_name}}</td>
-          <td>{{trainee.user.last_name}}</td>
-          <td>{{trainee.title}}</td>
-          <td>{{trainee.user.mobile}}</td>
           <td>
-            <address>{{trainee.user.address}}</address>
+            <i v-if="mentor.user.status == 1" class="badge badge-success">Active</i>
+            <i v-if="mentor.user.status == 0" class="badge badge-danger">Unactive</i>
           </td>
-          <td>{{trainee.description}}</td>
-          <td nowrap>{{trainee.formated_date}}</td>
+          <td>{{mentor.user.first_name}}</td>
+          <td>{{mentor.user.last_name}}</td>
+          <td>{{mentor.title}}</td>
+          <td>
+            <i v-for="tag in mentor.tags" class="badge badge-secondary">{{tag}}</i>
+          </td>
+          <td>{{mentor.user.mobile}}</td>
+          <td>
+            <address>{{mentor.user.address}}</address>
+          </td>
+          <td>{{mentor.description}}</td>
+          <td nowrap>{{mentor.formated_date}}</td>
+          <td>
+            <button class="btn btn-sm btn-danger" @click.prevent="del(mentor.id)">Delete</button>
+            <button
+              v-if="mentor.user.status == 0"
+              class="btn btn-sm btn-info"
+              @click.prevent="active(mentor.id)"
+            >Activate</button>
+          </td>
         </tr>
       </tbody>
     </table>
@@ -52,13 +76,13 @@
 import client from "@/client";
 import Pagination from "@comp/lib/Pagination";
 export default {
-  name: "trainee",
+  name: "mentor",
   components: { Pagination },
   props: ["user_id"],
 
   data() {
     return {
-      trainees: "",
+      mentors: "",
       dateRange: {
         fromDate: "",
         toDate: new Date().toISOString().substr(0, 10)
@@ -72,7 +96,7 @@ export default {
   },
   mounted() {
     this.setFromDate();
-    this.getTrainee();
+    this.getMentors();
   },
   methods: {
     setFromDate() {
@@ -82,12 +106,24 @@ export default {
     },
     syncPageWithPaginate($event) {
       this.meta.current = $event;
-      this.getTrainee();
+      this.getMentors();
     },
-    getTrainee() {
+    del(mentorId) {
+      client.put("del/"+mentorId)
+        .then(response => {
+          this.getMentors();
+        });
+    },
+    active(mentorId) {
+      client.put("active/"+mentorId)
+        .then(response => {
+          this.getMentors();
+        });
+    },
+    getMentors() {
       client
         .get(
-          getTraineeRoute +
+          getMentorRoute +
             "?fromDate=" +
             this.dateRange.fromDate +
             "&toDate=" +
@@ -96,13 +132,13 @@ export default {
             this.meta.current
         )
         .then(response => {
-          this.trainees = response.data.trainees.data;
-          this.meta.per_page = response.data.trainees.per_page;
-          this.meta.total = response.data.trainees.total;
+          this.mentors = response.data.mentors.data;
+          this.meta.per_page = response.data.mentors.per_page;
+          this.meta.total = response.data.mentors.total;
         });
     },
     dateFilter() {
-      this.getTrainee();
+      this.getMentors();
     }
   }
 };

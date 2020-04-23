@@ -18,9 +18,15 @@ Route::get('profile-show', 'HomeController@showProfile')->middleware('auth')->na
 Route::namespace('Admin')->prefix('admin')->middleware(['auth', 'role:admin'])->group(function(){
     Route::get('profile', 'AdminHomeController@index')->name('panels.admin.index');
     Route::get('trainee', 'AdminHomeController@trainee')->name('panels.admin.trainee');
-    Route::get('mentor', 'AdminHomeController@index')->name('panels.admin.mentor.index');
-    Route::get('contact-us', 'AdminHomeController@index')->name('panels.admin.contact_us.index');
-    Route::get('forum', 'AdminHomeController@index')->name('panels.admin.forum.index');
+    Route::get('mentor', 'AdminHomeController@mentor')->name('panels.admin.mentor.index');
+    Route::get('contact-us', 'AdminHomeController@contactUs')->name('panels.admin.contact_us.index');
+    Route::get('forum', 'AdminHomeController@forum')->name('panels.admin.forum.index');
+    Route::get('website', 'AdminHomeController@website')->name('panels.admin.website');
+    Route::post('website', 'AdminHomeController@updateWebsite')->name('panels.admin.website.update');
+    Route::put('/active/{mentorId}', 'AdminHomeController@activeMentor');
+    Route::put('/del/{mentorId}', 'AdminHomeController@delMentor');
+
+
 });
 
 Route::namespace('Mentor')->prefix('mentor')->middleware(['auth', 'role:mentor'])->group(function(){

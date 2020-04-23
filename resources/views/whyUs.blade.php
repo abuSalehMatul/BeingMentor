@@ -10,10 +10,9 @@
                 </div>
             </div>
             <div class="et_pb_module et_pb_text et_pb_text_4 et_pb_text_align_left ">
-                <p style="text-align: center;" class="whyUsp">Step up your career game plan, prep up interviews, job search &amp;
-                    promotion. Your mentor will listen to your doubts, give solutions (all drawn from their
-                    experience) and take you where you want
-                    to be.</p>
+                <p style="text-align: center;" class="whyUsp">
+                    {{$website->why_us_description}}
+                </p>
             </div>
             <!-- .et_pb_text -->
         </div>

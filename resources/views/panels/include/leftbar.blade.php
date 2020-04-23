@@ -49,8 +49,6 @@
                     </a>
                 </li>
 
-
-
                 <li class="nav-item">
                     <a class='sidebar-link {{ request()->is('admin/mentor*') ? 'highlight' : '' }}'
                        href="{{ route('panels.admin.mentor.index') }}">
@@ -77,6 +75,16 @@
                             <i class="c-blue-500 ti-layers-alt"></i>
                         </span>
                         <span class="title">Forum</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class='sidebar-link {{ request()->is('admin/web*') ? 'highlight' : '' }}'
+                       href="{{ route('panels.admin.website')  }}">
+                        <span class="icon-holder">
+                            <i class="c-blue-500 ti-settings"></i>
+                        </span>
+                        <span class="title">Website</span>
                     </a>
                 </li>
             @endrole

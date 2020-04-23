@@ -2,8 +2,10 @@
 
 namespace App\Providers;
 
+use App\Model\Website;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\View;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -24,6 +26,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+       $Website = Website::first();
+       View::share('website', $Website);
     }
 }

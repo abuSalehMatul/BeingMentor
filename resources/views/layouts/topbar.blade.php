@@ -2,8 +2,8 @@
     <div class="container clearfix et_menu_container">
         <div class="logo_container">
             <span class="logo_helper"></span>
-            <a href="index.html">
-                <img src="{{asset('images/logo-4.png')}}" alt="BeingMentor" id="logo" data-height-percentage="100" />
+            <a href="{{url('/')}}">
+                <img src="{{$website->logo}}" alt="BeingMentor" id="logo" data-height-percentage="100" />
             </a>
         </div>
         <div id="et-top-navigation" data-height="79" data-fixed-height="40">

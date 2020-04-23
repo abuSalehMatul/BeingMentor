@@ -18,4 +18,6 @@ Route::get('get-profile-users', 'HomeController@getProfile')->name('api.panel.pr
 Route::middleware('auth')->group(function () {
     Route::post('update-profile', 'HomeController@updateProfile')->name('api.panel.profile.update');
     Route::get('get-trainee/{userId}', 'Trainee\TraineeHomeController@getTrainees')->name('api.get.trainee');
+
 });
+Route::get('get-mentor/{userId}', 'Mentor\MentorHomeController@getMentor')->name('api.get.mentor');

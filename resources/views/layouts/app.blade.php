@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Favicon-->
-    <link rel="shortcut icon" type="image/png" href="{{asset('images/favicon.png')}}" />
+    <link rel="shortcut icon" type="image/png" href="{{$website->logo}}" />
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
 
     <title>{{ config('app.name', 'Mentor') }} - @yield('title')</title>
@@ -16,6 +16,7 @@
     {{-- <link href="{{asset('customStyle/anymate.css')}}"> --}}
     <link href="{{ asset('customStyle/style.css') }}" rel="stylesheet">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('customStyle/myStyle.css')}}" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     @yield('css')
 

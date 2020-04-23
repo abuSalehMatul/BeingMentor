@@ -5,20 +5,21 @@
             <div
                 class="et_pb_module dsm_dual_heading    et_pb_text_align_center et_pb_bg_layout_dark">
                 <div class="et_pb_module_inner">
-                    <h1 class="dsm-dual-heading-main et_pb_module_header"><span class="dsm-dual-heading-before">Say Bye
-                            to Self-Doubt,
-                            Hello to
-                            Confidence</span></h1>
+                    <h1 class="dsm-dual-heading-main et_pb_module_header">
+                    <span class="dsm-dual-heading-before">
+                        {{$website->quote_title1}}
+                    </span>
+                    </h1>
                 </div>
             </div>
             <div class="et_pb_module et_pb_divider et_pb_divider_1 et_pb_divider_position_ et_pb_space">
                 <div class="et_pb_divider_internal"></div>
             </div>
             <div class="et_pb_module et_pb_text et_pb_text_5  et_pb_text_align_center et_pb_bg_layout_dark">
-                <div class="et_pb_text_inner">Step up your career game plan, prep up interviews, job search &amp;
-                    promotion. Your mentor will listen to your doubts, give solutions (all drawn from their experience)
-                    and take you where you want to
-                    be.
+                <div class="et_pb_text_inner">
+                    @php
+                        print_r($website->quote_description1);
+                    @endphp
                 </div>
             </div>
             <!-- .et_pb_text -->
@@ -32,14 +33,16 @@
         <div class="et_pb_column et_pb_column_4_4 et_pb_column_26  et_pb_css_mix_blend_mode_passthrough et-last-child">
             <div class="et_pb_module dsm_mask_text dsm_mask_text_0 ">
                 <div class="et_pb_module_inner">
-                    <h2 class="dsm-mask-text et_pb_module_header">Become A Mentor
+                    <h2 class="dsm-mask-text et_pb_module_header">{{$website->quote_title2}}
                     </h2>
                 </div>
             </div>
             <div class="et_pb_module et_pb_text et_pb_text_6   et_pb_text_align_center et_pb_bg_layout_dark">
-                <div class="et_pb_text_inner">You give the guidance, we handle the network, discoverability, mentee
-                    assignment, payment, tooling and knowledge transfers. Help young professionals around the world with
-                    reaching their goals.</div>
+                <div class="et_pb_text_inner">
+                    @php
+                        print_r($website->quote_description2);
+                    @endphp
+                </div>
             </div>
             <!-- .et_pb_text -->
             <div class="et_pb_module dsm_button dsm_button_1  et_pb_bg_layout_dark">
