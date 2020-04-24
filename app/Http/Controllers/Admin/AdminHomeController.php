@@ -17,12 +17,12 @@ class AdminHomeController extends AdminController
 
     public function trainee()
     {
-        return view('panels.admin.trainee')->with('user_id', 'all');
+        return view('panels.admin.trainee')->with('user_id', 'matulPermission');
     }
 
     public function mentor()
     {
-        return view('panels.admin.mentor')->with('user_id', 'all');
+        return view('panels.admin.mentor')->with('user_id', 'matulPermission');
     }
 
 
@@ -38,7 +38,6 @@ class AdminHomeController extends AdminController
 
     public function updateWebsite(Request $request)
     {
-      //  return $request;
         $textData =  $request->only([
             'email', 'mobile',
             'mobile1', 'address',
@@ -56,20 +55,6 @@ class AdminHomeController extends AdminController
                 Website::updateImage($request->file($data), $data);
             }
         }
-
-        // if ($request->hasFile('how_image3')) {
-        //     Website::updateImage($request->file('how_image3'), 'how_it_work_image_three');
-        // }
-        // if ($request->hasFile('logo')) {
-        //     Website::updateImage($request->file('logo'), 'how_it_work_image_three');
-        // }
-        // if ($request->hasFile('how_it_work_image_one')) {
-        //     Website::updateImage($request->file('how_it_work_image_one'), 'how_it_work_image_one');
-        // }
-        // if ($request->hasFile('how_it_2')) {
-        //     Website::updateImage($request->file('how_it_2'), 'how_it_work_image_two');
-        // }
-       // die();
         return redirect()->back();
     }
 

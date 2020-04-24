@@ -1,19 +1,25 @@
 <template>
-  <div class="bgc-white bd bdrs-3 p-20 mB-20 mT-15">
+  <div :class="selectedClass">
     <h4>Mentors</h4>
-    <input type="date" v-model="dateRange.fromDate" @change="dateFilter" />
-    To
-    <input type="date" v-model="dateRange.toDate" @change="dateFilter" />
-    <br />
+    <div v-if="user_id == 'matulPermission'" class="col-md-12 mB-10 col-sm-12">
+      <input type="date" v-model="dateRange.fromDate" @change="dateFilter" />
+      To
+      <input type="date" v-model="dateRange.toDate" @change="dateFilter" />
+    </div>
+    <div class="input-icons col-md-6">
+      <i class="fa fa-search icon"></i>
+      <input class="input-field" v-model="searchKey" type="text" placeholder="Search Mentors" @keyup="mentorFilter" />
+    </div>
     <hr />
     <span>
       <i
         class="badge badge-danger"
+        v-if="user_id == 'matulPermission'"
       >Deactivate mentors will not shown in user search and also they can't perfom regular mentor action</i>
     </span>
 
     <table class="table table-striped">
-      <thead class="thead-dark">
+      <thead class="thead-dark" v-if="user_id == 'matulPermission'">
         <th>Image</th>
         <th>Status</th>
         <th>First Name</th>
@@ -34,7 +40,7 @@
               class="img-fluid img-thumbnail rounded mx-auto d-block"
             />
           </td>
-          <td>
+          <td v-if="user_id == 'matulPermission'">
             <i v-if="mentor.user.status == 1" class="badge badge-success">Active</i>
             <i v-if="mentor.user.status == 0" class="badge badge-danger">Unactive</i>
           </td>
@@ -50,7 +56,7 @@
           </td>
           <td>{{mentor.description}}</td>
           <td nowrap>{{mentor.formated_date}}</td>
-          <td>
+          <td v-if="user_id == 'matulPermission'">
             <button class="btn btn-sm btn-danger" @click.prevent="del(mentor.id)">Delete</button>
             <button
               v-if="mentor.user.status == 0"
@@ -58,10 +64,15 @@
               @click.prevent="active(mentor.id)"
             >Activate</button>
           </td>
+          <td v-else>
+            <button class="btn btn-sm btn-success">Contact</button>
+          </td>
         </tr>
       </tbody>
     </table>
-
+    <div v-if="Object.keys(mentors).length === 0" class="well bg-info">
+        <h3 class="text-danger text-center">No Result Found </h3>
+    </div>
     <pagination
       class="display-inline"
       @current="syncPageWithPaginate($event)"
@@ -83,6 +94,7 @@ export default {
   data() {
     return {
       mentors: "",
+      searchKey: '',
       dateRange: {
         fromDate: "",
         toDate: new Date().toISOString().substr(0, 10)
@@ -93,6 +105,16 @@ export default {
         total: 0
       }
     };
+  },
+  computed: {
+    selectedClass: function() {
+      if (this.user_id == "matulPermission") {
+        return "bgc-white bd bdrs-3 p-20 mB-20 mT-15";
+      }
+      if (this.user_id === "front") {
+        return "front-mentor-div";
+      }
+    }
   },
   mounted() {
     this.setFromDate();
@@ -109,16 +131,14 @@ export default {
       this.getMentors();
     },
     del(mentorId) {
-      client.put("del/"+mentorId)
-        .then(response => {
-          this.getMentors();
-        });
+      client.put("del/" + mentorId).then(response => {
+        this.getMentors();
+      });
     },
     active(mentorId) {
-      client.put("active/"+mentorId)
-        .then(response => {
-          this.getMentors();
-        });
+      client.put("active/" + mentorId).then(response => {
+        this.getMentors();
+      });
     },
     getMentors() {
       client
@@ -129,7 +149,8 @@ export default {
             "&toDate=" +
             this.dateRange.toDate +
             "&page=" +
-            this.meta.current
+            this.meta.current+
+            "&key=" + this.searchKey
         )
         .then(response => {
           this.mentors = response.data.mentors.data;
@@ -137,10 +158,47 @@ export default {
           this.meta.total = response.data.mentors.total;
         });
     },
+
     dateFilter() {
       this.getMentors();
+    },
+    mentorFilter(){
+        this.getMentors();
     }
   }
 };
 </script>
+
+<style scoped>
+.front-mentor-div {
+  margin: 30px;
+  color: white;
+  background-image: url("/images/used_logo.png");
+  background-position: 50% 0;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.input-icons i {
+  position: absolute;
+}
+
+.input-icons {
+  width: 100%;
+  margin-bottom: 5px;
+}
+
+.icon {
+  padding: 10px;
+  color: green;
+  min-width: 50px;
+  text-align: center;
+}
+
+.input-field {
+  width: 80%;
+  padding: 10px;
+  text-align: center;
+}
+</style>
 

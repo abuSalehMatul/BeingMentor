@@ -10,6 +10,10 @@ Auth::routes();
 Route::post('register/step-one', 'Auth\RegisterController@registerStepOne');
 Route::post('register-save', 'Auth\RegisterController@storeUser')->name('register.user.store');
 
+Route::get('mentor', 'FrontEndController@mentor')->name('mentor');
+Route::get('about-us', 'FrontEndController@aboutUs')->name('about.us');
+Route::get('contact-us', 'FrontEndController@contactUs')->name('contact.us');
+
 //see role and find corresponding dashboard profile
 Route::get('/find/profile', 'HomeController@findDashboard')->middleware('auth')->name('find.profile');
 

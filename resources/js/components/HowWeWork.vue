@@ -20,8 +20,8 @@
         </div>
       </div>
       <div class="et_pb_row et_pb_row_2">
-        <div
-          class="et_pb_column et_pb_column_1_3 et_pb_column_3 et_pb_css_mix_blend_mode_passthrough"
+        <div style=" background-color: #1fb6ea;"
+          class="et_pb_column et_pb_column_1_3 et_pb_column_3 et_pb_css_mix_blend_mode_passthrough first-div"
         >
           <div>
             <img :src="website.how_it_work_image_one" class="howToPic" />
@@ -34,8 +34,8 @@
           </div>
         </div>
         <!-- .et_pb_column -->
-        <div
-          class="et_pb_column et_pb_column_1_3 et_pb_column_4 et_pb_css_mix_blend_mode_passthrough"
+        <div style="background-color: #3644AF;"
+          class="et_pb_column et_pb_column_1_3 et_pb_column_4 et_pb_css_mix_blend_mode_passthrough first-div"
         >
           <div>
             <img :src="website.how_it_work_image_two" class="howToPic" />
@@ -48,8 +48,8 @@
           </div>
         </div>
 
-        <div
-          class="et_pb_column et_pb_column_1_3 et_pb_column_5 et_pb_css_mix_blend_mode_passthrough et-last-child"
+        <div style="background-color: #2A3443;"
+          class="et_pb_column et_pb_column_1_3 et_pb_column_5 et_pb_css_mix_blend_mode_passthrough et-last-child first-div"
         >
           <div>
             <img :src="website.how_it_work_image_three" class="howToPic" />
@@ -80,4 +80,15 @@ export default {
   }
 };
 </script>
+<style scoped>
+.first-div{
+    box-shadow: 2px 2px 3px dimgrey;
+    border-radius: 5px 5px 5px 5px;
+    overflow: hidden;
+    padding-top: 60px!important;
+    padding-right: 30px!important;
+    padding-bottom: 60px!important;
+    padding-left: 40px!important;
+}
+</style>
 

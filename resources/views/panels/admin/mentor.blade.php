@@ -1,7 +1,7 @@
 @extends('panels.backend')
 @section('title', 'Mentor')
 @section('content')
-    <mentor></mentor>
+    <mentor user_id="{{$user_id}}"></mentor>
 @endsection
 @section('route')
 <script>

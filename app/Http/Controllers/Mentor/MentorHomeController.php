@@ -34,8 +34,9 @@ class MentorHomeController extends MentorController
     public function getMentor(Request $request, $userId)
     {
         $dates = $this->formatDate($request->fromDate, $request->toDate);
+        $key = $request->key;
         $data= [];
-        $data['mentors'] = $this->mentorModel::getMentorsByUserId($userId, $dates['fromDate'], $dates['toDate']);
+        $data['mentors'] = $this->mentorModel::getMentorsByUserId($userId, $dates['fromDate'], $dates['toDate'], $key);
         return $data;
     }
 }

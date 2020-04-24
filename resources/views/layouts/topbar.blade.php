@@ -13,17 +13,23 @@
                         class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home current-menu-item page_item page-item-9 current_page_item menu-item-49">
                         <a href="{{ url('/') }}" aria-current="page">Home</a></li>
                     <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-52"><a
-                            href="http://mentors/">Mentors</a></li>
+                            href="{{route('mentor')}}">Mentors</a></li>
                     <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-50"><a
-                            href="contact-us/index.html">Contact</a></li>
+                            href="{{route('contact.us')}}">Contact</a></li>
                     <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-51"><a
-                            href="about/index.html">About</a></li>
+                            href="{{route('about.us')}}">About</a></li>
                     @guest
+                    <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-141"><a href="{{route('login')}}">Log-in</a></li>
+                    <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-142"><a href="{{route('register')}}">Sign Up</a></li>
+                    @endguest
+                    @auth
+                    <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-141"><a href="{{route('find.profile')}}">
+                       My Panel </a></li>
+                    @endauth
                     <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-141"><a href="#"><i
                                 class="fab fa-instagram"></i></a></li>
                     <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-142"><a href="#"><i
                                 class="fab fa-facebook"></i></a></li>
-                    @endguest
 
                     <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-143"><a href="#"><i
                                 class="fab fa-linkedin"></i></a></li>

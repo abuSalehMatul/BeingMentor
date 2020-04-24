@@ -5,6 +5,7 @@ namespace App\Model;
 use App\User;
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
+use DB;
 use Illuminate\Support\Collection;
 
 class Mentor extends Model
@@ -39,19 +40,68 @@ class Mentor extends Model
         );
     }
 
-    public static function getMentorsByUserId($userId, Carbon $fromDate, Carbon $toDate)
+    public static function getMentorsByUserId($userId, Carbon $fromDate, Carbon $toDate, $key = "")
     {
-        if($userId == 'all')
-        {
-            return Mentor::
-             whereDate('created_at', '>=', $fromDate->format('Y-m-d'))
-            ->whereDate('created_at', '<=', $toDate->format('Y-m-d'))
-            ->with('user')
-            ->orderBy('created_at', 'DESC')
-            ->paginate(15);
+        if ($userId == 'matulPermission' || $userId == 'front') {
+            return Mentor::whereDate('created_at', '>=', $fromDate->format('Y-m-d'))
+                ->whereDate('created_at', '<=', $toDate->format('Y-m-d'))
+                ->where(function ($q) use ($key) {
+                    if (strlen($key) > 0) {
+                        $q->whereIn('id', self::getMentorIds($key));
+                    }
+                })
 
+                ->with('user')
+                ->whereHas('user', function ($query) use ($userId) {
+                    if ($userId != 'matulPermission') {
+                        $query->where('status', 1);
+                    }
+                })
+                ->orderBy('created_at', 'DESC')
+                ->paginate(15);
         }
     }
+
+    public static function getMentorIds($key)
+    {
+
+        $ids = self::getMentorIdsByUserName($key);
+        $ids1 = self::getMentorIdsByTagName($key);
+        foreach ($ids1 as $id) {
+            array_push($ids, $id);
+        }
+        return $ids;
+    }
+
+    public static function getMentorIdsByUserName($key)
+    {
+        $ids = DB::table('mentors')->join('users', 'mentors.user_id', '=', 'users.id')
+            ->select('mentors.id')
+            ->where('first_name', 'like', '%' . $key . '%')
+            ->orWhere('last_name', 'like', '%' . $key . '%')
+            ->get();
+        $array = [];
+        foreach ($ids as $id) {
+            array_push($array, $id->id);
+        }
+        return $array;
+    }
+
+    public static function getMentorIdsByTagName($key)
+    {
+        $ids = DB::table('mentors')->join('users', 'mentors.user_id', '=', 'users.id')
+            ->rightJoin('user_tags', 'users.id', '=', 'user_tags.user_id')
+            ->join('tags', 'user_tags.tag_id', '=', 'tags.id')
+            ->select('mentors.id')
+            ->where('tags.tag', 'like', '%' . $key . '%')
+            ->get();
+        $array = [];
+        foreach ($ids as $id) {
+            array_push($array, $id->id);
+        }
+        return $array;
+    }
+
 
     public static function activeUser($mentorId)
     {
@@ -64,5 +114,4 @@ class Mentor extends Model
         $user = User::where('id', Mentor::findOrFail($mentorId))->delete();
         Mentor::where('id', $mentorId)->delete();
     }
-
 }

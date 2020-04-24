@@ -34,7 +34,7 @@ class Trainee extends Model
 
     public static function getTraineeByUserId($userId, Carbon $fromDate, Carbon $toDate)
     {
-        if($userId == 'all')
+        if($userId == 'matulPermission')
         {
             return Trainee::
              whereDate('created_at', '>=', $fromDate->format('Y-m-d'))
