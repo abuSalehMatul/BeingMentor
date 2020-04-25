@@ -10,6 +10,7 @@ Auth::routes();
 Route::post('register/step-one', 'Auth\RegisterController@registerStepOne');
 Route::post('register-save', 'Auth\RegisterController@storeUser')->name('register.user.store');
 
+//front end route.......
 Route::get('mentor', 'FrontEndController@mentor')->name('mentor');
 Route::get('about-us', 'FrontEndController@aboutUs')->name('about.us');
 Route::get('contact-us', 'FrontEndController@contactUs')->name('contact.us');
@@ -17,7 +18,14 @@ Route::get('contact-us', 'FrontEndController@contactUs')->name('contact.us');
 //see role and find corresponding dashboard profile
 Route::get('/find/profile', 'HomeController@findDashboard')->middleware('auth')->name('find.profile');
 
+// to the common panel guared with role
 Route::get('profile-show', 'HomeController@showProfile')->middleware('auth')->name('panels.profile.show');
+
+
+//chat initializer
+Route::post('chat-initialize', 'ChatController@initialize')->middleware('auth')->name('chat.initializer');
+//chat room
+Route::get('chat-room/{chatroomId}', 'ChatController@chat')->middleware(['auth', 'role:mentor|trainee'])->name('panels.chatroom');
 
 Route::namespace('Admin')->prefix('admin')->middleware(['auth', 'role:admin'])->group(function(){
     Route::get('profile', 'AdminHomeController@index')->name('panels.admin.index');

@@ -65,7 +65,7 @@
             >Activate</button>
           </td>
           <td v-else>
-            <button class="btn btn-sm btn-success">Contact</button>
+            <button class="btn btn-sm btn-success" @click="connect(mentor.user.id)">Contact</button>
           </td>
         </tr>
       </tbody>
@@ -139,6 +139,16 @@ export default {
       client.put("active/" + mentorId).then(response => {
         this.getMentors();
       });
+    },
+    connect(mentorUserId){
+        let data = new FormData();
+        data.append("receiver_id", mentorUserId);
+        client
+        .post(chatInitializerRoute, data)
+        .then(response => {
+            console.log(response);
+            window.location.href = response.data;
+        });
     },
     getMentors() {
       client

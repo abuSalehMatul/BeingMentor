@@ -6,5 +6,6 @@
 @section('route')
 <script>
     window.getMentorRoute = "{{ route('api.get.mentor', $user_id) }}";
+    window.chatInitializerRoute ="{{ route('chat.initializer') }}";
 </script>
 @endsection
