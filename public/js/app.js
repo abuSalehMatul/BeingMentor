@@ -6434,8 +6434,11 @@ __webpack_require__.r(__webpack_exports__);
       ticketForm: false
     };
   },
-  mounted: function mounted() {
+  created: function created() {
     this.getAllMessage();
+    Echo["private"]("send-message").listen("SendMessageEvent", function (e) {
+      console.log(e);
+    });
   },
   methods: {
     getAllMessage: function getAllMessage() {
@@ -6445,6 +6448,7 @@ __webpack_require__.r(__webpack_exports__);
         _this.messages = response.data.messages;
         _this.tickets = response.data.tickets;
         _this.otherPerson = response.data.other_person;
+        console.log("send-message." + _this.otherPerson.id);
 
         if (Object.keys(_this.tickets).length == 0) {
           _this.ticketForm = true;
@@ -6455,7 +6459,7 @@ __webpack_require__.r(__webpack_exports__);
       if (this.messageText.length > 0) {
         var data = new FormData();
         data.append("message", this.messageText);
-        this.messageText = '';
+        this.messageText = "";
         _client__WEBPACK_IMPORTED_MODULE_0__["default"].post(sendChatRoute, data).then(function (response) {});
       }
     },
@@ -79707,9 +79711,14 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 window.Pusher = __webpack_require__(/*! pusher-js */ "./node_modules/pusher-js/dist/web/pusher.js");
 window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
   broadcaster: 'pusher',
-  key: "",
-  cluster: "",
-  encrypted: true
+  key: '0e5cf0c84ce38e9e8dd5',
+  cluster: 'ap2',
+  encrypted: true,
+  auth: {
+    headers: {
+      'X-CSRF-TOKEN': laravel_token
+    }
+  }
 });
 
 /***/ }),

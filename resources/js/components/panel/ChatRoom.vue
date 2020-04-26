@@ -71,8 +71,15 @@ export default {
       ticketForm: false
     };
   },
-  mounted() {
+  created() {
     this.getAllMessage();
+    Echo.private("send-message").listen(
+          "SendMessageEvent",
+          e => {
+            console.log(e);
+          }
+        );
+        
   },
   methods: {
     getAllMessage() {
@@ -80,6 +87,8 @@ export default {
         this.messages = response.data.messages;
         this.tickets = response.data.tickets;
         this.otherPerson = response.data.other_person;
+        console.log("send-message." + this.otherPerson.id);
+
         if (Object.keys(this.tickets).length == 0) {
           this.ticketForm = true;
         }

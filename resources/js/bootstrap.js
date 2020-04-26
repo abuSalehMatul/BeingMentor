@@ -35,7 +35,13 @@ window.Pusher = require('pusher-js');
 
 window.Echo = new Echo({
     broadcaster: 'pusher',
-    key: process.env.MIX_PUSHER_APP_KEY,
-    cluster: process.env.MIX_PUSHER_APP_CLUSTER,
-    encrypted: true
+    key: '0e5cf0c84ce38e9e8dd5',
+    cluster: 'ap2',
+    encrypted: true,
+
+    auth: {
+        headers: {
+            'X-CSRF-TOKEN': laravel_token
+        }
+    },
 });
