@@ -1,10 +1,10 @@
 <template>
   <div class="bgc-white bd bdrs-3 p-20 mB-20 mT-15">
     <div class="row">
-      <div class="col-md-4 col-sm-12">
+      <!-- <div class="col-md-4 col-sm-12">
         <chat-list :user_id="own_id"></chat-list>
-      </div>
-      <div class="col-md-8 col-sm-12">
+      </div>-->
+      <div class="col-md-12 col-sm-12">
         <div v-if="ticketForm == true">
           <ticket-form @updateTicket="updateTic"></ticket-form>
         </div>
@@ -33,18 +33,29 @@
               <button v-if="ticket.status != 'solved'" class="btn btn-sm btn-success">Solved !</button>
             </div>
           </div>
-          <div class="card-body">
-            <ul class="list-unstyled" style="height:300px; overflow-y:scroll">
-              <li class="p-2 row" v-for="message in messageList" :class="selectedClass(message.sender_id)">
-                <div class="col-md-4">
+          <div class="card-body col-md-12">
+            <ul
+              class="list-unstyled col-md-12"
+              style="height:300px; overflow-y:scroll"
+              v-chat-scroll
+            >
+              <li
+                class="p-2 row"
+                v-for="message in messageList"
+                :class="selectedClass(message.sender_id)"
+              >
+                <div class="col-md-3">
                   <img :src="message.sender_image" class="img-fluid img-thumbnail-chat-box rounded" />
 
-                  <b class="name">{{message.sender_first_name}} <i>{{message.sender_last_name}}</i></b>
+                  <b class="name">
+                    {{message.sender_first_name}}
+                    <i>{{message.sender_last_name}}</i>
+                  </b>
 
                   <br />
-                  <i class="">Time:(GMT+00 ) {{message.time}}</i>
+                  <i class>Time:(GMT+00 ) {{message.time}}</i>
                 </div>
-                <div class="col-md-8">
+                <div class="col-md-9">
                   <p>{{message.message}}</p>
                 </div>
               </li>
@@ -112,7 +123,19 @@ export default {
         }
       });
       myEcho.private("send-message").listen("SendMessageEvent", e => {
-        console.log(e);
+        if (e.message.receiver.id == this.own_id) {
+          let formatedReturnMessage;
+          formatedReturnMessage = {
+            sender_id: e.message.sender.id,
+            message: e.message.message,
+            time: e.message.formated_time,
+            is_file: e.message.is_file,
+            sender_first_name: e.message.sender.first_name,
+            sender_last_name: e.message.sender.last_name,
+            sender_image: e.message.sender.profile_image
+          };
+          this.messageList.push(formatedReturnMessage);
+        }
       });
     },
     getAllMessage() {
@@ -146,8 +169,21 @@ export default {
       if (this.messageText.length > 0) {
         let data = new FormData();
         data.append("message", this.messageText);
+        let tem = this.messageText;
         this.messageText = "";
-        client.post(sendChatRoute, data).then(response => {});
+        client.post(sendChatRoute, data).then(response => {
+          let formatedReturnMessage;
+          formatedReturnMessage = {
+            sender_id: this.own_id,
+            message: tem,
+            time: response.data.formated_time,
+            is_file: typeof response.data.is_file == "undefined" ? 0 : 1,
+            sender_first_name: response.data.sender.first_name,
+            sender_last_name: response.data.sender.last_name,
+            sender_image: response.data.sender.profile_image
+          };
+          this.messageList.push(formatedReturnMessage);
+        });
       }
     },
     updateTic(description) {
@@ -179,21 +215,20 @@ export default {
   max-width: 100%;
   height: 40px;
 }
-.messageList{
- margin: 2px;
-    border: 1px solid beige;
-    box-shadow: 1px 1px beige;
-    font-size: 14px;
-
+.messageList {
+  margin: 2px;
+  border: 1px solid beige;
+  box-shadow: 1px 1px beige;
+  font-size: 14px;
 }
-.name{
-    padding: 1px;
+.name {
+  padding: 1px;
 }
-.senderLi{
-     background: radial-gradient(#dde3fd, transparent);
+.senderLi {
+  background: radial-gradient(#dde3fd, transparent);
 }
-.receiverLi{
- background: radial-gradient(rgb(250, 253, 251), transparent);
+.receiverLi {
+  background: radial-gradient(rgb(250, 253, 251), transparent);
 }
 </style>
 

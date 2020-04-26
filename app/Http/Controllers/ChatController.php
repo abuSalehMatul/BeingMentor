@@ -52,6 +52,7 @@ class ChatController extends Controller
     {
         $chat = Chat::saveChat($request->message, $chatRoomId);
         broadcast(new SendMessageEvent($chat))->toOthers();
+        return $chat;
 
     }
 

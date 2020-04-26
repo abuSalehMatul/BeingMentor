@@ -6427,6 +6427,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -6462,6 +6473,8 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     templateListener: function templateListener() {
+      var _this = this;
+
       var myEcho = new laravel_echo__WEBPACK_IMPORTED_MODULE_4__["default"]({
         broadcaster: "pusher",
         key: "0e5cf0c84ce38e9e8dd5",
@@ -6474,22 +6487,35 @@ __webpack_require__.r(__webpack_exports__);
         }
       });
       myEcho["private"]("send-message").listen("SendMessageEvent", function (e) {
-        console.log(e);
+        if (e.message.receiver.id == _this.own_id) {
+          var formatedReturnMessage;
+          formatedReturnMessage = {
+            sender_id: e.message.sender.id,
+            message: e.message.message,
+            time: e.message.formated_time,
+            is_file: e.message.is_file,
+            sender_first_name: e.message.sender.first_name,
+            sender_last_name: e.message.sender.last_name,
+            sender_image: e.message.sender.profile_image
+          };
+
+          _this.messageList.push(formatedReturnMessage);
+        }
       });
     },
     getAllMessage: function getAllMessage() {
-      var _this = this;
+      var _this2 = this;
 
       _client__WEBPACK_IMPORTED_MODULE_0__["default"].get(getChatRoute).then(function (response) {
-        _this.messages = response.data.messages;
-        _this.tickets = response.data.tickets;
-        _this.otherPerson = response.data.other_person;
+        _this2.messages = response.data.messages;
+        _this2.tickets = response.data.tickets;
+        _this2.otherPerson = response.data.other_person;
 
-        if (Object.keys(_this.tickets).length == 0) {
-          _this.ticketForm = true;
+        if (Object.keys(_this2.tickets).length == 0) {
+          _this2.ticketForm = true;
         }
 
-        _this.prepareMessageList();
+        _this2.prepareMessageList();
       });
     },
     prepareMessageList: function prepareMessageList() {
@@ -6510,22 +6536,38 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     sendMessage: function sendMessage() {
+      var _this3 = this;
+
       if (this.messageText.length > 0) {
         var data = new FormData();
         data.append("message", this.messageText);
+        var tem = this.messageText;
         this.messageText = "";
-        _client__WEBPACK_IMPORTED_MODULE_0__["default"].post(sendChatRoute, data).then(function (response) {});
+        _client__WEBPACK_IMPORTED_MODULE_0__["default"].post(sendChatRoute, data).then(function (response) {
+          var formatedReturnMessage;
+          formatedReturnMessage = {
+            sender_id: _this3.own_id,
+            message: tem,
+            time: response.data.formated_time,
+            is_file: typeof response.data.is_file == "undefined" ? 0 : 1,
+            sender_first_name: response.data.sender.first_name,
+            sender_last_name: response.data.sender.last_name,
+            sender_image: response.data.sender.profile_image
+          };
+
+          _this3.messageList.push(formatedReturnMessage);
+        });
       }
     },
     updateTic: function updateTic(description) {
-      var _this2 = this;
+      var _this4 = this;
 
       var data = new FormData();
       data.append("description", description);
       _client__WEBPACK_IMPORTED_MODULE_0__["default"].post(setTicketRoute, data).then(function (response) {
-        _this2.ticketForm = false;
+        _this4.ticketForm = false;
 
-        _this2.getAllMessage();
+        _this4.getAllMessage();
       });
     }
   }
@@ -11660,7 +11702,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.fa[data-v-14a567ae] {\n  font: normal normal normal 14px/1 FontAwesome;\n  font-size: 44px;\n  color: green;\n  text-rendering: auto;\n  cursor: pointer;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.img-thumbnail-chat-box[data-v-14a567ae] {\n  padding: 0.25rem;\n  background-color: #fff;\n  border: 1px solid #dee2e6;\n  border-radius: 0.25rem;\n  max-width: 100%;\n  height: 40px;\n}\n.messageList[data-v-14a567ae]{\n margin: 2px;\n    border: 1px solid beige;\n    box-shadow: 1px 1px beige;\n    font-size: 14px;\n}\n.name[data-v-14a567ae]{\n    padding: 1px;\n}\n.senderLi[data-v-14a567ae]{\n     background: radial-gradient(#dde3fd, transparent);\n}\n.receiverLi[data-v-14a567ae]{\n background: radial-gradient(rgb(250, 253, 251), transparent);\n}\n", ""]);
+exports.push([module.i, "\n.fa[data-v-14a567ae] {\n  font: normal normal normal 14px/1 FontAwesome;\n  font-size: 44px;\n  color: green;\n  text-rendering: auto;\n  cursor: pointer;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.img-thumbnail-chat-box[data-v-14a567ae] {\n  padding: 0.25rem;\n  background-color: #fff;\n  border: 1px solid #dee2e6;\n  border-radius: 0.25rem;\n  max-width: 100%;\n  height: 40px;\n}\n.messageList[data-v-14a567ae] {\n  margin: 2px;\n  border: 1px solid beige;\n  box-shadow: 1px 1px beige;\n  font-size: 14px;\n}\n.name[data-v-14a567ae] {\n  padding: 1px;\n}\n.senderLi[data-v-14a567ae] {\n  background: radial-gradient(#dde3fd, transparent);\n}\n.receiverLi[data-v-14a567ae] {\n  background: radial-gradient(rgb(250, 253, 251), transparent);\n}\n", ""]);
 
 // exports
 
@@ -65144,6 +65186,100 @@ VeeValidate$1.withValidation = withValidation;
 
 /***/ }),
 
+/***/ "./node_modules/vue-chat-scroll/dist/vue-chat-scroll.js":
+/*!**************************************************************!*\
+  !*** ./node_modules/vue-chat-scroll/dist/vue-chat-scroll.js ***!
+  \**************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+(function (global, factory) {
+   true ? module.exports = factory() :
+  undefined;
+}(this, (function () { 'use strict';
+
+  /**
+  * @name VueJS vChatScroll (vue-chat-scroll)
+  * @description Monitors an element and scrolls to the bottom if a new child is added
+  * @author Theodore Messinezis <theo@theomessin.com>
+  * @file v-chat-scroll  directive definition
+  */
+  var scrollToBottom = function scrollToBottom(el, smooth) {
+    if (typeof el.scroll === "function") {
+      el.scroll({
+        top: el.scrollHeight,
+        behavior: smooth ? 'smooth' : 'instant'
+      });
+    } else {
+      el.scrollTop = el.scrollHeight;
+    }
+  };
+
+  var vChatScroll = {
+    bind: function bind(el, binding) {
+      var scrolled = false;
+      el.addEventListener('scroll', function (e) {
+        scrolled = el.scrollTop + el.clientHeight + 1 < el.scrollHeight;
+
+        if (scrolled && el.scrollTop === 0) {
+          el.dispatchEvent(new Event("v-chat-scroll-top-reached"));
+        }
+      });
+      new MutationObserver(function (e) {
+        var config = binding.value || {};
+        if (config.enabled === false) return;
+        var pause = config.always === false && scrolled;
+        var addedNodes = e[e.length - 1].addedNodes.length;
+        var removedNodes = e[e.length - 1].removedNodes.length;
+
+        if (config.scrollonremoved) {
+          if (pause || addedNodes != 1 && removedNodes != 1) return;
+        } else {
+          if (pause || addedNodes != 1) return;
+        }
+
+        var smooth = config.smooth;
+        var loadingRemoved = !addedNodes && removedNodes === 1;
+
+        if (loadingRemoved && config.scrollonremoved && 'smoothonremoved' in config) {
+          smooth = config.smoothonremoved;
+        }
+
+        scrollToBottom(el, smooth);
+      }).observe(el, {
+        childList: true,
+        subtree: true
+      });
+    },
+    inserted: function inserted(el, binding) {
+      var config = binding.value || {};
+      scrollToBottom(el, config.notSmoothOnInit ? false : config.smooth);
+    }
+  };
+
+  /**
+  * @name VueJS vChatScroll (vue-chat-scroll)
+  * @description Monitors an element and scrolls to the bottom if a new child is added
+  * @author Theodore Messinezis <theo@theomessin.com>
+  * @file vue-chat-scroll plugin definition
+  */
+  var VueChatScroll = {
+    install: function install(Vue, options) {
+      Vue.directive('chat-scroll', vChatScroll);
+    }
+  };
+
+  if (typeof window !== 'undefined' && window.Vue) {
+    window.Vue.use(VueChatScroll);
+  }
+
+  return VueChatScroll;
+
+})));
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/FooterSection.vue?vue&type=template&id=3db4936f&":
 /*!****************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/FooterSection.vue?vue&type=template&id=3db4936f& ***!
@@ -66487,14 +66623,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "bgc-white bd bdrs-3 p-20 mB-20 mT-15" }, [
     _c("div", { staticClass: "row" }, [
-      _c(
-        "div",
-        { staticClass: "col-md-4 col-sm-12" },
-        [_c("chat-list", { attrs: { user_id: _vm.own_id } })],
-        1
-      ),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-md-8 col-sm-12" }, [
+      _c("div", { staticClass: "col-md-12 col-sm-12" }, [
         _vm.ticketForm == true
           ? _c(
               "div",
@@ -66560,11 +66689,12 @@ var render = function() {
             2
           ),
           _vm._v(" "),
-          _c("div", { staticClass: "card-body" }, [
+          _c("div", { staticClass: "card-body col-md-12" }, [
             _c(
               "ul",
               {
-                staticClass: "list-unstyled",
+                directives: [{ name: "chat-scroll", rawName: "v-chat-scroll" }],
+                staticClass: "list-unstyled col-md-12",
                 staticStyle: { height: "300px", "overflow-y": "scroll" }
               },
               _vm._l(_vm.messageList, function(message) {
@@ -66575,14 +66705,18 @@ var render = function() {
                     class: _vm.selectedClass(message.sender_id)
                   },
                   [
-                    _c("div", { staticClass: "col-md-4" }, [
+                    _c("div", { staticClass: "col-md-3" }, [
                       _c("img", {
                         staticClass: "img-fluid img-thumbnail-chat-box rounded",
                         attrs: { src: message.sender_image }
                       }),
                       _vm._v(" "),
                       _c("b", { staticClass: "name" }, [
-                        _vm._v(_vm._s(message.sender_first_name) + " "),
+                        _vm._v(
+                          "\n                  " +
+                            _vm._s(message.sender_first_name) +
+                            "\n                  "
+                        ),
                         _c("i", [_vm._v(_vm._s(message.sender_last_name))])
                       ]),
                       _vm._v(" "),
@@ -66593,7 +66727,7 @@ var render = function() {
                       ])
                     ]),
                     _vm._v(" "),
-                    _c("div", { staticClass: "col-md-8" }, [
+                    _c("div", { staticClass: "col-md-9" }, [
                       _c("p", [_vm._v(_vm._s(message.message))])
                     ])
                   ]
@@ -79737,11 +79871,15 @@ module.exports = function(module) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
+/* harmony import */ var vue_chat_scroll__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-chat-scroll */ "./node_modules/vue-chat-scroll/dist/vue-chat-scroll.js");
+/* harmony import */ var vue_chat_scroll__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue_chat_scroll__WEBPACK_IMPORTED_MODULE_1__);
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 __webpack_require__(/*! ./include/component */ "./resources/js/include/component.js");
 
 
+
+vue__WEBPACK_IMPORTED_MODULE_0__["default"].use(vue_chat_scroll__WEBPACK_IMPORTED_MODULE_1___default.a);
 var app = new vue__WEBPACK_IMPORTED_MODULE_0__["default"]({
   el: '#app'
 });
