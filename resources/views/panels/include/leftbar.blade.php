@@ -8,7 +8,7 @@
                         <div class="peers ai-c fxw-nw">
                             <div class="peer">
                                 <div class="logo">
-                                    <img src="{{asset('images/logo.png')}}" alt="" class="w-100" style="height: 65px">
+                                    <img src="{{asset('images/used_logo.png')}}" alt="" class="w-100" style="height: 65px">
                                 </div>
                             </div>
                             <div class="peer peer-greed">

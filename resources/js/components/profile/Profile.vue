@@ -151,7 +151,6 @@ export default {
         self.value.forEach(element => {
             selectedTag.push(element['name']);
         });
-        console.log(selectedTag);
         data.append("tags", selectedTag);
       }
       data.append("image", self.image);

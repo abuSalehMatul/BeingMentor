@@ -4,6 +4,9 @@
       <!-- <div class="col-md-4 col-sm-12">
         <chat-list :user_id="own_id"></chat-list>
       </div>-->
+      <div class="col-md-6" v-if="ratingForm">
+          <rating :type="type" :type_id="typeId" :route="ratingRoute" :solver="otherPerson.id"></rating>
+      </div>
       <div class="col-md-12 col-sm-12">
         <div v-if="ticketForm == true">
           <ticket-form @updateTicket="updateTic"></ticket-form>
@@ -11,16 +14,11 @@
         <div class="card card-default col-md-12 col-sm-12">
           <div class="card-header row">
             <div class="col-md-3">
-              <img
-                :src="otherPerson.profile_image"
-                class="img-thumbnail rounded col-md-4"
-                style="height:100%"
-              />
+              <img :src="otherPerson.profile_image" class="img-thumbnail rounded col-md-4" />
               <i>5start</i>
             </div>
             <div class="col-md-3">
-              <h4 class="col-md-12">{{otherPerson.first_name}}</h4>
-              <h5 class="col-md-12">{{otherPerson.last_name}}</h5>
+              <h4 class="col-md-12">{{otherPerson.first_name}} {{otherPerson.last_name}}</h4>
             </div>
             <div
               v-for="ticket in tickets"
@@ -28,9 +26,12 @@
               v-if="ticket.status != 'solved'"
             >
               Issue {{ticket.barcode}}
-              <h6 style="overflow: hidden;height: 40px;">{{ticket.description.substr(0, 50)}}</h6>
               <i class="badge badge-info">{{ticket.status}}</i>
-              <button v-if="ticket.status != 'solved'" class="btn btn-sm btn-success">Solved !</button>
+              <span v-if="ticket.opner_user_id == own_id">
+                  <button v-if="ticket.status != 'solved'" @click.prevent="solveTicket(ticket.id)" class="btn btn-sm btn-success">Solved !</button>
+              </span>
+
+              <h6 style="overflow: hidden;height: 40px;">{{ticket.description.substr(0, 50)}}</h6>
             </div>
           </div>
           <div class="card-body col-md-12">
@@ -61,10 +62,10 @@
               </li>
             </ul>
           </div>
-          <div class="col-md-12 row">
+          <div class="col-md-10 offset-1 row">
             <textarea rows="2" class="form-control" v-model="messageText"></textarea>
           </div>
-          <div class="col-md-12">
+          <div class="col-md-10 offset-1">
             <i class="fa fa-angle-double-right" @click="sendMessage()"></i>
           </div>
         </div>
@@ -77,6 +78,7 @@
 import client from "@/client";
 import ChatList from "./ChatList";
 import TicketForm from "./TicketForm";
+import Rating from "./Rating";
 import { EventBus } from "@/event-bus";
 import Echo from "laravel-echo";
 export default {
@@ -84,7 +86,8 @@ export default {
   props: ["room_id", "own_id"],
   components: {
     ChatList,
-    TicketForm
+    TicketForm,
+    Rating
   },
   data() {
     return {
@@ -93,7 +96,11 @@ export default {
       otherPerson: "",
       messageText: "",
       ticketForm: false,
-      messageList: []
+      ratingForm: false,
+      messageList: [],
+      ratingRoute: '',
+      typeId: '',
+      type:''
     };
   },
 
@@ -186,6 +193,12 @@ export default {
         });
       }
     },
+    solveTicket(ticketId){
+        this.type = "App\\Model\\Ticket";
+        this.typeId = ticketId;
+        this.ratingRoute = postTicketRoute;
+        this.ratingForm = true;
+    },
     updateTic(description) {
       let data = new FormData();
       data.append("description", description);
@@ -206,6 +219,16 @@ export default {
   cursor: pointer;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.img-thumbnail {
+  padding: 0.25rem;
+  background-color: #fff;
+  border: 1px solid #dee2e6;
+  border-radius: 0.25rem;
+  height: auto;
+  max-width: 75px !important;
+  max-height: 60px !important;
 }
 .img-thumbnail-chat-box {
   padding: 0.25rem;

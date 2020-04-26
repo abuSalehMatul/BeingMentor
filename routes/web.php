@@ -1,5 +1,6 @@
 <?php
 
+use App\Model\Mentor;
 use Illuminate\Support\Facades\Route;
 
 
@@ -53,4 +54,9 @@ Route::namespace('Trainee')->prefix('trainee')->middleware(['auth', 'role:traine
     Route::get('question', 'TraineeHomeController@question')->name('panels.trainee.question');
     Route::get('find-mentor', 'TraineeHomeController@findMentor')->name('panels.trainee.find.mentor');
     Route::get('message', 'TraineeHomeController@message')->name('panels.trainee.message');
+});
+
+
+Route::get('test', function(){
+   return Mentor::updateMentorsRating();
 });

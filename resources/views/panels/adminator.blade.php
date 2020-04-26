@@ -6,7 +6,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Favicon-->
-    <link rel="shortcut icon" type="image/png" href="{{asset('images/favicon.png')}}"/>
+    <link rel="shortcut icon" type="image/png" href="{{asset('images/used_logo.png')}}"/>
 
     <title>{{ config('app.name', 'mentor') }} - @yield('title')</title>
     <!-- Styles -->

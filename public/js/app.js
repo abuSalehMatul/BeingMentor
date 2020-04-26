@@ -6361,8 +6361,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _client__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/client */ "./resources/js/client.js");
 /* harmony import */ var _ChatList__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ChatList */ "./resources/js/components/panel/ChatList.vue");
 /* harmony import */ var _TicketForm__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./TicketForm */ "./resources/js/components/panel/TicketForm.vue");
-/* harmony import */ var _event_bus__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/event-bus */ "./resources/js/event-bus.js");
-/* harmony import */ var laravel_echo__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! laravel-echo */ "./node_modules/laravel-echo/dist/echo.js");
+/* harmony import */ var _Rating__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Rating */ "./resources/js/components/panel/Rating.vue");
+/* harmony import */ var _event_bus__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/event-bus */ "./resources/js/event-bus.js");
+/* harmony import */ var laravel_echo__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! laravel-echo */ "./node_modules/laravel-echo/dist/echo.js");
 //
 //
 //
@@ -6438,6 +6439,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+
 
 
 
@@ -6448,7 +6451,8 @@ __webpack_require__.r(__webpack_exports__);
   props: ["room_id", "own_id"],
   components: {
     ChatList: _ChatList__WEBPACK_IMPORTED_MODULE_1__["default"],
-    TicketForm: _TicketForm__WEBPACK_IMPORTED_MODULE_2__["default"]
+    TicketForm: _TicketForm__WEBPACK_IMPORTED_MODULE_2__["default"],
+    Rating: _Rating__WEBPACK_IMPORTED_MODULE_3__["default"]
   },
   data: function data() {
     return {
@@ -6457,7 +6461,11 @@ __webpack_require__.r(__webpack_exports__);
       otherPerson: "",
       messageText: "",
       ticketForm: false,
-      messageList: []
+      ratingForm: false,
+      messageList: [],
+      ratingRoute: '',
+      typeId: '',
+      type: ''
     };
   },
   created: function created() {
@@ -6475,7 +6483,7 @@ __webpack_require__.r(__webpack_exports__);
     templateListener: function templateListener() {
       var _this = this;
 
-      var myEcho = new laravel_echo__WEBPACK_IMPORTED_MODULE_4__["default"]({
+      var myEcho = new laravel_echo__WEBPACK_IMPORTED_MODULE_5__["default"]({
         broadcaster: "pusher",
         key: "0e5cf0c84ce38e9e8dd5",
         cluster: "ap2",
@@ -6559,6 +6567,12 @@ __webpack_require__.r(__webpack_exports__);
         });
       }
     },
+    solveTicket: function solveTicket(ticketId) {
+      this.type = "App\\Model\\Ticket";
+      this.typeId = ticketId;
+      this.ratingRoute = postTicketRoute;
+      this.ratingForm = true;
+    },
     updateTic: function updateTic(description) {
       var _this4 = this;
 
@@ -6569,6 +6583,80 @@ __webpack_require__.r(__webpack_exports__);
 
         _this4.getAllMessage();
       });
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/panel/Rating.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/panel/Rating.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _client__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/client */ "./resources/js/client.js");
+/* harmony import */ var _comp_lib_Modal__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @comp/lib/Modal */ "./resources/js/components/lib/Modal.vue");
+/* harmony import */ var _event_bus__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/event-bus */ "./resources/js/event-bus.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "rating",
+  components: {
+    modal: _comp_lib_Modal__WEBPACK_IMPORTED_MODULE_1__["default"]
+  },
+  props: ["type", "type_id", "route", "solver"],
+  data: function data() {
+    return {
+      rate: ""
+    };
+  },
+  methods: {
+    submitRate: function submitRate() {
+      var data = new FormData();
+      data.append("rating", this.rate);
+      data.append("rateable_type", this.type);
+      data.append("rateable_id", this.type_id);
+
+      if (typeof this.solver != 'undefined') {
+        data.append('solver', this.solver);
+      }
+
+      _client__WEBPACK_IMPORTED_MODULE_0__["default"].post(this.route, data).then(function (response) {
+        if (response.status >= 200 && response.status < 300) {
+          location.reload();
+        }
+      });
+    },
+    getImageUrl: function getImageUrl() {
+      return window.location.origin + "/" + "images/" + "star-rating.png";
     }
   }
 });
@@ -7109,7 +7197,6 @@ __webpack_require__.r(__webpack_exports__);
         self.value.forEach(function (element) {
           selectedTag.push(element['name']);
         });
-        console.log(selectedTag);
         data.append("tags", selectedTag);
       }
 
@@ -11702,7 +11789,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.fa[data-v-14a567ae] {\n  font: normal normal normal 14px/1 FontAwesome;\n  font-size: 44px;\n  color: green;\n  text-rendering: auto;\n  cursor: pointer;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.img-thumbnail-chat-box[data-v-14a567ae] {\n  padding: 0.25rem;\n  background-color: #fff;\n  border: 1px solid #dee2e6;\n  border-radius: 0.25rem;\n  max-width: 100%;\n  height: 40px;\n}\n.messageList[data-v-14a567ae] {\n  margin: 2px;\n  border: 1px solid beige;\n  box-shadow: 1px 1px beige;\n  font-size: 14px;\n}\n.name[data-v-14a567ae] {\n  padding: 1px;\n}\n.senderLi[data-v-14a567ae] {\n  background: radial-gradient(#dde3fd, transparent);\n}\n.receiverLi[data-v-14a567ae] {\n  background: radial-gradient(rgb(250, 253, 251), transparent);\n}\n", ""]);
+exports.push([module.i, "\n.fa[data-v-14a567ae] {\n  font: normal normal normal 14px/1 FontAwesome;\n  font-size: 44px;\n  color: green;\n  text-rendering: auto;\n  cursor: pointer;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.img-thumbnail[data-v-14a567ae] {\n  padding: 0.25rem;\n  background-color: #fff;\n  border: 1px solid #dee2e6;\n  border-radius: 0.25rem;\n  height: auto;\n  max-width: 75px !important;\n  max-height: 60px !important;\n}\n.img-thumbnail-chat-box[data-v-14a567ae] {\n  padding: 0.25rem;\n  background-color: #fff;\n  border: 1px solid #dee2e6;\n  border-radius: 0.25rem;\n  max-width: 100%;\n  height: 40px;\n}\n.messageList[data-v-14a567ae] {\n  margin: 2px;\n  border: 1px solid beige;\n  box-shadow: 1px 1px beige;\n  font-size: 14px;\n}\n.name[data-v-14a567ae] {\n  padding: 1px;\n}\n.senderLi[data-v-14a567ae] {\n  background: radial-gradient(#dde3fd, transparent);\n}\n.receiverLi[data-v-14a567ae] {\n  background: radial-gradient(rgb(250, 253, 251), transparent);\n}\n", ""]);
 
 // exports
 
@@ -66623,6 +66710,24 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "bgc-white bd bdrs-3 p-20 mB-20 mT-15" }, [
     _c("div", { staticClass: "row" }, [
+      _vm.ratingForm
+        ? _c(
+            "div",
+            { staticClass: "col-md-6" },
+            [
+              _c("rating", {
+                attrs: {
+                  type: _vm.type,
+                  type_id: _vm.typeId,
+                  route: _vm.ratingRoute,
+                  solver: _vm.otherPerson.id
+                }
+              })
+            ],
+            1
+          )
+        : _vm._e(),
+      _vm._v(" "),
       _c("div", { staticClass: "col-md-12 col-sm-12" }, [
         _vm.ticketForm == true
           ? _c(
@@ -66640,7 +66745,6 @@ var render = function() {
               _c("div", { staticClass: "col-md-3" }, [
                 _c("img", {
                   staticClass: "img-thumbnail rounded col-md-4",
-                  staticStyle: { height: "100%" },
                   attrs: { src: _vm.otherPerson.profile_image }
                 }),
                 _vm._v(" "),
@@ -66649,11 +66753,11 @@ var render = function() {
               _vm._v(" "),
               _c("div", { staticClass: "col-md-3" }, [
                 _c("h4", { staticClass: "col-md-12" }, [
-                  _vm._v(_vm._s(_vm.otherPerson.first_name))
-                ]),
-                _vm._v(" "),
-                _c("h5", { staticClass: "col-md-12" }, [
-                  _vm._v(_vm._s(_vm.otherPerson.last_name))
+                  _vm._v(
+                    _vm._s(_vm.otherPerson.first_name) +
+                      " " +
+                      _vm._s(_vm.otherPerson.last_name)
+                  )
                 ])
               ]),
               _vm._v(" "),
@@ -66665,23 +66769,35 @@ var render = function() {
                           _vm._s(ticket.barcode) +
                           "\n            "
                       ),
-                      _c(
-                        "h6",
-                        { staticStyle: { overflow: "hidden", height: "40px" } },
-                        [_vm._v(_vm._s(ticket.description.substr(0, 50)))]
-                      ),
-                      _vm._v(" "),
                       _c("i", { staticClass: "badge badge-info" }, [
                         _vm._v(_vm._s(ticket.status))
                       ]),
                       _vm._v(" "),
-                      ticket.status != "solved"
-                        ? _c(
-                            "button",
-                            { staticClass: "btn btn-sm btn-success" },
-                            [_vm._v("Solved !")]
-                          )
-                        : _vm._e()
+                      ticket.opner_user_id == _vm.own_id
+                        ? _c("span", [
+                            ticket.status != "solved"
+                              ? _c(
+                                  "button",
+                                  {
+                                    staticClass: "btn btn-sm btn-success",
+                                    on: {
+                                      click: function($event) {
+                                        $event.preventDefault()
+                                        return _vm.solveTicket(ticket.id)
+                                      }
+                                    }
+                                  },
+                                  [_vm._v("Solved !")]
+                                )
+                              : _vm._e()
+                          ])
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _c(
+                        "h6",
+                        { staticStyle: { overflow: "hidden", height: "40px" } },
+                        [_vm._v(_vm._s(ticket.description.substr(0, 50)))]
+                      )
                     ])
                   : _vm._e()
               })
@@ -66737,7 +66853,7 @@ var render = function() {
             )
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "col-md-12 row" }, [
+          _c("div", { staticClass: "col-md-10 offset-1 row" }, [
             _c("textarea", {
               directives: [
                 {
@@ -66761,7 +66877,7 @@ var render = function() {
             })
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "col-md-12" }, [
+          _c("div", { staticClass: "col-md-10 offset-1" }, [
             _c("i", {
               staticClass: "fa fa-angle-double-right",
               on: {
@@ -66775,6 +66891,104 @@ var render = function() {
       ])
     ])
   ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/panel/Rating.vue?vue&type=template&id=085bc3f3&":
+/*!***************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/panel/Rating.vue?vue&type=template&id=085bc3f3& ***!
+  \***************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("modal", {
+    attrs: { customClass: "sm" },
+    scopedSlots: _vm._u([
+      {
+        key: "header",
+        fn: function() {
+          return [
+            _c("h2", [_vm._v("We are very Happy that you want to Rate !!")])
+          ]
+        },
+        proxy: true
+      },
+      {
+        key: "body",
+        fn: function() {
+          return [
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-md-6 com-sm-12 p-5" }, [
+                _c("img", {
+                  staticClass:
+                    "img-fluid img-thumbnail rounded mx-auto d-block",
+                  attrs: { src: _vm.getImageUrl() }
+                })
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-6 col-sm-12 p-5" }, [
+                _c("div", { staticClass: "form-group" }, [
+                  _c("i", [_vm._v("Put your Rating Please (on a scale of 5)")]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.rate,
+                        expression: "rate"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: { type: "number" },
+                    domProps: { value: _vm.rate },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.rate = $event.target.value
+                      }
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-info",
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                          return _vm.submitRate($event)
+                        }
+                      }
+                    },
+                    [_vm._v("Rate ...........")]
+                  )
+                ])
+              ])
+            ])
+          ]
+        },
+        proxy: true
+      }
+    ])
+  })
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -80998,6 +81212,75 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/panel/Rating.vue":
+/*!**************************************************!*\
+  !*** ./resources/js/components/panel/Rating.vue ***!
+  \**************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Rating_vue_vue_type_template_id_085bc3f3___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Rating.vue?vue&type=template&id=085bc3f3& */ "./resources/js/components/panel/Rating.vue?vue&type=template&id=085bc3f3&");
+/* harmony import */ var _Rating_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Rating.vue?vue&type=script&lang=js& */ "./resources/js/components/panel/Rating.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _Rating_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Rating_vue_vue_type_template_id_085bc3f3___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _Rating_vue_vue_type_template_id_085bc3f3___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/panel/Rating.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/panel/Rating.vue?vue&type=script&lang=js&":
+/*!***************************************************************************!*\
+  !*** ./resources/js/components/panel/Rating.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Rating_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./Rating.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/panel/Rating.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Rating_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/panel/Rating.vue?vue&type=template&id=085bc3f3&":
+/*!*********************************************************************************!*\
+  !*** ./resources/js/components/panel/Rating.vue?vue&type=template&id=085bc3f3& ***!
+  \*********************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Rating_vue_vue_type_template_id_085bc3f3___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./Rating.vue?vue&type=template&id=085bc3f3& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/panel/Rating.vue?vue&type=template&id=085bc3f3&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Rating_vue_vue_type_template_id_085bc3f3___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Rating_vue_vue_type_template_id_085bc3f3___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/panel/TicketForm.vue":
 /*!******************************************************!*\
   !*** ./resources/js/components/panel/TicketForm.vue ***!
@@ -81328,6 +81611,7 @@ vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('profile', __webpack_requi
 vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('trainee', __webpack_require__(/*! @/components/panel/Trainee.vue */ "./resources/js/components/panel/Trainee.vue")["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('mentor', __webpack_require__(/*! @/components/panel/mentor.vue */ "./resources/js/components/panel/mentor.vue")["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('chat-room', __webpack_require__(/*! @/components/panel/ChatRoom.vue */ "./resources/js/components/panel/ChatRoom.vue")["default"]);
+vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('rating', __webpack_require__(/*! @/components/panel/Rating.vue */ "./resources/js/components/panel/Rating.vue")["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('pagination', __webpack_require__(/*! @comp/lib/Pagination */ "./resources/js/components/lib/Pagination.vue")["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('footer-section', __webpack_require__(/*! @comp/FooterSection */ "./resources/js/components/FooterSection.vue")["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('how-we-work', __webpack_require__(/*! @comp/HowWeWork */ "./resources/js/components/HowWeWork.vue")["default"]);

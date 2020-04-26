@@ -19,4 +19,9 @@ class Ticket extends Model
         $ticket->save();
         return $ticket;
     }
+
+    public function rating()
+    {
+        return $this->morphMany(Rating::class, 'rateable');
+    }
 }

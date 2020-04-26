@@ -8,5 +8,6 @@
     window.getChatRoute = "{{ route('api.panel.chatroom', $roomId) }}";
     window.setTicketRoute = "{{ route('api.panel.chatromm.ticket', $roomId) }}";
     window.sendChatRoute ="{{ route('api.panel.send.message', $roomId) }}";
+    window.postTicketRoute ="{{ route('api.panel.solve.ticket') }}";
 </script>
 @endsection

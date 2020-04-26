@@ -86,6 +86,7 @@
 <script>
 import client from "@/client";
 import Pagination from "@comp/lib/Pagination";
+
 export default {
   name: "mentor",
   components: { Pagination },

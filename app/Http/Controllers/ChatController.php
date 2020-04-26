@@ -8,6 +8,8 @@ use App\Model\Ticket;
 use App\User;
 use Illuminate\Http\Request;
 use App\Events\SendMessageEvent;
+use App\Model\Rating;
+use App\Model\Solve;
 
 class ChatController extends Controller
 {
@@ -55,6 +57,27 @@ class ChatController extends Controller
         return $chat;
 
     }
+
+    public function rateSolveTicket(Request $request)
+    {
+        $request->validate([
+            'rateable_id' => 'required:exists:tickets,id',
+            'rateable_type' => 'required',
+            'rating' => 'required| max:5'
+        ]);
+        $rating = Rating::saveRating($request->all());
+        $ticket = Ticket::findOrFail($request->rateable_id);
+        $ticket->status = 'solved';
+        $ticket->save();
+        $solver = Solve::create([
+            'ticket_id' => $request->rateable_id,
+            'solver_id' => $request->solver,
+            'created_at' => now()
+        ]);
+        return $rating;
+
+    }
+
 
     public function setTicket(Request $request, $chatRoomId)
     {

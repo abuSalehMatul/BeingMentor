@@ -76,7 +76,7 @@ class UsersTableSeeder extends Seeder
         $data = [];
         $data = [
             'first_name' => 'Mentor',
-            'last_name' => '',
+            'last_name' => 'Me',
             'mobile' => '01717190072',
             'email' => 'mentor@example.com',
             'password' => $password,
@@ -98,7 +98,7 @@ class UsersTableSeeder extends Seeder
         $data = [];
         $data = [
             'first_name' => 'Trainee',
-            'last_name' => '',
+            'last_name' => 'Me',
             'mobile' => '01717190072',
             'email' => 'trainee@example.com',
             'password' => $password,

@@ -20,6 +20,7 @@ Route::middleware('auth')->group(function () {
     Route::get('get-trainee/{userId}', 'Trainee\TraineeHomeController@getTrainees')->name('api.get.trainee');
     Route::get('chat-room/{id}', 'ChatController@getMessages')->name('api.panel.chatroom');
     Route::post('send-message/{id}', 'ChatController@sendMessage')->name('api.panel.send.message');
+    Route::post('chat-ticket', 'ChatController@rateSolveTicket')->name('api.panel.solve.ticket');
     Route::post('chat-room-ticket/{id}', 'ChatController@setTicket')->name('api.panel.chatromm.ticket');
 });
 Route::get('get-mentor/{userId}', 'Mentor\MentorHomeController@getMentor')->name('api.get.mentor');
