@@ -6362,6 +6362,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ChatList__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ChatList */ "./resources/js/components/panel/ChatList.vue");
 /* harmony import */ var _TicketForm__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./TicketForm */ "./resources/js/components/panel/TicketForm.vue");
 /* harmony import */ var _event_bus__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/event-bus */ "./resources/js/event-bus.js");
+/* harmony import */ var laravel_echo__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! laravel-echo */ "./node_modules/laravel-echo/dist/echo.js");
 //
 //
 //
@@ -6414,6 +6415,19 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 
@@ -6431,16 +6445,38 @@ __webpack_require__.r(__webpack_exports__);
       tickets: [],
       otherPerson: "",
       messageText: "",
-      ticketForm: false
+      ticketForm: false,
+      messageList: []
     };
   },
   created: function created() {
     this.getAllMessage();
-    Echo["private"]("send-message").listen("SendMessageEvent", function (e) {
-      console.log(e);
-    });
+    this.templateListener();
   },
   methods: {
+    selectedClass: function selectedClass(userId) {
+      if (userId == this.own_id) {
+        return "col-md-12 messageList senderLi";
+      } else {
+        return "col-md-12 messageList receiverLi";
+      }
+    },
+    templateListener: function templateListener() {
+      var myEcho = new laravel_echo__WEBPACK_IMPORTED_MODULE_4__["default"]({
+        broadcaster: "pusher",
+        key: "0e5cf0c84ce38e9e8dd5",
+        cluster: "ap2",
+        encrypted: true,
+        auth: {
+          headers: {
+            "X-CSRF-TOKEN": laravel_token
+          }
+        }
+      });
+      myEcho["private"]("send-message").listen("SendMessageEvent", function (e) {
+        console.log(e);
+      });
+    },
     getAllMessage: function getAllMessage() {
       var _this = this;
 
@@ -6448,11 +6484,29 @@ __webpack_require__.r(__webpack_exports__);
         _this.messages = response.data.messages;
         _this.tickets = response.data.tickets;
         _this.otherPerson = response.data.other_person;
-        console.log("send-message." + _this.otherPerson.id);
 
         if (Object.keys(_this.tickets).length == 0) {
           _this.ticketForm = true;
         }
+
+        _this.prepareMessageList();
+      });
+    },
+    prepareMessageList: function prepareMessageList() {
+      var data;
+      var self = this;
+
+      _.forEach(this.messages, function (value, key) {
+        data = {
+          sender_id: value.sender.id,
+          message: value.message,
+          time: value.formated_time,
+          is_file: value.is_file,
+          sender_first_name: value.sender.first_name,
+          sender_last_name: value.sender.last_name,
+          sender_image: value.sender.profile_image
+        };
+        self.messageList.push(data);
       });
     },
     sendMessage: function sendMessage() {
@@ -11606,7 +11660,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.fa[data-v-14a567ae] {\n  font: normal normal normal 14px/1 FontAwesome;\n  font-size: 44px;\n  color: green;\n  text-rendering: auto;\n  cursor: pointer;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n", ""]);
+exports.push([module.i, "\n.fa[data-v-14a567ae] {\n  font: normal normal normal 14px/1 FontAwesome;\n  font-size: 44px;\n  color: green;\n  text-rendering: auto;\n  cursor: pointer;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.img-thumbnail-chat-box[data-v-14a567ae] {\n  padding: 0.25rem;\n  background-color: #fff;\n  border: 1px solid #dee2e6;\n  border-radius: 0.25rem;\n  max-width: 100%;\n  height: 40px;\n}\n.messageList[data-v-14a567ae]{\n margin: 2px;\n    border: 1px solid beige;\n    box-shadow: 1px 1px beige;\n    font-size: 14px;\n}\n.name[data-v-14a567ae]{\n    padding: 1px;\n}\n.senderLi[data-v-14a567ae]{\n     background: radial-gradient(#dde3fd, transparent);\n}\n.receiverLi[data-v-14a567ae]{\n background: radial-gradient(rgb(250, 253, 251), transparent);\n}\n", ""]);
 
 // exports
 
@@ -66506,7 +66560,48 @@ var render = function() {
             2
           ),
           _vm._v(" "),
-          _vm._m(0),
+          _c("div", { staticClass: "card-body" }, [
+            _c(
+              "ul",
+              {
+                staticClass: "list-unstyled",
+                staticStyle: { height: "300px", "overflow-y": "scroll" }
+              },
+              _vm._l(_vm.messageList, function(message) {
+                return _c(
+                  "li",
+                  {
+                    staticClass: "p-2 row",
+                    class: _vm.selectedClass(message.sender_id)
+                  },
+                  [
+                    _c("div", { staticClass: "col-md-4" }, [
+                      _c("img", {
+                        staticClass: "img-fluid img-thumbnail-chat-box rounded",
+                        attrs: { src: message.sender_image }
+                      }),
+                      _vm._v(" "),
+                      _c("b", { staticClass: "name" }, [
+                        _vm._v(_vm._s(message.sender_first_name) + " "),
+                        _c("i", [_vm._v(_vm._s(message.sender_last_name))])
+                      ]),
+                      _vm._v(" "),
+                      _c("br"),
+                      _vm._v(" "),
+                      _c("i", {}, [
+                        _vm._v("Time:(GMT+00 ) " + _vm._s(message.time))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-md-8" }, [
+                      _c("p", [_vm._v(_vm._s(message.message))])
+                    ])
+                  ]
+                )
+              }),
+              0
+            )
+          ]),
           _vm._v(" "),
           _c("div", { staticClass: "col-md-12 row" }, [
             _c("textarea", {
@@ -66547,23 +66642,7 @@ var render = function() {
     ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card-body" }, [
-      _c(
-        "ul",
-        {
-          staticClass: "list-unstyled",
-          staticStyle: { height: "300px", "overflow-y": "scroll" }
-        },
-        [_c("li", { staticClass: "p-2" })]
-      )
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -79713,12 +79792,12 @@ window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_0__["default"]({
   broadcaster: 'pusher',
   key: '0e5cf0c84ce38e9e8dd5',
   cluster: 'ap2',
-  encrypted: true,
-  auth: {
-    headers: {
-      'X-CSRF-TOKEN': laravel_token
-    }
-  }
+  encrypted: true // auth: {
+  //     headers: {
+  //         'X-CSRF-TOKEN': laravel_token
+  //     }
+  // },
+
 });
 
 /***/ }),

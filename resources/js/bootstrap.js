@@ -39,9 +39,9 @@ window.Echo = new Echo({
     cluster: 'ap2',
     encrypted: true,
 
-    auth: {
-        headers: {
-            'X-CSRF-TOKEN': laravel_token
-        }
-    },
+    // auth: {
+    //     headers: {
+    //         'X-CSRF-TOKEN': laravel_token
+    //     }
+    // },
 });

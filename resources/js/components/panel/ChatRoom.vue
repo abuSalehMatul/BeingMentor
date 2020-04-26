@@ -35,7 +35,19 @@
           </div>
           <div class="card-body">
             <ul class="list-unstyled" style="height:300px; overflow-y:scroll">
-              <li class="p-2"></li>
+              <li class="p-2 row" v-for="message in messageList" :class="selectedClass(message.sender_id)">
+                <div class="col-md-4">
+                  <img :src="message.sender_image" class="img-fluid img-thumbnail-chat-box rounded" />
+
+                  <b class="name">{{message.sender_first_name}} <i>{{message.sender_last_name}}</i></b>
+
+                  <br />
+                  <i class="">Time:(GMT+00 ) {{message.time}}</i>
+                </div>
+                <div class="col-md-8">
+                  <p>{{message.message}}</p>
+                </div>
+              </li>
             </ul>
           </div>
           <div class="col-md-12 row">
@@ -55,6 +67,7 @@ import client from "@/client";
 import ChatList from "./ChatList";
 import TicketForm from "./TicketForm";
 import { EventBus } from "@/event-bus";
+import Echo from "laravel-echo";
 export default {
   name: "chat-room",
   props: ["room_id", "own_id"],
@@ -68,30 +81,65 @@ export default {
       tickets: [],
       otherPerson: "",
       messageText: "",
-      ticketForm: false
+      ticketForm: false,
+      messageList: []
     };
   },
+
   created() {
     this.getAllMessage();
-    Echo.private("send-message").listen(
-          "SendMessageEvent",
-          e => {
-            console.log(e);
-          }
-        );
-        
+    this.templateListener();
   },
   methods: {
+    selectedClass(userId) {
+      if (userId == this.own_id) {
+        return "col-md-12 messageList senderLi";
+      } else {
+        return "col-md-12 messageList receiverLi";
+      }
+    },
+    templateListener() {
+      let myEcho = new Echo({
+        broadcaster: "pusher",
+        key: "0e5cf0c84ce38e9e8dd5",
+        cluster: "ap2",
+        encrypted: true,
+
+        auth: {
+          headers: {
+            "X-CSRF-TOKEN": laravel_token
+          }
+        }
+      });
+      myEcho.private("send-message").listen("SendMessageEvent", e => {
+        console.log(e);
+      });
+    },
     getAllMessage() {
       client.get(getChatRoute).then(response => {
         this.messages = response.data.messages;
         this.tickets = response.data.tickets;
         this.otherPerson = response.data.other_person;
-        console.log("send-message." + this.otherPerson.id);
-
         if (Object.keys(this.tickets).length == 0) {
           this.ticketForm = true;
         }
+        this.prepareMessageList();
+      });
+    },
+    prepareMessageList() {
+      let data;
+      let self = this;
+      _.forEach(this.messages, function(value, key) {
+        data = {
+          sender_id: value.sender.id,
+          message: value.message,
+          time: value.formated_time,
+          is_file: value.is_file,
+          sender_first_name: value.sender.first_name,
+          sender_last_name: value.sender.last_name,
+          sender_image: value.sender.profile_image
+        };
+        self.messageList.push(data);
       });
     },
     sendMessage() {
@@ -122,6 +170,30 @@ export default {
   cursor: pointer;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+.img-thumbnail-chat-box {
+  padding: 0.25rem;
+  background-color: #fff;
+  border: 1px solid #dee2e6;
+  border-radius: 0.25rem;
+  max-width: 100%;
+  height: 40px;
+}
+.messageList{
+ margin: 2px;
+    border: 1px solid beige;
+    box-shadow: 1px 1px beige;
+    font-size: 14px;
+
+}
+.name{
+    padding: 1px;
+}
+.senderLi{
+     background: radial-gradient(#dde3fd, transparent);
+}
+.receiverLi{
+ background: radial-gradient(rgb(250, 253, 251), transparent);
 }
 </style>
 
