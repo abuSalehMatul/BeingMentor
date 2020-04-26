@@ -17,6 +17,8 @@ class CreateChatsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('chat_room_id');
             $table->text('message');
+            $table->unsignedBigInteger('sender_id');
+            $table->unsignedBigInteger('receiver_id');
             $table->integer('is_file')->default(0);
             $table->timestamps();
         });

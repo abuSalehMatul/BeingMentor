@@ -18,6 +18,8 @@ Route::get('get-profile-users', 'HomeController@getProfile')->name('api.panel.pr
 Route::middleware('auth')->group(function () {
     Route::post('update-profile', 'HomeController@updateProfile')->name('api.panel.profile.update');
     Route::get('get-trainee/{userId}', 'Trainee\TraineeHomeController@getTrainees')->name('api.get.trainee');
-    Route::get('chat-room/{id}')->name('api.panel.chatroom');
+    Route::get('chat-room/{id}', 'ChatController@getMessages')->name('api.panel.chatroom');
+    Route::post('send-message/{id}', 'ChatController@sendMessage')->name('api.panel.send.message');
+    Route::post('chat-room-ticket/{id}', 'ChatController@setTicket')->name('api.panel.chatromm.ticket');
 });
 Route::get('get-mentor/{userId}', 'Mentor\MentorHomeController@getMentor')->name('api.get.mentor');
