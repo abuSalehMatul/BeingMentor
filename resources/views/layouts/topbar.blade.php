@@ -15,7 +15,7 @@
                     <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-52"><a
                             href="{{route('mentor')}}">Mentors</a></li>
                     <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-50"><a
-                            href="{{route('contact.us')}}">Contact</a></li>
+                            href="#contact_us">Contact</a></li>
                     <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-51"><a
                             href="{{route('about.us')}}">About</a></li>
                     @guest
@@ -26,15 +26,7 @@
                     <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-141"><a href="{{route('find.profile')}}">
                        My Panel </a></li>
                     @endauth
-                    <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-141"><a href="#"><i
-                                class="fab fa-instagram"></i></a></li>
-                    <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-142"><a href="#"><i
-                                class="fab fa-facebook"></i></a></li>
-
-                    <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-143"><a href="#"><i
-                                class="fab fa-linkedin"></i></a></li>
-                    <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-144"><a href="#"><i
-                                class="fab fa-twitter-square"></i></a></li>
+                    
                 </ul>
             </nav>
             <div id="et_mobile_nav_menu">

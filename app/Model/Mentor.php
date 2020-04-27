@@ -104,33 +104,24 @@ class Mentor extends Model
 
     public static function updateMentorsRating()
     {
-        $solves = Solve::orderBy('solver_id')->get();
-
-        if (isset($solves[0])) {
-            $currentSolver = $solves[0]->solver_id;
-
-            $ratingsArr = [];
-            for ($i=0; $i<sizeof($solves); $i++) {
-                if($solves[$i]->solver_id != $currentSolver || $i == sizeof($solves)-1){
-                    return array_sum($ratingsArr) ;
-                    $userRating = array_sum($ratingsArr) / sizeof($ratingsArr);
-
-                    $mentor = Mentor::where('user_id', $solves[$i]->solver_id);
-                    $mentor->raging = $userRating;
-                    $mentor->save();
-                    $ratingsArr = [];
-                    $currentSolver = $solves[$i]->solver_id;
-                }
-                $ratings = optional($solves[$i]->ticket)->rating;
-
-                if (!is_null($ratings)) {
-                    foreach ($ratings as $rating) {
-
-                        array_push($ratingsArr, $rating->rating);
-                    }
-                }
-                print_r($ratingsArr);
-              //  return array_sum($ratingsArr);
+        $ratingsByUser = Rating::get()->groupBy('rateable_id');
+        foreach($ratingsByUser as $userId => $ratings){
+            $ratingArr = [];
+            foreach($ratings as $rating){
+                array_push($ratingArr, $rating->rating);
+            }
+            if(sizeof($ratingArr) > 0){
+                $rate = array_sum($ratingArr) / sizeof($ratingArr);
+            }else{
+                $rate =0;
+            }
+            $mentor = Mentor::where('user_id', $userId)->first();
+            if($mentor){
+                $rate = (double) $rate;
+                $rate = round($rate, 2);
+                $mentor->rating = $rate;
+                $mentor->save(); 
+                
             }
         }
     }

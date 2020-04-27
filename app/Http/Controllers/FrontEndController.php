@@ -23,7 +23,7 @@ class FrontEndController extends Controller
 
     public function aboutUs()
     {
-
+        return view('aboutUs');
     }
 
     public function contactUs()

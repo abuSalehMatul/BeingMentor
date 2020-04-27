@@ -5,7 +5,7 @@
         <chat-list :user_id="own_id"></chat-list>
       </div>-->
       <div class="col-md-6" v-if="ratingForm">
-          <rating :type="type" :type_id="typeId" :route="ratingRoute" :solver="otherPerson.id"></rating>
+          <rating :type="type" :ticket_id="ticketId" :route="ratingRoute" :type_id="otherPerson.id"></rating>
       </div>
       <div class="col-md-12 col-sm-12">
         <div v-if="ticketForm == true">
@@ -99,7 +99,7 @@ export default {
       ratingForm: false,
       messageList: [],
       ratingRoute: '',
-      typeId: '',
+      ticketId: '',
       type:''
     };
   },
@@ -194,8 +194,8 @@ export default {
       }
     },
     solveTicket(ticketId){
-        this.type = "App\\Model\\Ticket";
-        this.typeId = ticketId;
+        this.type = "App\\User";
+        this.ticketId = ticketId;
         this.ratingRoute = postTicketRoute;
         this.ratingForm = true;
     },

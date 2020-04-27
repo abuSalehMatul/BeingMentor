@@ -8,6 +8,7 @@ use App\Model\Ticket;
 use App\User;
 use Illuminate\Http\Request;
 use App\Events\SendMessageEvent;
+use App\Model\Mentor;
 use App\Model\Rating;
 use App\Model\Solve;
 
@@ -61,19 +62,16 @@ class ChatController extends Controller
     public function rateSolveTicket(Request $request)
     {
         $request->validate([
-            'rateable_id' => 'required:exists:tickets,id',
+            'rateable_id' => 'required:exists:users,id',
             'rateable_type' => 'required',
-            'rating' => 'required| max:5'
+            'rating' => 'required| max:5',
+            'ticket_id' => 'required'
         ]);
         $rating = Rating::saveRating($request->all());
-        $ticket = Ticket::findOrFail($request->rateable_id);
+        $ticket = Ticket::findOrFail($request->ticket_id);
         $ticket->status = 'solved';
         $ticket->save();
-        $solver = Solve::create([
-            'ticket_id' => $request->rateable_id,
-            'solver_id' => $request->solver,
-            'created_at' => now()
-        ]);
+        Mentor::updateMentorsRating();
         return $rating;
 
     }
@@ -88,5 +86,34 @@ class ChatController extends Controller
         $chatRoom->tickets_json = json_encode($tickArr);
         $chatRoom->save();
         return true;
+    }
+
+    public function myMessage($userId)
+    {   
+         $chatRooms = ChatRoom::where('small_id_participant', $userId)
+        ->orWhere('big_id_participant', $userId)
+        ->orderBy('created_at', 'DESC')->get();
+        $message = [];
+        foreach($chatRooms as $room){
+            $chat = Chat::where('chat_room_id', $room->id)->latest('created_at')->first();
+           
+            if($chat){
+                $message[]=[
+                    'sender_first_name' => $chat->sender->first_name,
+                    'sender_last_name' => $chat->sender->last_name,
+                    'receiver_id' => $chat->receiver->id,
+                    'chat_room_id' => $room->id,
+                    'mentor_rating' => $chat->sender->hasRole('mentor')? $chat->sender->mentor->rating: 0,
+                    'sender_id' => $chat->sender->id,
+                    'is_viewed' => $chat->is_viewed,
+                    'time' => $chat->formated_time,
+                    'message' => $chat->message,
+                    'sender_image' => $chat->sender->profile_image
+                ];
+            }
+           
+        }
+        return $message;
+
     }
 }

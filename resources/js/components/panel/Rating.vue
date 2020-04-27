@@ -31,7 +31,7 @@ export default {
   components: {
     modal
   },
-  props: ["type", "type_id", "route", "solver"],
+  props: ["type", "type_id", "route", "ticket_id"],
   data() {
     return {
       rate: ""
@@ -43,9 +43,7 @@ export default {
       data.append("rating", this.rate);
       data.append("rateable_type", this.type);
       data.append("rateable_id", this.type_id);
-      if(typeof this.solver != 'undefined'){
-          data.append('solver', this.solver);
-      }
+      data.append('ticket_id', this.ticket_id);
       client.post(this.route, data).then(response => {
           if(response.status >= 200 && response.status < 300){
               location.reload();

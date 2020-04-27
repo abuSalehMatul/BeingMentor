@@ -37,4 +37,9 @@ class TraineeHomeController extends TraineeController
         $data['trainees'] = $this->traineeModel::getTraineeByUserId($userId, $dates['fromDate'], $dates['toDate']);
         return $data;
     }
+
+    public function message()
+    {
+        return view('panels.message')->with('userId', auth()->id());
+    }
 }

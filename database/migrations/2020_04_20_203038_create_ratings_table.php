@@ -18,6 +18,7 @@ class CreateRatingsTable extends Migration
             $table->string('rateable_type');
             $table->unsignedBigInteger('rateable_id');
             $table->double('rating');
+            $table->unsignedBigInteger('ticket_id');
             $table->text('comment')->nullable();
             $table->timestamps();
         });
