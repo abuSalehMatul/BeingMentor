@@ -16,6 +16,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('get-profile-users', 'HomeController@getProfile')->name('api.panel.profile.index');
 Route::middleware('auth')->group(function () {
+    Route::get('get-bar-chart-men-trainee', 'ReportController@getUserBarChart');
+    Route::get('mentor-overview', 'ReportController@mentorOverView');
     Route::post('update-profile', 'HomeController@updateProfile')->name('api.panel.profile.update');
     Route::get('get-trainee/{userId}', 'Trainee\TraineeHomeController@getTrainees')->name('api.get.trainee');
     Route::get('chat-room/{id}', 'ChatController@getMessages')->name('api.panel.chatroom');
@@ -25,3 +27,4 @@ Route::middleware('auth')->group(function () {
     Route::post('chat-room-ticket/{id}', 'ChatController@setTicket')->name('api.panel.chatromm.ticket');
 });
 Route::get('get-mentor/{userId}', 'Mentor\MentorHomeController@getMentor')->name('api.get.mentor');
+Route::get('statistics', 'FrontEndController@statistics');

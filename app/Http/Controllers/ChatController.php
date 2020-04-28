@@ -116,4 +116,12 @@ class ChatController extends Controller
         return $message;
 
     }
+
+    public function seeMessage($chatRoomId)
+    {
+        $chat = Chat::where('chat_room_id', $chatRoomId)->latest('created_at')->first();
+        $chat->is_viewed = 1;
+        $chat->save();
+        return redirect()->route('panels.chatroom', $chatRoomId);
+    }
 }

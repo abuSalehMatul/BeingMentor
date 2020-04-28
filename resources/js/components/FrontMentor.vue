@@ -1,12 +1,12 @@
 <template>
   <div :class="selectedClass">
-    <h4>Mentors</h4>
+    <h4 v-if="user_id != 'website'">Mentors</h4>
     <div v-if="user_id == 'matulPermission'" class="col-md-12 mB-10 col-sm-12">
       <input type="date" v-model="dateRange.fromDate" @change="dateFilter" />
       To
       <input type="date" v-model="dateRange.toDate" @change="dateFilter" />
     </div>
-    <div class="input-icons col-md-6">
+    <div class="input-icons col-md-6" v-if="user_id != 'website'">
       <i class="fa fa-search icon"></i>
       <input
         class="input-field"
@@ -61,14 +61,14 @@
             <i v-for="tag in mentor.tags" class="badge badge-info text-2xl" style="color:white">{{tag}}</i>
           </td>
           <td v-if="user_id == 'matulPermission'">{{mentor.user.mobile}}</td>
-          <td pre>
+          <td pre v-if="user_id != 'website'">
             <small style="font-size:10px">{{mentor.user.address}}</small>
           </td>
           <td >
             <p style="height: 70px; transition: height 300ms; overflow:hidden;color:skyblue" @click="displayMore(mentor.id)" :id="mentor.id"> {{mentor.description}} </p>
             
           </td>
-          <td nowrap><small>Joins at: <i class="fa fa-calendar"></i></small> {{mentor.formated_date}}</td>
+          <td nowrap v-if="user_id != 'website'"><small>Joins at: <i class="fa fa-calendar"></i></small> {{mentor.formated_date}}</td>
           <td v-if="user_id == 'matulPermission'">
             <button class="btn btn-sm btn-danger" @click.prevent="del(mentor.id)">Delete</button>
             <button
@@ -101,7 +101,7 @@ import client from "@/client";
 import Pagination from "@comp/lib/Pagination";
 
 export default {
-  name: "mentor",
+  name: "front-mentor",
   components: { Pagination },
   props: ["user_id"],
 

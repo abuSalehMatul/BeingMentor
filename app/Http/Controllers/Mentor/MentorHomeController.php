@@ -39,4 +39,14 @@ class MentorHomeController extends MentorController
         $data['mentors'] = $this->mentorModel::getMentorsByUserId($userId, $dates['fromDate'], $dates['toDate'], $key);
         return $data;
     }
+
+    public function message()
+    {
+        return view('panels.message')->with('userId', auth()->id());
+    }
+
+    public function myTrainee()
+    {
+        return view('panels.myTrainee')->with('user_id', auth()->id());
+    }
 }

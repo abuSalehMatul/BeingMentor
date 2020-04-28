@@ -42,7 +42,7 @@ class Mentor extends Model
 
     public static function getMentorsByUserId($userId, Carbon $fromDate, Carbon $toDate, $key = "")
     {
-        if ($userId == 'matulPermission' || $userId == 'front') {
+        if ($userId == 'matulPermission') {
             return Mentor::whereDate('created_at', '>=', $fromDate->format('Y-m-d'))
                 ->whereDate('created_at', '<=', $toDate->format('Y-m-d'))
                 ->where(function ($q) use ($key) {
@@ -58,6 +58,21 @@ class Mentor extends Model
                     }
                 })
                 ->orderBy('created_at', 'DESC')
+                ->paginate(15);
+        }
+        if ($userId == 'front' || $userId== "website") {
+            return Mentor::where(function ($q) use ($key) {
+                    if (strlen($key) > 0) {
+                        $q->whereIn('id', self::getMentorIds($key));
+                    }
+                })
+                ->with('user')
+                ->whereHas('user', function ($query) use ($userId) {
+                    if ($userId != 'matulPermission') {
+                        $query->where('status', 1);
+                    }
+                })
+                ->orderBy('rating', 'DESC')
                 ->paginate(15);
         }
     }
@@ -105,23 +120,22 @@ class Mentor extends Model
     public static function updateMentorsRating()
     {
         $ratingsByUser = Rating::get()->groupBy('rateable_id');
-        foreach($ratingsByUser as $userId => $ratings){
+        foreach ($ratingsByUser as $userId => $ratings) {
             $ratingArr = [];
-            foreach($ratings as $rating){
+            foreach ($ratings as $rating) {
                 array_push($ratingArr, $rating->rating);
             }
-            if(sizeof($ratingArr) > 0){
+            if (sizeof($ratingArr) > 0) {
                 $rate = array_sum($ratingArr) / sizeof($ratingArr);
-            }else{
-                $rate =0;
+            } else {
+                $rate = 0;
             }
             $mentor = Mentor::where('user_id', $userId)->first();
-            if($mentor){
-                $rate = (double) $rate;
+            if ($mentor) {
+                $rate = (float) $rate;
                 $rate = round($rate, 2);
                 $mentor->rating = $rate;
-                $mentor->save(); 
-                
+                $mentor->save();
             }
         }
     }

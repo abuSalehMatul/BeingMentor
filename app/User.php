@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Model\ChatRoom;
 use App\Model\Mentor;
 use App\Model\Tag;
 use App\Model\Trainee;
@@ -10,7 +11,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
-
+use App\Model\Rating;
 class User extends Authenticatable
 {
     use Notifiable, HasRoles;
@@ -57,6 +58,21 @@ class User extends Authenticatable
     public function userTags()
     {
         return $this->hasMany(UserTag::class);
+    }
+
+    public function ratings()
+    {
+        return $this->morphMany(Rating::class, 'rateable');
+    }
+
+    public function small_id_participant()
+    {
+        return $this->hasMany(ChatRoom::class, 'small_id_participant');
+    }
+
+    public function big_id_participant()
+    {
+        return $this->hasMany(ChatRoom::class, 'big_id_participant');
     }
 
 

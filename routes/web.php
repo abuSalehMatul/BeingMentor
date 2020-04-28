@@ -26,6 +26,7 @@ Route::get('profile-show', 'HomeController@showProfile')->middleware('auth')->na
 //chat initializer
 Route::post('chat-initialize', 'ChatController@initialize')->middleware('auth')->name('chat.initializer');
 //chat room
+Route::get('see-message/{chatroomId}', 'ChatController@seeMessage')->middleware('auth');
 Route::get('chat-room/{chatroomId}', 'ChatController@chat')->middleware(['auth', 'role:mentor|trainee'])->name('panels.chatroom');
 
 Route::namespace('Admin')->prefix('admin')->middleware(['auth', 'role:admin'])->group(function(){

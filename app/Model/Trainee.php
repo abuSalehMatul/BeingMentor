@@ -43,6 +43,33 @@ class Trainee extends Model
             ->orderBy('created_at', 'DESC')
             ->paginate(10);
         }
+        elseif(is_numeric($userId)){
+            $chatRoomSmall= auth()->user()->small_id_participant;
+            $chatRoomBig = auth()->user()->big_id_participant;
+            $traineeIds=[];
+            foreach($chatRoomBig as $room){
+                $trainee = Trainee::where('user_id',$room->small_id_participant)->first();
+                if($trainee){
+                    array_push($traineeIds, $trainee->id);
+                }
+                
+            }
+            foreach($chatRoomSmall as $room){
+                $trainee = Trainee::where('user_id',$room->big_id_participant)->first();
+                if($trainee){
+                    array_push($traineeIds, $trainee->id);
+                }
+                
+            }
+            return Trainee::
+             whereDate('created_at', '>=', $fromDate->format('Y-m-d'))
+            ->whereDate('created_at', '<=', $toDate->format('Y-m-d'))
+            ->whereIn('id', $traineeIds)
+            ->with('user')
+            ->orderBy('created_at', 'DESC')
+            ->paginate(10);
+
+        }
     }
 
 }
