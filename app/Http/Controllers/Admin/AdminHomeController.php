@@ -4,7 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Admin\AdminController;
+use App\Model\ContactUs;
 use App\Model\Mentor;
+use App\Model\SuccessStory;
+use App\Model\Tag;
 use App\Model\Website;
 
 class AdminHomeController extends AdminController
@@ -25,15 +28,62 @@ class AdminHomeController extends AdminController
         return view('panels.admin.mentor')->with('user_id', 'matulPermission');
     }
 
+    public function changeSuccessStatus(Request $request)
+    {
+        $request->validate([
+            'new_status' => 'required',
+            'id' => 'required'
+        ]);
+        $story = SuccessStory::find($request->id);
+        $story->status = $request->new_status;
+        $story->save();
+    }
 
+    public function changeStatus(Request $request)
+    {
+        $request->validate([
+            'id' => 'required',
+            'status' => 'required'
+        ]);
+        return ContactUs::where('id', $request->id)->update(['status' => $request->status]);
+    }
+
+    public function getContactUs()
+    {
+        $contacts = ContactUs::orderBy('created_at', 'DESC')->get();
+        return $contacts;
+    }
 
     public function contactUs()
     {
+        return view('panels.admin.contact');
     }
 
     public function website()
     {
         return view('panels.admin.website');
+    }
+
+    public function tag()
+    {
+        return view('panels.admin.tag');
+    }
+
+    public function getTag()
+    {
+        return Tag::get();
+    }
+
+    public function story()
+    {
+        return view('panels.admin.story');
+    }
+
+    public function saveTag(Request $request)
+    {
+        $tags = explode(',', $request->tags);
+        return Tag::sync($tags);
+
     }
 
     public function updateWebsite(Request $request)

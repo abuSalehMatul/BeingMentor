@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Model\ContactUs;
 use App\Model\Mentor;
+use App\Model\SuccessStory;
 use App\Model\Tag;
 use App\Model\Ticket;
 use App\Model\Trainee;
@@ -28,9 +30,60 @@ class FrontEndController extends Controller
         return view('aboutUs');
     }
 
-    public function contactUs()
+    public function contactUs(Request $request)
     {
+        $request->validate([
+            'name' => 'required',
+            'email' => 'email|required',
+            'message' => 'required'
+        ]);
+        ContactUs::create($request->all());
+        $request->session()->flash('status', 'Contact was successful!');
+        return redirect()->back();
+    }
 
+    public function contact()
+    {
+        return view('contact_us');
+    }
+
+    public function story()
+    {
+        return view('success_story');
+    }
+
+    public function addSuccess()
+    {
+        return view('add_success');
+    }
+
+    public function getSuccessStory($user)
+    {
+        if($user === 'front'){
+            $stories = SuccessStory::where('status', 1)->orderBy('created_at', 'DESC')->get();
+            return $stories;
+        }
+        else{
+            $stories = SuccessStory::orderBy('created_at', 'DESC')->get();
+            return $stories;
+        }
+    }
+
+    public function saveStory(Request $request)
+    {
+        $request->validate([
+            'story' => 'required'
+        ]);
+        $story = new SuccessStory;
+        $story->story = $request->story;
+        $story->user_id = auth()->id();
+        $story->save();
+        return redirect('/');
+    }
+
+    public function termPolicy()
+    {
+        return view('term_policy');
     }
 
     public Function statistics()
@@ -38,7 +91,19 @@ class FrontEndController extends Controller
         $mentors = Mentor::count();
         $tickets = Ticket::count();
         $solved = Ticket::where('status', 'solved')->count();
-        $online = 
+        $users = User::get();
+        $online =0;
+        foreach($users as $user){
+            if($user->isOnline()){
+                $online++;
+            }
+        }
+        return [
+            'mentors' => $mentors,
+            'problems' => $tickets,
+            'solved' => $solved,
+            'online' => $online
+        ];
     }
 
 }

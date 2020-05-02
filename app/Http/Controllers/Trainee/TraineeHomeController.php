@@ -42,4 +42,9 @@ class TraineeHomeController extends TraineeController
     {
         return view('panels.message')->with('userId', auth()->id());
     }
+
+    public function findMentor()
+    {
+        return view('panels.findMentor')->with('user_id', 'front');
+    }
 }

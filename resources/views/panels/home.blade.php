@@ -13,6 +13,6 @@
 @endsection
 @section('route')
 <script>
-
+    
 </script>
 @endsection

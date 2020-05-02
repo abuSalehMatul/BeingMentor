@@ -98,7 +98,7 @@
             <div class="et_pb_blurb_content">
               <div class="et_pb_main_blurb_image">
                 <span class="et_pb_image_wrap">
-                  <span class="et-waypoint et_pb_animation_off et-pb-icon">&#xe104;</span>
+                  <span class="et-waypoint et_pb_animation_off et-pb-icon">&#167;</span>
                 </span>
               </div>
               <div class="et_pb_blurb_container">
@@ -124,7 +124,7 @@
             <div class="et_pb_blurb_content">
               <div class="et_pb_main_blurb_image">
                 <span class="et_pb_image_wrap">
-                  <span class="et-waypoint et_pb_animation_off et-pb-icon">&#xe00e;</span>
+                  <span class="et-waypoint et_pb_animation_off et-pb-icon">&#x1f4bb;</span>
                 </span>
               </div>
               <div class="et_pb_blurb_container">
@@ -152,7 +152,7 @@
             <div class="et_pb_blurb_content">
               <div class="et_pb_main_blurb_image">
                 <span class="et_pb_image_wrap">
-                  <span class="et-waypoint et_pb_animation_off et-pb-icon">&#xe0e9;</span>
+                  <span class="et-waypoint et_pb_animation_off et-pb-icon">&#8669;</span>
                 </span>
               </div>
               <div class="et_pb_blurb_container">
@@ -181,7 +181,7 @@
             <div class="et_pb_blurb_content">
               <div class="et_pb_main_blurb_image">
                 <span class="et_pb_image_wrap">
-                  <span class="et-waypoint et_pb_animation_off et-pb-icon">&#xe109;</span>
+                  <span class="et-waypoint et_pb_animation_off et-pb-icon">&#128712;</span>
                 </span>
               </div>
               <div class="et_pb_blurb_container">
@@ -241,7 +241,7 @@
             <div class="et_pb_blurb_content">
               <div class="et_pb_main_blurb_image">
                 <span class="et_pb_image_wrap">
-                  <span class="et-waypoint et_pb_animation_off et-pb-icon">&#xe007;</span>
+                  <span class="et-waypoint et_pb_animation_off et-pb-icon">&#128161;</span>
                 </span>
               </div>
               <div class="et_pb_blurb_container">

@@ -17,6 +17,7 @@ class CreateTicketsTable extends Migration
             $table->id();
             $table->string('barcode')->nullable();
             $table->text('description')->default('system_ticket');
+            $table->string('inquire')->nullable();
             $table->unsignedBigInteger('opner_user_id');
             $table->enum('status', ['pending', 'solved', 'canceled'])->default('pending');
             $table->timestamps();

@@ -17,7 +17,7 @@
             class="et_pb_module et_pb_text et_pb_text_1 et_pb_text_align_left et_pb_bg_layout_light"
           >
             <div class="title-des">
-              <h5 class="animated infinite bounce delay-2s">
+              <h5 class="animated infinite bounce delay-2s" style="font-size:21px">
                  {{website.index_description}}
               </h5>
             </div>
@@ -44,12 +44,12 @@
                     </div>
                   </div>
                 </div>
-                <div
+                <div style="cursor:pointer"
                   class="et_pb_module dsm_flipbox_child dsm_flipbox_child_1 et_pb_bg_layout_light dsm_flipbox_icon_position_top"
                 >
                   <div class="et_pb_module_inner">
                     <div class="dsm_flipbox_wrapper et_pb_text_align_left">
-                      <span class>Click for more details</span>
+                      <span class="badge badge-info">Click for more details</span>
                       <div class="dsm-content">
                         We provide opportunities, resources, and tools for everyone
                         related to the education and training field. We assist potential leaders and
@@ -107,7 +107,7 @@
                     </div>
                   </div>
                 </div>
-                <div
+                <div style="cursor:pointer"
                   class="et_pb_module dsm_flipbox_child dsm_flipbox_child_3 et_pb_bg_layout_light dsm_flipbox_icon_position_top"
                 >
                   <div class="et_pb_module_inner" @click="updateTransition1()">
@@ -120,7 +120,7 @@
                         have an MBA degree or engineering expertise, you will find here opportunities to
                         be hired. You may help the trainees in
                         <span
-                          class
+                          class="badge badge-info"
                         >Click for more details</span>
                       </div>
                     </div>

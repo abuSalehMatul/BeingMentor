@@ -79,7 +79,7 @@ class ChatController extends Controller
 
     public function setTicket(Request $request, $chatRoomId)
     {
-        $Ticket = Ticket::setTicketByChatRoomId($request->description, $chatRoomId);
+        $Ticket = Ticket::setTicketByChatRoomId($request->description, $request->inquire, $chatRoomId);
         $tickArr = [];
         array_push($tickArr, $Ticket->id);
         $chatRoom = ChatRoom::findOrFail($chatRoomId);

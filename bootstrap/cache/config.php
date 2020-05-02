@@ -385,6 +385,43 @@
       ),
     ),
   ),
+  'enums' => 
+  array (
+    'inquires' => 
+    array (
+      'Academic' => 
+      array (
+        0 => 'School',
+        1 => 'College',
+        2 => 'University',
+        3 => 'Non-profit',
+        4 => 'Academic',
+        5 => 'Others',
+      ),
+      'Professional' => 
+      array (
+        0 => 'Freelance',
+        1 => 'IT',
+        2 => 'Business',
+        3 => 'Health',
+        4 => 'Engineering',
+        5 => 'Medicine',
+        6 => 'Law',
+        7 => 'Others',
+      ),
+    ),
+    'url' => 
+    array (
+      '/' => 'Home Page',
+      'mentor' => 'Mentor Page',
+      'about-us' => 'About Us',
+      'contact' => 'Contact Us',
+      'term-policy' => 'Term And Policy',
+      'success-story' => 'Success Story',
+      'mentor/message' => 'Chat',
+      'trainee/message' => 'Chat',
+    ),
+  ),
   'filesystems' => 
   array (
     'default' => 'local',

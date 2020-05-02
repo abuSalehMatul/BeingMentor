@@ -199,9 +199,10 @@ export default {
         this.ratingRoute = postTicketRoute;
         this.ratingForm = true;
     },
-    updateTic(description) {
+    updateTic(ticketData) {
       let data = new FormData();
-      data.append("description", description);
+      data.append("description", ticketData[0]);
+      data.append('inquire', ticketData[1]);
       client.post(setTicketRoute, data).then(response => {
         this.ticketForm = false;
         this.getAllMessage();

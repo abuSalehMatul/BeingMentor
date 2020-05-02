@@ -16,8 +16,16 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('get-profile-users', 'HomeController@getProfile')->name('api.panel.profile.index');
 Route::middleware('auth')->group(function () {
+    Route::get('get-admin-mentor-trainee-pie','ReportController@adminTraineeMentor');
+    Route::get('get-chat-inquire', 'ReportController@getChatInquire');
+    Route::post('contact-us-change-status', 'Admin\AdminHomeController@changeStatus')->name('api.contact.us.change.status');
+    Route::get('contact-us-admin', 'Admin\AdminHomeController@getContactUs')->name('api.contact.us.admin');
     Route::get('get-bar-chart-men-trainee', 'ReportController@getUserBarChart');
     Route::get('mentor-overview', 'ReportController@mentorOverView');
+    Route::get('get-pages-hit', 'ReportController@getPagesHit');
+    Route::post('change-success-status', 'Admin\AdminHomeController@changeSuccessStatus');
+    Route::post('admin-tag', 'Admin\AdminHomeController@saveTag')->name('api.admin.save.tag');
+    Route::get('admin-tag', 'Admin\AdminHomeController@getTag')->name('api.admin.get.tag');
     Route::post('update-profile', 'HomeController@updateProfile')->name('api.panel.profile.update');
     Route::get('get-trainee/{userId}', 'Trainee\TraineeHomeController@getTrainees')->name('api.get.trainee');
     Route::get('chat-room/{id}', 'ChatController@getMessages')->name('api.panel.chatroom');
@@ -28,3 +36,5 @@ Route::middleware('auth')->group(function () {
 });
 Route::get('get-mentor/{userId}', 'Mentor\MentorHomeController@getMentor')->name('api.get.mentor');
 Route::get('statistics', 'FrontEndController@statistics');
+Route::get('get-inquires', 'ReportController@getInquires');
+Route::get('get-success-story/{user}', 'FrontEndController@getSuccessStory');

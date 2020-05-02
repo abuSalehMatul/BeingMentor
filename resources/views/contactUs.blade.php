@@ -5,25 +5,25 @@
                 class="et_pb_module dsm_dual_heading dsm_dual_heading_4  et_pb_text_align_center et_pb_bg_layout_light">
                 <h1> Contact Us </h1>
             </div>
-            <form class="form" method="post" action="https://www.beingmentor.pk/">
+            <form class="form" method="POST" action="{{route('contact.us')}}">
                 @csrf
                 <div class="form-group">
                     <label for="name">Name</label>
-                    <input class="form-control" type="text" name="name" id="name">
+                    <input class="form-control" type="text" name="name" id="name" required>
                 </div>
                 <div class="form-goup">
                     <label for="email">Email</label>
-                    <input type="email" class="form-control" name="name" id="email" aria-describedby="emailHelp" placeholder="Enter email" required>
+                    <input type="email" class="form-control" name="email" id="email" aria-describedby="emailHelp" placeholder="Enter email" required>
                     <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
                 </div>
                 <div class="form-goup">
-                    <label for="name">Your Message</label>
-                    <textarea class="form-control" rows="5">
+                    <label for="message">Your Message</label>
+                    <textarea class="form-control" rows="5" id="message" name="message" required>
                     </textarea>
                 </div>
                 <hr>
                 <div class="form-group">
-                    <button type="submit" class="btn btn-primary mb-5 p-10">Send</button>
+                    <input type="submit" class="btn btn-primary mb-5 p-10" value="SEND">
                 </div>
 
             </form>

@@ -3,15 +3,19 @@
         <div class="et_pb_column et_pb_column_1_3 et_pb_column_22  et_pb_css_mix_blend_mode_passthrough">
             <div class="et_pb_module dsm_dual_heading dsm_dual_heading_2  et_pb_text_align_left et_pb_bg_layout_light">
                 <div class="et_pb_module_inner">
-                    <h1 class="text-center text-info">
-                        Why Us ?
+                    <h1 class="text-center">
+                       <span class="why" style="color:black"> Why </span> 
+                       <span class="why" style="color:blue"> Us </span>
                     </h1>
                     <hr>
                 </div>
             </div>
             <div class="et_pb_module et_pb_text et_pb_text_4 et_pb_text_align_left ">
-                <p style="text-align: center;" class="whyUsp">
-                    {{$website->why_us_description}}
+                <p class="whyUsp">
+                     @php
+                         print_r($website->why_us_description);
+                     @endphp
+                   
                 </p>
             </div>
             <!-- .et_pb_text -->

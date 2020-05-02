@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="how-it-works">
     <div
       class="et_pb_section et_pb_section_1 et_pb_section_parallax et_pb_with_background et_section_regular"
     >
@@ -28,8 +28,8 @@
           </div>
           <div>
             <h3 class="howToTitle">{{website.how_it_work_title1}}</h3>
-            <p class="howToPeragraph">
-               {{website.how_it_work_description1}}
+            <p class="howToPeragraph" v-html="formater(website.how_it_work_description1)" style="color:white">
+              
             </p>
           </div>
         </div>
@@ -42,8 +42,8 @@
           </div>
           <div>
             <h3 class="howToTitle">{{website.how_it_work_title2}}</h3>
-            <p class="howToPeragraph">
-               {{website.how_it_work_description2}}
+            <p class="howToPeragraph" v-html="formater(website.how_it_work_description2)">
+               
             </p>
           </div>
         </div>
@@ -56,8 +56,8 @@
           </div>
           <div>
             <h3 class="howToTitle">{{website.how_it_work_title3}}</h3>
-            <p class="howToPeragraph">
-                {{website.how_it_work_description3}}
+            <p class="howToPeragraph" v-html="formater(website.how_it_work_description3)">
+                
             </p>
           </div>
         </div>
@@ -77,6 +77,11 @@ export default {
     },
   data() {
     return {};
+  },
+  methods:{
+    formater(data){
+      return data;
+    }
   }
 };
 </script>

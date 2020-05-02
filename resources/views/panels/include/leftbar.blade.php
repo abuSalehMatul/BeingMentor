@@ -31,7 +31,7 @@
         <ul class="sidebar-menu scrollable pos-r">
             @role('admin')
             <li class="nav-item">
-                <a class='sidebar-link {{ request()->is('admin/profile*') ? 'highlight' : '' }}'
+                <a class='sidebar-link {{ request()->is('admin/profi*') ? 'highlight' : '' }}'
                    href="{{ route('panels.admin.index') }}">
                     <span class="icon-holder">
                         <i class="c-brown-500 ti-id-badge"></i>
@@ -40,7 +40,7 @@
                 </a>
             </li>
                 <li class="nav-item mT-30 active">
-                    <a class="sidebar-link {{ request()->is('admin/trainee*') ? 'highlight' : '' }}"
+                    <a class="sidebar-link {{ request()->is('admin/train*') ? 'highlight' : '' }}"
                         href="{{route('panels.admin.trainee')}}">
                         <span class="icon-holder">
                             <i class="c-blue-500 ti-user"></i>
@@ -50,7 +50,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class='sidebar-link {{ request()->is('admin/mentor*') ? 'highlight' : '' }}'
+                    <a class='sidebar-link {{ request()->is('admin/ment*') ? 'highlight' : '' }}'
                        href="{{ route('panels.admin.mentor.index') }}">
                         <span class="icon-holder">
                             <i class="c-blue-500 ti-user"></i>
@@ -60,7 +60,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class='sidebar-link {{ request()->is('admin/contact-us*') ? 'highlight' : '' }}'
+                    <a class='sidebar-link {{ request()->is('admin/contact*') ? 'highlight' : '' }}'
                        href="{{ route('panels.admin.contact_us.index')  }}">
                         <span class="icon-holder">
                             <i class="c-blue-500 ti-support"></i>
@@ -85,6 +85,26 @@
                             <i class="c-blue-500 ti-settings"></i>
                         </span>
                         <span class="title">Website</span>
+                    </a>
+                </li>
+
+                 <li class="nav-item">
+                    <a class='sidebar-link {{ request()->is('admin/ta*') ? 'highlight' : '' }}'
+                       href="{{ route('panels.admin.tag')  }}">
+                        <span class="icon-holder">
+                            <i class="c-blue-500 ti-tag"></i>
+                        </span>
+                        <span class="title">Tag</span>
+                    </a>
+                </li>
+
+                 <li class="nav-item">
+                    <a class='sidebar-link {{ request()->is('admin/suc*') ? 'highlight' : '' }}'
+                       href="{{ route('panels.admin.story')  }}">
+                        <span class="icon-holder">
+                            <i class="c-blue-500 ti-bookmark-alt"></i>
+                        </span>
+                        <span class="title">Success Story</span>
                     </a>
                 </li>
             @endrole
@@ -151,6 +171,8 @@
                     <span class="title">Find Mentors</span>
                 </a>
             </li>
+
+            
 
             <li class="nav-item">
                 <a class='sidebar-link {{ request()->is('trainee/question*') ? 'highlight' : '' }}'

@@ -34,10 +34,10 @@
                     </i>
                     <br /><a href="/login" style="color: #ffffff;">Home</a>
                     <br />
-                    <span style="color: #ffffff;"></span>About Us
-                    <br />Mentors
+                    <span></span><a :href="'/about-us'" style="color: #ffffff;">About Us </a>
+                    <br /><a :href="'/mentor'" style="color: #ffffff;">Mentors</a>
                     <br />
-                    <span style="color: #ffffff;"></span>Success Stories
+                    <a style="color: #ffffff;" :href="'/success-story'">Success Stories</a>
                   </p>
 
                 </div>
@@ -66,9 +66,9 @@
                         <span style="color: #ffffff;"></span>
                       </u>
                     </i>Help Center
-                    <br />Contact Us
-                    <br />How It works
-                    <br />Terms &#038; Policy
+                    <br /><a :href="'/contact'" style="color:#ffffff"> Contact Us </a>
+                    <br /> <a href="#how-it-works" style="color:#ffffff">How It works </a>
+                    <br /><a :href="'/term-policy'" style="color:#ffffff">Terms &#038; Policy </a>
                     <span style="color: #ffffff;"></span>
                   </p>
                   <p>&nbsp;</p>
