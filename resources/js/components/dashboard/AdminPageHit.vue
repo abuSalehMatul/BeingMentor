@@ -1,10 +1,14 @@
 <template>
   <div>
-    <h3>Pages Hits</h3>
+   
     <div class="col-md-12 mB-10 col-sm-12">
+         <h3>Pages Hits</h3>
       <input type="date" v-model="dateRange.fromDate" @change="dateFilter" />
       To
       <input type="date" v-model="dateRange.toDate" @change="dateFilter" />
+    </div>
+    <div class="col-md-12">
+      <canvas id="pagesHit" width="900" height="400"></canvas>
     </div>
   </div>
 </template>
@@ -13,7 +17,6 @@
 import client from "@/client";
 export default {
   name: "admin-page-hit",
-  props: ["user_id"],
   components: {},
   data() {
     return {
@@ -22,7 +25,7 @@ export default {
         fromDate: "",
         toDate: new Date().toISOString().substr(0, 10)
       },
-      myChart: ''
+      myChart: ""
     };
   },
   mounted() {
@@ -34,7 +37,7 @@ export default {
       if (typeof this.myChart != "undefined") {
         this.myChart.destroy();
       }
-      this.getReport();
+      this.getList();
     },
     setFromDate() {
       let currentDate = new Date();
@@ -52,8 +55,55 @@ export default {
             this.dateRange.toDate
         )
         .then(response => {
-            this.hits = response.data;
+          this.hits = response.data;
+          this.generateChart();
         });
+    },
+    generateChart() {
+      var ctx = document.getElementById("pagesHit");
+      this.myChart = new Chart(ctx, {
+        type: "bar",
+         barThickness: 7,
+        data: {
+          labels: Object.keys(this.hits),
+          datasets: [
+            {
+              label: "# Pages Hit by Date",
+              data: Object.values(this.hits),
+              backgroundColor: [
+                "#ff2052",
+                "#cd20ff",
+                "#52ff20",
+                "#2052ff",
+                "#ffcd20",
+                "#20ffcd",
+                "#ff5e20"
+              ],
+              borderColor: [
+                "#ff2052",
+                "#cd20ff",
+                "#52ff20",
+                "#2052ff",
+                "#ffcd20",
+                "#20ffcd",
+                "#ff5e20"
+              ],
+              borderWidth: 2
+            }
+          ]
+        },
+        options: {
+          scales: {
+            yAxes: [
+              {
+                ticks: {
+                  beginAtZero: true
+                }
+              }
+            ]
+          }
+        }
+      });
     }
   }
 };

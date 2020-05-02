@@ -23,6 +23,7 @@ Route::middleware('auth')->group(function () {
     Route::get('get-bar-chart-men-trainee', 'ReportController@getUserBarChart');
     Route::get('mentor-overview', 'ReportController@mentorOverView');
     Route::get('get-pages-hit', 'ReportController@getPagesHit');
+    Route::get('get-mentor-performance', 'ReportController@getPerformance');
     Route::post('change-success-status', 'Admin\AdminHomeController@changeSuccessStatus');
     Route::post('admin-tag', 'Admin\AdminHomeController@saveTag')->name('api.admin.save.tag');
     Route::get('admin-tag', 'Admin\AdminHomeController@getTag')->name('api.admin.get.tag');

@@ -18,6 +18,8 @@ class DatabaseSeeder extends Seeder
         $this->call(UserTagTableSeeder::class);
         $this->call(WebsiteTableSeeder::class);
         $this->call(TicketTableSeeder::class);
+        $this->call(ChatRoomSeeder::class);
+        $this->call(RatingTableSeeder::class);
     }
 
 }
