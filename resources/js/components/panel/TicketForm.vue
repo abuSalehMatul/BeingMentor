@@ -39,6 +39,7 @@ export default {
   components: {
     modal
   },
+  props: ['type'],
   data() {
     return {
       description: "",
@@ -65,7 +66,7 @@ export default {
         });
     },
     emitData() {
-      this.$emit("updateTicket", [this.description, this.selectedOption]);
+      this.$emit("updateTicket", [this.description, this.selectedOption, this.type]);
     },
     changeOptions() {
       this.options = this.allData[this.selectedKey];

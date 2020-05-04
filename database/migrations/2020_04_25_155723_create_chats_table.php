@@ -21,6 +21,7 @@ class CreateChatsTable extends Migration
             $table->unsignedBigInteger('receiver_id');
             $table->tinyInteger('is_viewed')->default(0);
             $table->integer('is_file')->default(0);
+            $table->integer('is_video')->default(0);
             $table->timestamps();
         });
     }

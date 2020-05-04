@@ -7833,6 +7833,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -7856,9 +7865,10 @@ __webpack_require__.r(__webpack_exports__);
       ticketForm: false,
       ratingForm: false,
       messageList: [],
-      ratingRoute: '',
-      ticketId: '',
-      type: ''
+      ratingRoute: "",
+      ticketId: "",
+      type: "",
+      ticketType: "chat"
     };
   },
   created: function created() {
@@ -7895,6 +7905,7 @@ __webpack_require__.r(__webpack_exports__);
             message: e.message.message,
             time: e.message.formated_time,
             is_file: e.message.is_file,
+            is_video: e.message.is_video,
             sender_first_name: e.message.sender.first_name,
             sender_last_name: e.message.sender.last_name,
             sender_image: e.message.sender.profile_image
@@ -7916,6 +7927,8 @@ __webpack_require__.r(__webpack_exports__);
           _this2.ticketForm = true;
         }
 
+        _this2.messageList = [];
+
         _this2.prepareMessageList();
       });
     },
@@ -7929,6 +7942,7 @@ __webpack_require__.r(__webpack_exports__);
           message: value.message,
           time: value.formated_time,
           is_file: value.is_file,
+          is_video: value.is_video,
           sender_first_name: value.sender.first_name,
           sender_last_name: value.sender.last_name,
           sender_image: value.sender.profile_image
@@ -7966,12 +7980,17 @@ __webpack_require__.r(__webpack_exports__);
       this.ratingRoute = postTicketRoute;
       this.ratingForm = true;
     },
+    initialeVideo: function initialeVideo() {
+      this.ticketType = "video";
+      this.ticketForm = true;
+    },
     updateTic: function updateTic(ticketData) {
       var _this4 = this;
 
       var data = new FormData();
       data.append("description", ticketData[0]);
-      data.append('inquire', ticketData[1]);
+      data.append("inquire", ticketData[1]);
+      data.append("type", ticketData[2]);
       _client__WEBPACK_IMPORTED_MODULE_0__["default"].post(setTicketRoute, data).then(function (response) {
         _this4.ticketForm = false;
 
@@ -8172,6 +8191,7 @@ __webpack_require__.r(__webpack_exports__);
   components: {
     modal: _comp_lib_Modal__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
+  props: ['type'],
   data: function data() {
     return {
       description: "",
@@ -8198,7 +8218,7 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     emitData: function emitData() {
-      this.$emit("updateTicket", [this.description, this.selectedOption]);
+      this.$emit("updateTicket", [this.description, this.selectedOption, this.type]);
     },
     changeOptions: function changeOptions() {
       this.options = this.allData[this.selectedKey];
@@ -29495,7 +29515,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.fa[data-v-14a567ae] {\n  font: normal normal normal 14px/1 FontAwesome;\n  font-size: 44px;\n  color: green;\n  text-rendering: auto;\n  cursor: pointer;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.img-thumbnail[data-v-14a567ae] {\n  padding: 0.25rem;\n  background-color: #fff;\n  border: 1px solid #dee2e6;\n  border-radius: 0.25rem;\n  height: auto;\n  max-width: 75px !important;\n  max-height: 60px !important;\n}\n.img-thumbnail-chat-box[data-v-14a567ae] {\n  padding: 0.25rem;\n  background-color: #fff;\n  border: 1px solid #dee2e6;\n  border-radius: 0.25rem;\n  max-width: 100%;\n  height: 40px;\n}\n.messageList[data-v-14a567ae] {\n  margin: 2px;\n  border: 1px solid beige;\n  box-shadow: 1px 1px beige;\n  font-size: 14px;\n}\n.name[data-v-14a567ae] {\n  padding: 1px;\n}\n.senderLi[data-v-14a567ae] {\n  background: radial-gradient(#dde3fd, transparent);\n}\n.receiverLi[data-v-14a567ae] {\n  background: radial-gradient(rgb(250, 253, 251), transparent);\n}\n", ""]);
+exports.push([module.i, "\n.fa[data-v-14a567ae] {\n  font: normal normal normal 14px/1 FontAwesome;\n  font-size: 44px;\n  color: green;\n  text-rendering: auto;\n  cursor: pointer;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.img-thumbnail[data-v-14a567ae] {\n  padding: 0.25rem;\n  background-color: #fff;\n  border: 1px solid #dee2e6;\n  border-radius: 0.25rem;\n  height: auto;\n  max-width: 68px !important;\n  max-height: 60px !important;\n}\n.img-thumbnail-chat-box[data-v-14a567ae] {\n  padding: 0.25rem;\n  background-color: #fff;\n  border: 1px solid #dee2e6;\n  border-radius: 0.25rem;\n  max-width: 100%;\n  height: 40px;\n}\n.messageList[data-v-14a567ae] {\n  margin: 2px;\n  border: 1px solid beige;\n  box-shadow: 1px 1px beige;\n  font-size: 14px;\n}\n.name[data-v-14a567ae] {\n  padding: 1px;\n}\n.senderLi[data-v-14a567ae] {\n  background: radial-gradient(#dde3fd, transparent);\n}\n.receiverLi[data-v-14a567ae] {\n  background: radial-gradient(rgb(250, 253, 251), transparent);\n}\n", ""]);
 
 // exports
 
@@ -104008,42 +104028,45 @@ var render = function() {
         _vm.ticketForm == true
           ? _c(
               "div",
-              [_c("ticket-form", { on: { updateTicket: _vm.updateTic } })],
+              [
+                _c("ticket-form", {
+                  attrs: { type: _vm.ticketType },
+                  on: { updateTicket: _vm.updateTic }
+                })
+              ],
               1
             )
           : _vm._e(),
         _vm._v(" "),
         _c("div", { staticClass: "card card-default col-md-12 col-sm-12" }, [
-          _c(
-            "div",
-            { staticClass: "card-header row" },
-            [
-              _c("div", { staticClass: "col-md-3" }, [
-                _c("img", {
-                  staticClass: "img-thumbnail rounded col-md-4",
-                  attrs: { src: _vm.otherPerson.profile_image }
-                }),
-                _vm._v(" "),
-                _c("i", [_vm._v("5start")])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-md-3" }, [
-                _c("h4", { staticClass: "col-md-12" }, [
-                  _vm._v(
-                    _vm._s(_vm.otherPerson.first_name) +
-                      " " +
-                      _vm._s(_vm.otherPerson.last_name)
-                  )
-                ])
-              ]),
-              _vm._v(" "),
+          _c("div", { staticClass: "card-header row" }, [
+            _c("div", { staticClass: "col-md-1" }, [
+              _c("img", {
+                staticClass: "img-thumbnail rounded col-md-4",
+                attrs: { src: _vm.otherPerson.profile_image }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md-3" }, [
+              _c("h4", { staticClass: "col-md-12" }, [
+                _vm._v(
+                  _vm._s(_vm.otherPerson.first_name) +
+                    " " +
+                    _vm._s(_vm.otherPerson.last_name)
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "row" },
               _vm._l(_vm.tickets, function(ticket) {
                 return ticket.status != "solved"
-                  ? _c("div", { staticClass: "float-left col-md-6" }, [
+                  ? _c("div", {}, [
                       _vm._v(
-                        "\n            Issue " +
+                        "\n              Issue " +
                           _vm._s(ticket.barcode) +
-                          "\n            "
+                          "\n              "
                       ),
                       _c("i", { staticClass: "badge badge-info" }, [
                         _vm._v(_vm._s(ticket.status))
@@ -104076,10 +104099,10 @@ var render = function() {
                       )
                     ])
                   : _vm._e()
-              })
-            ],
-            2
-          ),
+              }),
+              0
+            )
+          ]),
           _vm._v(" "),
           _c("div", { staticClass: "card-body col-md-12" }, [
             _c(
@@ -104120,7 +104143,24 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "col-md-9" }, [
-                      _c("p", [_vm._v(_vm._s(message.message))])
+                      message.is_video == 1
+                        ? _c(
+                            "a",
+                            {
+                              attrs: { href: message.message, target: "blank" }
+                            },
+                            [
+                              _vm._m(0, true),
+                              _vm._v(" "),
+                              _c("br"),
+                              _vm._v(
+                                "\n                  " +
+                                  _vm._s(message.message) +
+                                  "\n                "
+                              )
+                            ]
+                          )
+                        : _c("p", [_vm._v(_vm._s(message.message))])
                     ])
                   ]
                 )
@@ -104129,7 +104169,7 @@ var render = function() {
             )
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "col-md-10 offset-1 row" }, [
+          _c("div", { staticClass: "col-md-12 row" }, [
             _c("textarea", {
               directives: [
                 {
@@ -104140,7 +104180,7 @@ var render = function() {
                 }
               ],
               staticClass: "form-control",
-              attrs: { rows: "2" },
+              attrs: { rows: "1" },
               domProps: { value: _vm.messageText },
               on: {
                 input: function($event) {
@@ -104153,12 +104193,21 @@ var render = function() {
             })
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "col-md-10 offset-1" }, [
+          _c("div", { staticClass: "col-md-10" }, [
             _c("i", {
               staticClass: "fa fa-angle-double-right",
               on: {
                 click: function($event) {
                   return _vm.sendMessage()
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c("i", {
+              staticClass: "fa fa-camera-retro",
+              on: {
+                click: function($event) {
+                  return _vm.initialeVideo()
                 }
               }
             })
@@ -104168,7 +104217,17 @@ var render = function() {
     ])
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("b", [
+      _vm._v("Join in this link for Video calling: \n                    "),
+      _c("small", [_vm._v(" This link will expire after 1000s ")])
+    ])
+  }
+]
 render._withStripped = true
 
 

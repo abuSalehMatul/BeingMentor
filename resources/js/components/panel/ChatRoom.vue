@@ -5,33 +5,34 @@
         <chat-list :user_id="own_id"></chat-list>
       </div>-->
       <div class="col-md-6" v-if="ratingForm">
-          <rating :type="type" :ticket_id="ticketId" :route="ratingRoute" :type_id="otherPerson.id"></rating>
+        <rating :type="type" :ticket_id="ticketId" :route="ratingRoute" :type_id="otherPerson.id"></rating>
       </div>
       <div class="col-md-12 col-sm-12">
         <div v-if="ticketForm == true">
-          <ticket-form @updateTicket="updateTic"></ticket-form>
+          <ticket-form :type="ticketType" @updateTicket="updateTic"></ticket-form>
         </div>
         <div class="card card-default col-md-12 col-sm-12">
           <div class="card-header row">
-            <div class="col-md-3">
+            <div class="col-md-1">
               <img :src="otherPerson.profile_image" class="img-thumbnail rounded col-md-4" />
-              <i>5start</i>
             </div>
             <div class="col-md-3">
               <h4 class="col-md-12">{{otherPerson.first_name}} {{otherPerson.last_name}}</h4>
             </div>
-            <div
-              v-for="ticket in tickets"
-              class="float-left col-md-6"
-              v-if="ticket.status != 'solved'"
-            >
-              Issue {{ticket.barcode}}
-              <i class="badge badge-info">{{ticket.status}}</i>
-              <span v-if="ticket.opner_user_id == own_id">
-                  <button v-if="ticket.status != 'solved'" @click.prevent="solveTicket(ticket.id)" class="btn btn-sm btn-success">Solved !</button>
-              </span>
+            <div class="row">
+              <div v-for="ticket in tickets" class v-if="ticket.status != 'solved'">
+                Issue {{ticket.barcode}}
+                <i class="badge badge-info">{{ticket.status}}</i>
+                <span v-if="ticket.opner_user_id == own_id">
+                  <button
+                    v-if="ticket.status != 'solved'"
+                    @click.prevent="solveTicket(ticket.id)"
+                    class="btn btn-sm btn-success"
+                  >Solved !</button>
+                </span>
 
-              <h6 style="overflow: hidden;height: 40px;">{{ticket.description.substr(0, 50)}}</h6>
+                <h6 style="overflow: hidden;height: 40px;">{{ticket.description.substr(0, 50)}}</h6>
+              </div>
             </div>
           </div>
           <div class="card-body col-md-12">
@@ -57,16 +58,24 @@
                   <i class>Time:(GMT+00 ) {{message.time}}</i>
                 </div>
                 <div class="col-md-9">
-                  <p>{{message.message}}</p>
+                  <a v-if="message.is_video == 1" :href="message.message" target="blank">
+                    <b>Join in this link for Video calling: 
+                      <small> This link will expire after 1000s </small>
+                    </b>
+                    <br />
+                    {{message.message}}
+                  </a>
+                  <p v-else>{{message.message}}</p>
                 </div>
               </li>
             </ul>
           </div>
-          <div class="col-md-10 offset-1 row">
-            <textarea rows="2" class="form-control" v-model="messageText"></textarea>
+          <div class="col-md-12 row">
+            <textarea rows="1" class="form-control" v-model="messageText"></textarea>
           </div>
-          <div class="col-md-10 offset-1">
+          <div class="col-md-10">
             <i class="fa fa-angle-double-right" @click="sendMessage()"></i>
+            <i class="fa fa-camera-retro" @click="initialeVideo()"></i>
           </div>
         </div>
       </div>
@@ -98,9 +107,10 @@ export default {
       ticketForm: false,
       ratingForm: false,
       messageList: [],
-      ratingRoute: '',
-      ticketId: '',
-      type:''
+      ratingRoute: "",
+      ticketId: "",
+      type: "",
+      ticketType: "chat"
     };
   },
 
@@ -137,6 +147,7 @@ export default {
             message: e.message.message,
             time: e.message.formated_time,
             is_file: e.message.is_file,
+            is_video: e.message.is_video,
             sender_first_name: e.message.sender.first_name,
             sender_last_name: e.message.sender.last_name,
             sender_image: e.message.sender.profile_image
@@ -153,6 +164,7 @@ export default {
         if (Object.keys(this.tickets).length == 0) {
           this.ticketForm = true;
         }
+        this.messageList =[];
         this.prepareMessageList();
       });
     },
@@ -165,6 +177,7 @@ export default {
           message: value.message,
           time: value.formated_time,
           is_file: value.is_file,
+          is_video: value.is_video,
           sender_first_name: value.sender.first_name,
           sender_last_name: value.sender.last_name,
           sender_image: value.sender.profile_image
@@ -193,16 +206,21 @@ export default {
         });
       }
     },
-    solveTicket(ticketId){
-        this.type = "App\\User";
-        this.ticketId = ticketId;
-        this.ratingRoute = postTicketRoute;
-        this.ratingForm = true;
+    solveTicket(ticketId) {
+      this.type = "App\\User";
+      this.ticketId = ticketId;
+      this.ratingRoute = postTicketRoute;
+      this.ratingForm = true;
+    },
+    initialeVideo() {
+      this.ticketType = "video";
+      this.ticketForm = true;
     },
     updateTic(ticketData) {
       let data = new FormData();
       data.append("description", ticketData[0]);
-      data.append('inquire', ticketData[1]);
+      data.append("inquire", ticketData[1]);
+      data.append("type", ticketData[2]);
       client.post(setTicketRoute, data).then(response => {
         this.ticketForm = false;
         this.getAllMessage();
@@ -228,7 +246,7 @@ export default {
   border: 1px solid #dee2e6;
   border-radius: 0.25rem;
   height: auto;
-  max-width: 75px !important;
+  max-width: 68px !important;
   max-height: 60px !important;
 }
 .img-thumbnail-chat-box {

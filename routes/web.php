@@ -64,10 +64,14 @@ Route::middleware('visit_count')->group(function(){
         Route::get('find-mentor', 'TraineeHomeController@findMentor')->name('panels.trainee.find.mentor');
         Route::get('message', 'TraineeHomeController@message')->name('panels.trainee.message');
     });
+    Route::get('video-room/{participants}/{room}/{token}', 'ChatController@goToVideo')->name('video.room');
     
+    // Route::get('test', function(Request $request){
+    //    return dd(Carbon::now());
+    // });
     
-    Route::get('test', function(Request $request){
-       return dd(Carbon::now());
-    });
-    
+});
+
+Route::get('video', function(){
+    return view('video');
 });
