@@ -8,6 +8,7 @@ Vue.component('trainee', require('@/components/panel/Trainee.vue').default);
 Vue.component('admin-contact-us', require('@/components/panel/AdminContactUs.vue').default);
 Vue.component('admin-tag', require('@/components/panel/AdminTag.vue').default);
 Vue.component('mentor', require('@/components/panel/mentor.vue').default);
+Vue.component('forum', require('@comp/panel/Forum').default);
 Vue.component('chat-room', require('@/components/panel/ChatRoom.vue').default);
 Vue.component('rating', require('@/components/panel/Rating.vue').default);
 Vue.component('message', require('@/components/panel/Message.vue').default);

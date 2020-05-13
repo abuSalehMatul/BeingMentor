@@ -1754,7 +1754,7 @@ span.et_close_search_field:after {
 
 div.et_pb_section.et_pb_section_0 {
     background-blend-mode: multiply;
-    background-image: url(../../uploads/2020/04/header1-1.png), linear-gradient(180deg, #2b87da 0%, #0a1a54 100%)!important
+    background-image: url(/images/header1-1.png), linear-gradient(180deg, #2b87da 0%, #0a1a54 100%)!important
 }
 
 .et_pb_section_0.et_pb_section {
@@ -2720,7 +2720,7 @@ div.et_pb_section.et_pb_section_5 {
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
-    background-image: url(http://www.beingmentor.pk/wp-content/uploads/2020/04/inline_image_preview.jpg);
+    background-image: url(/images/inline_image_preview.jpg);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent
 }

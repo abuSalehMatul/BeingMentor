@@ -3,10 +3,12 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
-
+// Route::get('test', function(){
+//     return view('newHome');
+// });
 Route::middleware('visit_count')->group(function(){
     Route::get('/', 'HomeController@index');
-
+    Route::get('forum', 'ForumController@index')->name('forum');
     Auth::routes();
     // registering route //
     Route::post('register/step-one', 'Auth\RegisterController@registerStepOne');
@@ -21,6 +23,8 @@ Route::middleware('visit_count')->group(function(){
     Route::get('success-story', 'FrontEndController@story');
     Route::get('add-success', 'FrontEndController@addSuccess')->middleware('auth');
     Route::post('save-story', 'FrontEndController@saveStory')->middleware('auth');
+
+    Route::post('submit-package', 'UserPackageController@submitPackage')->middleware('auth')->name('submit-package');
     
     //see role and find corresponding dashboard profile
     Route::get('/find/profile', 'HomeController@findDashboard')->middleware('auth')->name('find.profile');
@@ -47,7 +51,8 @@ Route::middleware('visit_count')->group(function(){
         Route::put('/del/{mentorId}', 'AdminHomeController@delMentor');
         Route::get('tag', 'AdminHomeController@tag')->name('panels.admin.tag');
         Route::get('success-story', 'AdminHomeController@story')->name('panels.admin.story');
-    
+        Route::get('packages', 'AdminHomeController@package')->name('panels.admin.package');
+        Route::post('save-package', 'AdminHomeController@savePackage')->name('save.package');
     
     });
     
@@ -63,6 +68,8 @@ Route::middleware('visit_count')->group(function(){
         Route::get('question', 'TraineeHomeController@question')->name('panels.trainee.question');
         Route::get('find-mentor', 'TraineeHomeController@findMentor')->name('panels.trainee.find.mentor');
         Route::get('message', 'TraineeHomeController@message')->name('panels.trainee.message');
+        Route::get('ask', 'TraineeHomeController@ask')->name('ask.a.question');
+        Route::post('save-question', 'TraineeHomeController@saveQuestion')->name('save.question');
     });
     Route::get('video-room/{participants}/{room}/{token}', 'ChatController@goToVideo')->name('video.room');
     
@@ -72,6 +79,6 @@ Route::middleware('visit_count')->group(function(){
     
 });
 
-Route::get('video', function(){
-    return view('video');
-});
+// Route::get('video', function(){
+//     return view('video');
+// });

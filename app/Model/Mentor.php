@@ -132,6 +132,9 @@ class Mentor extends Model
             }
             $mentor = Mentor::where('user_id', $userId)->first();
             if ($mentor) {
+                if($rate < 0 ){
+                    $rate = 0;
+                }
                 $rate = (float) $rate;
                 $rate = round($rate, 2);
                 $mentor->rating = $rate;

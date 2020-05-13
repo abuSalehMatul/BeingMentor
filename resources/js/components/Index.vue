@@ -10,14 +10,14 @@
           <div
             class="et_pb_module et_pb_text et_pb_text_0 et_pb_text_align_left et_pb_bg_layout_light"
           >
-            <div class="et_pb_text_inner">Being mentors: a pool of experts and learners</div>
+            <div class="et_pb_text_inner index-title">Being Mentors Powers Academic Progress.</div>
           </div>
           <!-- .et_pb_text -->
           <div
             class="et_pb_module et_pb_text et_pb_text_1 et_pb_text_align_left et_pb_bg_layout_light"
           >
             <div class="title-des">
-              <h5 class="animated infinite bounce delay-2s" style="font-size:21px">
+              <h5 class="animated infinite bounce delay-2s index-des">
                  {{website.index_description}}
               </h5>
             </div>
@@ -35,8 +35,8 @@
                   class="et_pb_module dsm_flipbox_child dsm_flipbox_child_0 et_pb_bg_layout_light dsm_flipbox_icon_position_top"
                 >
                   <div class="et_pb_module_inner">
-                    <div class="dsm_flipbox_wrapper et_pb_text_align_center">
-                      <h4 class="dsm-title et_pb_module_header">Academic Mentorship</h4>
+                    <div class="dsm_flipbox_wrapper et_pb_text_align_center index-qoute">
+                      <h4 class="dsm-title et_pb_module_header ">Academic Mentorship</h4>
                       <span class="dsm-subtitle">
                         For students &
                         coaching
@@ -98,7 +98,7 @@
                   class="et_pb_module dsm_flipbox_child dsm_flipbox_child_2 et_pb_bg_layout_light dsm_flipbox_icon_position_top"
                 >
                   <div class="et_pb_module_inner">
-                    <div class="dsm_flipbox_wrapper et_pb_text_align_center">
+                    <div class="dsm_flipbox_wrapper et_pb_text_align_center index-qoute">
                       <h4 class="dsm-title et_pb_module_header">Professionals</h4>
                       <span class="dsm-subtitle">
                         For students &
@@ -221,4 +221,28 @@ export default {
   }
 };
 </script>
+<style scoped>
+.index-title{
+  font-family: Open Sans, Arial, sans-serif;
+  line-height: 51px;
+  font-size: 39px;
+  color: #ffffff;
+}
+.index-des{
+  font-family: Open Sans, Arial, sans-serif;
+  line-height: 30px;
+  font-size: 23px;
+  color: #ffffff;
+}
+.index-qoute{
+   font-family: Open Sans, Arial, sans-serif;
+   color: #ffffff;
+}
+.index-qoute .dsm-content{
+  font-size: 14px;
+  font-weight: 600;
+  font-style: normal;
+  line-height: 0;
+}
+</style>
 

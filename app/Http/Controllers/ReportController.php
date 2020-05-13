@@ -104,12 +104,40 @@ class ReportController extends Controller
         ];
     }
 
+    public function getForumInquire(Request $request)
+    {
+        $dates = $this->formatDate($request->fromDate, $request->toDate);
+        $ticketsByInqu = Ticket::whereDate('created_at', '>=', $dates['fromDate']->format('Y-m-d'))
+            ->whereDate('created_at', '<=', $dates['toDate']->format('Y-m-d'))
+            ->whereNotNull('inquire')
+            ->where('type', 'forum')
+            ->get()
+            ->groupBy('inquire');
+        $data = [];
+        $allInquries = config('enums.inquires');
+
+        $inquires = [];
+        $inquires = $allInquries['Academic'];
+        foreach ($allInquries['Professional'] as $inq) {
+            array_push($inquires, $inq);
+        }
+        foreach ($ticketsByInqu as $inquire => $tickets) {
+            $data[$inquire] = $tickets->count();
+        }
+        $notPresents = array_diff($inquires, array_keys($data));
+        foreach ($notPresents as $key) {
+            $data[$key] = 0;
+        }
+        return $data;
+    }
+
     public function getChatInquire(Request $request)
     {
         $dates = $this->formatDate($request->fromDate, $request->toDate);
         $ticketsByInqu = Ticket::whereDate('created_at', '>=', $dates['fromDate']->format('Y-m-d'))
             ->whereDate('created_at', '<=', $dates['toDate']->format('Y-m-d'))
             ->whereNotNull('inquire')
+            ->where('type', 'chat')
             ->get()
             ->groupBy('inquire');
         $data = [];

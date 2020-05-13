@@ -17,6 +17,8 @@
                         <a class="{{ request()->path() == 'contact' ? "current_link" : '' }}" href="{{url('contact')}}">Contact</a></li>
                     <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home">
                         <a class="{{ request()->path() == 'about-us' ? "current_link" : '' }}" href="{{route('about.us')}}">About</a></li>
+                    <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home">
+                        <a class="{{ request()->path() == 'forum' ? "current_link" : '' }}" href="{{route('forum')}}">Forum</a></li>
                     @guest
                     <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-141">
                         <a href="{{route('login')}}">Log-in</a></li>
@@ -54,22 +56,22 @@
         let logo = document.getElementById('logo');
         let topNavigation = document.getElementById('et-top-navigation');
         header.style.position = "relative";
-        header.style.backgroundColor = "#287CCC";
+        header.style.backgroundColor = "#287FCF";
         window.addEventListener("scroll", function(event) {
             let scroll = this.scrollY;
             if (scroll < 110) {
                 logo.style.maxHeight = "100%";
                 header.style.position = "relative";
-                header.style.backgroundColor = "#287CCC";
+                header.style.backgroundColor = "#287FCF";
                 header.style.height = "100%";
                 header.style.opacity = 1;
                 topNavigation.style.padding = "4px"
             } else {
                 logo.style.maxHeight = "45%";
                 header.style.position = "fixed";
-                header.style.backgroundColor = "#58ce52";
-                header.style.padding = "8px";
-                header.style.height = "80px";
+                header.style.backgroundColor = "#287FCF";
+                header.style.padding = "10px";
+                header.style.height = "60px";
                 header.style.opacity = .9;
                 topNavigation.style.padding = "0"
             }

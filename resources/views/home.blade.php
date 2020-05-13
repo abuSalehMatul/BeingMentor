@@ -11,6 +11,7 @@
                 @include('whyUs')
                 @include('inspiration')
                 @include('contactUs')
+                @include('packages')
             </div>
         </div>
     </div>

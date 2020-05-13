@@ -4,8 +4,8 @@
             <div class="et_pb_module dsm_dual_heading dsm_dual_heading_2  et_pb_text_align_left et_pb_bg_layout_light">
                 <div class="et_pb_module_inner">
                     <h1 class="text-center">
-                       <span class="why" style="color:black"> Why </span> 
-                       <span class="why" style="color:blue"> Us </span>
+                       <span class="why" style="color:#333333"> WHY </span> 
+                       <span class="why" style="color:#0C71C3"> US </span>
                     </h1>
                     <hr>
                 </div>

@@ -80,4 +80,17 @@ class HomeController extends Controller
         }
         return true;
     }
+
+    public function getRole()
+    {
+        if(auth()->user()->hasRole('admin')){
+            return 'admin';
+        }
+        if(auth()->user()->hasRole('mentor')){
+            return 'mentor';
+        }
+        if(auth()->user()->hasRole('trainee')){
+            return 'trainee';
+        }
+    }
 }

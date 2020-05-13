@@ -8,6 +8,7 @@ use App\Model\Ticket;
 use App\User;
 use Illuminate\Http\Request;
 use App\Events\SendMessageEvent;
+use App\Helper;
 use App\Model\Mentor;
 use App\Model\Rating;
 use App\Model\Solve;
@@ -77,7 +78,7 @@ class ChatController extends Controller
 
     public function setTicket(Request $request, $chatRoomId)
     {
-        $Ticket = Ticket::setTicketByChatRoomId($request->description, $request->inquire, $chatRoomId, $request->type);
+        $Ticket = Ticket::setTicket($request->description, $request->inquire, $chatRoomId, $request->type);
         $tickArr = [];
         $chatRoom = ChatRoom::findOrFail($chatRoomId);
         if ($chatRoom->tickets_json === null) {
@@ -112,6 +113,10 @@ class ChatController extends Controller
 
     public function goToVideo($participants, $room, $token)
     {
+        $message = Helper::packageActivity('video_calling');
+        if($message != true){
+            return $message;
+        }
         return view('video')->with('participants', $participants)
         ->with('room', $room)
         ->with('myName', auth()->user()->first_name)

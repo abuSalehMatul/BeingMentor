@@ -12,8 +12,10 @@
             data-number-value="200"
             data-number-separator
           >
-            <h1 class="percent-value number">{{mentors}}</h1>
-            <h3 class="title">Mentors</h3>
+            <p>
+              <span class="percent-value number">{{mentors}}</span>
+              <span class="title">Mentors</span>
+            </p>
           </div>
           <!-- .et_pb_number_counter -->
         </div>
@@ -26,8 +28,10 @@
             data-number-value="54"
             data-number-separator
           >
-            <h1 class="percent-value number">{{problems}}</h1>
-            <h3 class="title">Problems</h3>
+            <p>
+              <span class="percent-value number">{{problems}}</span>
+              <span class="title">Problems</span>
+            </p>
           </div>
           <!-- .et_pb_number_counter -->
         </div>
@@ -40,8 +44,10 @@
             data-number-value="12"
             data-number-separator
           >
-            <h1 class="percent-value number">{{solves}}</h1>
-            <h3 class="title">Problem Solved</h3>
+            <p>
+              <span class="percent-value number">{{solves}}</span>
+              <span class="title">Problem Solved</span>
+            </p>
           </div>
           <!-- .et_pb_number_counter -->
         </div>
@@ -54,8 +60,10 @@
             data-number-value="906"
             data-number-separator
           >
-            <h1 class="percent-value number number">{{onlines}}</h1>
-            <h3 class="title">Online Users</h3>
+            <p>
+              <span class="percent-value number number">{{onlines}}</span>
+              <span class="title">Online Users</span>
+            </p>
           </div>
           <!-- .et_pb_number_counter -->
         </div>
@@ -93,16 +101,23 @@ export default {
 };
 </script>
 <style scoped>
-.number{
-    font-size: 75px;
-    font-weight: bolder;
-    font-family: 'Montserrat',Helvetica,Arial,Lucida,sans-serif;
+.number {
+  font-size: 60px;
+  display: block;
+  line-height: 90px;
+  font-style: normal;
+  color: #ffffff !important;
+  font-weight: 700;
+  font-family: "Montserrat", Helvetica, Arial, Lucida, sans-serif;
 }
-.title{
-    font-size: 22px;
-    font-family: 'Montserrat',Helvetica,Arial,Lucida,sans-serif;
-    text-transform: uppercase;
-    color: #ffffff!important;
+.title {
+  font-size: 18px;
+  line-height: 18px;
+  font-style: normal;
+  font-weight: 500;
+  font-family: "Montserrat", Helvetica, Arial, Lucida, sans-serif;
+  text-transform: uppercase;
+  color: #ffffff !important;
 }
 </style>
 

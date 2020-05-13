@@ -13,11 +13,15 @@
     <div class="col-md-12"> 
       <admin-mentor-performance> </admin-mentor-performance>
     </div>
+    <div> 
+      <admin-forum-inquire> </admin-forum-inquire>
+    </div>
   </div>
 </template>
 
 <script>
 import AdminChatInquire from "./AdminChatInquire";
+import AdminForumInquire from "./AdminForumInquire";
 import AdminMentorPerformance from "./AdminMentorPerformance";
 import AdminMentorTraineePie from "./AdminMentorTraineePie";
 import AdminPageHit from "./AdminPageHit";
@@ -27,6 +31,7 @@ export default {
   name: "admin-dashboard",
   components: {
     AdminOverView,
+    AdminForumInquire,
     AdminChatInquire,
     AdminMentorPerformance,
     AdminMentorTraineePie,

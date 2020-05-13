@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Admin\AdminController;
 use App\Model\ContactUs;
 use App\Model\Mentor;
+use App\Model\Package;
 use App\Model\SuccessStory;
 use App\Model\Tag;
 use App\Model\Website;
@@ -21,6 +22,43 @@ class AdminHomeController extends AdminController
     public function trainee()
     {
         return view('panels.admin.trainee')->with('user_id', 'matulPermission');
+    }
+
+    public function package()
+    {
+        $packages = Package::get();
+        return view('panels.admin.package')->with('packages', $packages);
+    }
+
+    public function savePackage(Request $request)
+    {
+        $request->validate([
+            'name' => 'required',
+            'short_title' => 'required',
+            'price' => 'required',
+            'duration' => 'required',
+            'package_id' => 'required'
+        ]);
+        $package = Package::findOrFail($request->package_id);
+        $package->name = $request->name;
+        $package->short_title = $request->short_title;
+        $package->price = $request->price;
+        $package->duration = $request->duration;
+        $package->description = $request->description;
+        $package->video_calling = $request->video_calling;
+        $package->chatting = $request->chatting;
+        $package->questions = $request->questions;
+
+        if ($request->hasFile('icon')) {
+            $file = $request->file('icon');
+            $extension = $file->getClientOriginalExtension(); // getting image extension
+            $filename = env('APP_URL') . '/icon' . '/' . rand(100, 30000) . time() . '.' . $extension;
+            $file->move('icon/', $filename);
+            $package->icon = $filename;
+        }
+        $package->save();
+        return redirect()->back();
+       
     }
 
     public function mentor()
@@ -110,6 +148,7 @@ class AdminHomeController extends AdminController
 
     public function forum()
     {
+        return view('panels.admin.forum');
     }
 
 

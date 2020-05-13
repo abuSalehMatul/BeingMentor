@@ -17,7 +17,12 @@ use Illuminate\Support\Facades\Route;
 Route::get('get-profile-users', 'HomeController@getProfile')->name('api.panel.profile.index');
 Route::middleware('auth')->group(function () {
     Route::get('get-admin-mentor-trainee-pie','ReportController@adminTraineeMentor');
+    Route::post('mark-correct', 'ForumController@markCorrect');
+    Route::post('give-vote', 'ForumController@giveVote');
+    Route::post('change-question-status', 'ForumController@changeQuestionStatus');
+    Route::post('save-answer', 'ForumController@saveAns');
     Route::get('get-chat-inquire', 'ReportController@getChatInquire');
+    Route::get('get-forum-inquire', 'ReportController@getForumInquire');
     Route::post('contact-us-change-status', 'Admin\AdminHomeController@changeStatus')->name('api.contact.us.change.status');
     Route::get('contact-us-admin', 'Admin\AdminHomeController@getContactUs')->name('api.contact.us.admin');
     Route::get('get-bar-chart-men-trainee', 'ReportController@getUserBarChart');
@@ -36,6 +41,8 @@ Route::middleware('auth')->group(function () {
     Route::post('chat-room-ticket/{id}', 'ChatController@setTicket')->name('api.panel.chatromm.ticket');
 });
 Route::get('get-mentor/{userId}', 'Mentor\MentorHomeController@getMentor')->name('api.get.mentor');
+Route::get('get-tags', 'ForumController@getTags');
 Route::get('statistics', 'FrontEndController@statistics');
 Route::get('get-inquires', 'ReportController@getInquires');
+Route::get('get-forum/{user}', 'ForumController@getForum');
 Route::get('get-success-story/{user}', 'FrontEndController@getSuccessStory');

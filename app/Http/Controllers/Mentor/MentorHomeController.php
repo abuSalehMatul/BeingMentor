@@ -40,6 +40,11 @@ class MentorHomeController extends MentorController
         return $data;
     }
 
+    public function answer()
+    {
+        return view('panels.forum')->with('user', 'mentor');
+    }
+
     public function message()
     {
         return view('panels.message')->with('userId', auth()->id());

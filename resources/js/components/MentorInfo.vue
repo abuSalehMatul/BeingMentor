@@ -303,13 +303,13 @@
               </div>
               <div class="et_pb_blurb_container">
                 <h1 class="et_pb_module_header">
-                  <span>{{mentor.user.first_name}} {{mentor.user.last_name}}</span>
+                  <span class="mentor-name">{{mentor.user.first_name}} {{mentor.user.last_name}}</span>
                 </h1>
                 <div class="et_pb_blurb_description">
-                  <p>
+                  <p class="mentor-title-short">
                     {{mentor.title}}
                   </p>
-                  <p>
+                  <p class="mentor-description-short">
                       {{mentor.description}}
                   </p>
                 </div>
@@ -427,4 +427,38 @@ export default {
   }
 };
 </script>
+<style scoped>
+.et_pb_module_inner{
+   font-family: Open Sans, Arial, sans-serif;
+   font-style: normal;
+   font-weight: 800;
+   font-size: 63px;
+   line-height: 63px;
+}
+.mentor-name{
+   font-family: Open Sans, Arial, sans-serif;
+   font-style: normal;
+   font-weight: 500;
+   font-size: 26px;
+   line-height: 26px;
+   color: #ffffff;
+}
+.mentor-description-short{
+  font-family: Open Sans, Arial, sans-serif;
+   font-style: normal;
+   font-weight: 500;
+   font-size: 14px;
+   line-height: 24px;
+   color: #ffffff;
+}
+.mentor-title-short{
+  font-family: Open Sans, Arial, sans-serif;
+   font-style: normal;
+   font-weight: 500;
+   font-size: 16px;
+   margin-bottom: 0;
+   line-height: 24px;
+   color: #ffffff;
+}
+</style>
 

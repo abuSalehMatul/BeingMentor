@@ -10,7 +10,7 @@ class Ticket extends Model
         'barcode', 'description', 'opner_user_id', 'status', 'inquire', 'type', 'created_at', 'updated_at'
     ];
 
-    public static function setTicketByChatRoomId($description, $inquire, $chatRoomId, $type)
+    public static function setTicket($description, $inquire, $chatRoomId, $type)
     {
         $ticket = new Ticket;
         $ticket->description =$description;

@@ -127,7 +127,7 @@
               >
                 <div class="et_pb_text_inner">
                   <img
-                    :src="website.logo"
+                    :src="'/images/beingmentor.PNG'"
                     width="300"
                     height="76"
                     alt

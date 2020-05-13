@@ -107,6 +107,16 @@
                         <span class="title">Success Story</span>
                     </a>
                 </li>
+
+                 <li class="nav-item">
+                    <a class='sidebar-link {{ request()->is('admin/packa*') ? 'highlight' : '' }}'
+                       href="{{ route('panels.admin.package')  }}">
+                        <span class="icon-holder">
+                            <i class="c-blue-500 ti-bookmark-alt"></i>
+                        </span>
+                        <span class="title">Packages</span>
+                    </a>
+                </li>
             @endrole
 
             @role('mentor')

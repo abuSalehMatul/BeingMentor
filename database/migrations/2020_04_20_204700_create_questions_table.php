@@ -21,6 +21,7 @@ class CreateQuestionsTable extends Migration
             $table->integer('is_solved')->default(0);
             $table->string('tag');
             $table->integer('status')->default(1);
+            $table->unsignedBigInteger('ticket_id')->nullable();
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });

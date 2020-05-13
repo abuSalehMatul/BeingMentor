@@ -20,6 +20,10 @@ class DatabaseSeeder extends Seeder
         $this->call(TicketTableSeeder::class);
         $this->call(ChatRoomSeeder::class);
         $this->call(RatingTableSeeder::class);
+        $this->call(QuestionTableSeeder::class);
+        $this->call(AnswerTableSeeder::class);
+        $this->call(VoteTableSeeder::class);
+        $this->call(PackageTableSeeder::class);
     }
 
 }
