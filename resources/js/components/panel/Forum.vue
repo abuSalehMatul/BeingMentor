@@ -275,6 +275,14 @@ export default {
   max-width: 13%;
   height: auto;
 }
+.card{
+  background-image: url("/images/bg.png");
+  background-position: 50% 0;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  font-weight: 700;
+}
 .answer {
   border: 1px dotted black;
   padding: 10px;

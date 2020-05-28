@@ -9,6 +9,8 @@ use App\Model\Tag;
 use App\Model\Ticket;
 use Carbon\Carbon;
 use App\Model\Trainee;
+use App\Helper;
+use Session;
 
 class TraineeHomeController extends TraineeController
 {
@@ -25,6 +27,11 @@ class TraineeHomeController extends TraineeController
 
     public function ask()
     {
+        $message = Helper::packageActivity('questions');
+        if($message != 'procced'){
+            Session::flash('package-message', $message);
+            return redirect('only-package');
+        }
         $inquires = [
             'School', 'College', 'University', 'Non-profit', 'Academic', 'Others',
             'Freelance', 'IT', 'Business', 'Health', 'Engineering', 'Medicine',

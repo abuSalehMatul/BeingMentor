@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div
+     <div
       class="et_pb_section et_pb_section_3 et_section_regular section_has_divider et_pb_bottom_divider"
     >
       <div class="et_pb_row et_pb_row_10">
@@ -69,6 +69,7 @@
         </div>
       </div>
     </div>
+    <!-- .et_pb_section -->
   </div>
 </template>
 

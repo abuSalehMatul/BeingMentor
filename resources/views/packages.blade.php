@@ -8,7 +8,7 @@
         @php
         $packages = DB::table('packages')->get();
         $i =0;
-        $color =['#9fed38', '#f71652', '#383eed'];
+        $color =['#38c172', '#1FB6EA', '#2D82D0'];
         @endphp
         <div class="packageList">
             @foreach($packages as $package)
@@ -32,6 +32,8 @@
                     @endif
                     @if($package->price)
                     <h6>Price: ${{$package->price}}</h6>
+                    @else 
+                    <h6>Price: $0 (Free)</h6>
                     @endif
                     @if($package->video_calling)
                     <h6>Video Calling: {{$package->video_calling}}</h6>
@@ -47,7 +49,7 @@
                     <form method="post" action="{{route('submit-package')}}">
                         @csrf
                         <input type="hidden" name="package_id" value="{{$package->id}}">
-                        <input type="submit" value="purchase" class="btn btn-lg">
+                        <input type="submit" value="purchase" class="btn btn-lg package-btn">
                     </form>
                 </div>
             </div>

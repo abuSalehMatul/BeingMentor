@@ -1,5 +1,6 @@
 <template>
   <div>
+    <!-- new  -->
     <div class="et_pb_section et_pb_section_2 et_section_regular">
       <div class="et_pb_row et_pb_row_3">
         <div
@@ -14,20 +15,19 @@
           <div
             class="et_pb_module et_pb_search et_pb_search_0 et_pb_text_align_center et_pb_bg_layout_light"
           >
-            <form class="et_pb_searchform">
+            <form role="search" class="et_pb_searchform">
               <div>
-                <label class="screen-reader-text">
-                  Search
-                  for:
-                </label>
-                <input
+                <label class="screen-reader-text" for="s">Search for:</label>
+                <input 
+                  style="color:black"
                   type="text"
                   @keyup="mentorFilter"
                   v-model="searchKey"
+                  name="s"
                   placeholder="Search Your Mentor Now"
                   class="et_pb_s"
-                  style="color:black"
                 />
+
                 <input type="submit" value="Search" class="et_pb_searchsubmit" />
               </div>
             </form>
@@ -86,6 +86,7 @@
           </div>
           <!-- .et_pb_text -->
         </div>
+        <!-- .et_pb_column -->
       </div>
       <!-- .et_pb_row -->
       <div class="et_pb_row et_pb_row_4">
@@ -98,7 +99,7 @@
             <div class="et_pb_blurb_content">
               <div class="et_pb_main_blurb_image">
                 <span class="et_pb_image_wrap">
-                  <span class="et-waypoint et_pb_animation_off et-pb-icon">&#167;</span>
+                  <span class="et-waypoint et_pb_animation_off et-pb-icon">&#xe104;</span>
                 </span>
               </div>
               <div class="et_pb_blurb_container">
@@ -124,7 +125,7 @@
             <div class="et_pb_blurb_content">
               <div class="et_pb_main_blurb_image">
                 <span class="et_pb_image_wrap">
-                  <span class="et-waypoint et_pb_animation_off et-pb-icon">&#x1f4bb;</span>
+                  <span class="et-waypoint et_pb_animation_off et-pb-icon">&#xe00e;</span>
                 </span>
               </div>
               <div class="et_pb_blurb_container">
@@ -140,6 +141,7 @@
           </div>
           <!-- .et_pb_blurb -->
         </div>
+        <!-- .et_pb_column -->
       </div>
       <!-- .et_pb_row -->
       <div class="et_pb_row et_pb_row_5">
@@ -152,15 +154,12 @@
             <div class="et_pb_blurb_content">
               <div class="et_pb_main_blurb_image">
                 <span class="et_pb_image_wrap">
-                  <span class="et-waypoint et_pb_animation_off et-pb-icon">&#8669;</span>
+                  <span class="et-waypoint et_pb_animation_off et-pb-icon">&#xe0e9;</span>
                 </span>
               </div>
               <div class="et_pb_blurb_container">
                 <h6 class="et_pb_module_header">
-                  <span>
-                    Search Engine
-                    Optimization
-                  </span>
+                  <span>Search Engine Optimization</span>
                 </h6>
                 <div class="et_pb_blurb_description">
                   <p>In hac habitasse platea dictumst. Vivamus adipiscing fermentum quam volutpat aliquam.</p>
@@ -181,15 +180,12 @@
             <div class="et_pb_blurb_content">
               <div class="et_pb_main_blurb_image">
                 <span class="et_pb_image_wrap">
-                  <span class="et-waypoint et_pb_animation_off et-pb-icon">&#128712;</span>
+                  <span class="et-waypoint et_pb_animation_off et-pb-icon">&#xe109;</span>
                 </span>
               </div>
               <div class="et_pb_blurb_container">
                 <h6 class="et_pb_module_header">
-                  <span>
-                    Information
-                    Architecture
-                  </span>
+                  <span>Information Architecture</span>
                 </h6>
                 <div class="et_pb_blurb_description">
                   <p>In hac habitasse platea dictumst. Vivamus adipiscing fermentum quam volutpat aliquam.</p>
@@ -200,6 +196,7 @@
           </div>
           <!-- .et_pb_blurb -->
         </div>
+        <!-- .et_pb_column -->
       </div>
       <!-- .et_pb_row -->
       <div class="et_pb_row et_pb_row_6">
@@ -217,10 +214,7 @@
               </div>
               <div class="et_pb_blurb_container">
                 <h6 class="et_pb_module_header">
-                  <span>
-                    Content
-                    Strategy
-                  </span>
+                  <span>Content Strategy</span>
                 </h6>
                 <div class="et_pb_blurb_description">
                   <p>In hac habitasse platea dictumst. Vivamus adipiscing fermentum quam volutpat aliquam.</p>
@@ -241,15 +235,12 @@
             <div class="et_pb_blurb_content">
               <div class="et_pb_main_blurb_image">
                 <span class="et_pb_image_wrap">
-                  <span class="et-waypoint et_pb_animation_off et-pb-icon">&#128161;</span>
+                  <span class="et-waypoint et_pb_animation_off et-pb-icon">&#xe007;</span>
                 </span>
               </div>
               <div class="et_pb_blurb_container">
                 <h6 class="et_pb_module_header">
-                  <span>
-                    Business
-                    Consulting
-                  </span>
+                  <span>Business Consulting</span>
                 </h6>
                 <div class="et_pb_blurb_description">
                   <p>In hac habitasse platea dictumst. Vivamus adipiscing fermentum quam volutpat aliquam.</p>
@@ -260,6 +251,7 @@
           </div>
           <!-- .et_pb_blurb -->
         </div>
+        <!-- .et_pb_column -->
       </div>
       <!-- .et_pb_row -->
       <div class="et_pb_row et_pb_row_7">
@@ -286,41 +278,102 @@
           </div>
           <!-- .et_pb_text -->
         </div>
+        <!-- .et_pb_column -->
       </div>
       <!-- .et_pb_row -->
       <div class="et_pb_row et_pb_row_8">
-        <div v-for="(mentor,index) in mentors" v-if="index < 3" style="margin:15px"
-          class="et_pb_column et_pb_column_1_3 et_pb_column_16 et_pb_css_mix_blend_mode_passthrough et-last-child"
-        >
-          <div
-            class="et_pb_module et_pb_blurb et_pb_blurb_11 et_pb_text_align_center et_pb_blurb_position_top et_pb_bg_layout_dark"
+        <div v-for="(mentor,index) in mentors" v-if="index < 3" >
+          <div v-if="index == 0" style="margin:10px;"
+            class="et_pb_column et_pb_column_1_3 et_pb_column_14 et_pb_css_mix_blend_mode_passthrough"
           >
-            <div class="et_pb_blurb_content">
-              <div class="et_pb_main_blurb_image">
-                <span class="et_pb_image_wrap">
-                  <img :src="mentor.user.profile_image" alt class=" et_pb_animation_top" />
-                </span>
-              </div>
-              <div class="et_pb_blurb_container">
-                <h1 class="et_pb_module_header">
-                  <span class="mentor-name">{{mentor.user.first_name}} {{mentor.user.last_name}}</span>
-                </h1>
-                <div class="et_pb_blurb_description">
-                  <p class="mentor-title-short">
-                    {{mentor.title}}
-                  </p>
-                  <p class="mentor-description-short">
-                      {{mentor.description}}
-                  </p>
+            <div
+              class="et_pb_module et_pb_blurb et_pb_blurb_9 et_pb_text_align_center et_pb_blurb_position_top et_pb_bg_layout_dark"
+            >
+              <div class="et_pb_blurb_content">
+                <div class="et_pb_main_blurb_image">
+                  <span class="et_pb_image_wrap">
+                    <img :src="mentor.user.profile_image" alt class="et-waypoint et_pb_animation_top" />
+                  </span>
+                </div>
+                <div class="et_pb_blurb_container">
+                  <h1 class="et_pb_module_header">
+                    <span>{{mentor.user.first_name}} {{mentor.user.last_name}}</span>
+                  </h1>
+                  <div class="et_pb_blurb_description">
+                    <p>
+                      {{mentor.title}}
+                    </p>
+                    <p>{{mentor.description}}</p>
+                  </div>
                 </div>
               </div>
+              <!-- .et_pb_blurb_content -->
             </div>
-            <!-- .et_pb_blurb_content -->
+            <!-- .et_pb_blurb -->
           </div>
-          <!-- .et_pb_blurb -->
+          <!-- .et_pb_column -->
+          <div v-if="index == 1" style="margin:10px;"
+            class="et_pb_column et_pb_column_1_3 et_pb_column_15 et_pb_css_mix_blend_mode_passthrough"
+          >
+            <div
+              class="et_pb_module et_pb_blurb et_pb_blurb_10 et_pb_text_align_center et_pb_blurb_position_top et_pb_bg_layout_dark"
+            >
+              <div class="et_pb_blurb_content">
+                <div class="et_pb_main_blurb_image">
+                  <span class="et_pb_image_wrap">
+                    <img :src="mentor.user.profile_image" alt class="et-waypoint et_pb_animation_top" />
+                  </span>
+                </div>
+                <div class="et_pb_blurb_container">
+                  <h1 class="et_pb_module_header">
+                    <span>{{mentor.user.first_name}} {{mentor.user.last_name}}</span>
+                  </h1>
+                  <div class="et_pb_blurb_description">
+                    <p>
+                      {{mentor.title}}
+                    </p>
+                    <p>{{mentor.description}}</p>
+                  </div>
+                </div>
+              </div>
+              <!-- .et_pb_blurb_content -->
+            </div>
+            <!-- .et_pb_blurb -->
+          </div>
+          <!-- .et_pb_column -->
+          <div v-if="index == 2" style="margin:10px;"
+            class="et_pb_column et_pb_column_1_3 et_pb_column_16 et_pb_css_mix_blend_mode_passthrough et-last-child"
+          >
+            <div
+              class="et_pb_module et_pb_blurb et_pb_blurb_11 et_pb_text_align_center et_pb_blurb_position_top et_pb_bg_layout_dark"
+            >
+              <div class="et_pb_blurb_content">
+                <div class="et_pb_main_blurb_image">
+                  <span class="et_pb_image_wrap">
+                    <img :src="mentor.user.profile_image" alt class="et-waypoint et_pb_animation_top" />
+                  </span>
+                </div>
+                <div class="et_pb_blurb_container">
+                  <h1 class="et_pb_module_header">
+                    <span>{{mentor.user.first_name}} {{mentor.user.last_name}}</span>
+                  </h1>
+                  <div class="et_pb_blurb_description">
+                    <p>
+                     {{mentor.title}}
+                    </p>
+                    <p>{{mentor.description}}</p>
+                  </div>
+                </div>
+              </div>
+              <!-- .et_pb_blurb_content -->
+            </div>
+            <!-- .et_pb_blurb -->
+          </div>
+          <!-- .et_pb_column -->
         </div>
       </div>
       <!-- .et_pb_row -->
+
       <div class="et_pb_row et_pb_row_9">
         <div
           class="et_pb_column et_pb_column_4_4 et_pb_column_17 et_pb_css_mix_blend_mode_passthrough et-last-child"
@@ -334,16 +387,16 @@
                   class="et_pb_button et_pb_button_one et_pb_bg_layout_light dsm-none"
                   :href="'/mentor'"
                   data-dsm-lightbox-id="dsm_button_one_lightbox dsm_button_0"
-                >
-                  See
-                  More
-                </a>
+                >See More</a>
               </div>
             </div>
           </div>
         </div>
+        <!-- .et_pb_column -->
       </div>
+      <!-- .et_pb_row -->
     </div>
+    <!-- .et_pb_section -->
   </div>
 </template>
 
@@ -428,37 +481,5 @@ export default {
 };
 </script>
 <style scoped>
-.et_pb_module_inner{
-   font-family: Open Sans, Arial, sans-serif;
-   font-style: normal;
-   font-weight: 800;
-   font-size: 63px;
-   line-height: 63px;
-}
-.mentor-name{
-   font-family: Open Sans, Arial, sans-serif;
-   font-style: normal;
-   font-weight: 500;
-   font-size: 26px;
-   line-height: 26px;
-   color: #ffffff;
-}
-.mentor-description-short{
-  font-family: Open Sans, Arial, sans-serif;
-   font-style: normal;
-   font-weight: 500;
-   font-size: 14px;
-   line-height: 24px;
-   color: #ffffff;
-}
-.mentor-title-short{
-  font-family: Open Sans, Arial, sans-serif;
-   font-style: normal;
-   font-weight: 500;
-   font-size: 16px;
-   margin-bottom: 0;
-   line-height: 24px;
-   color: #ffffff;
-}
 </style>
 

@@ -16,6 +16,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('get-profile-users', 'HomeController@getProfile')->name('api.panel.profile.index');
 Route::middleware('auth')->group(function () {
+    Route::post('create-payment', 'PaypalController@create');
+    Route::post('execute-payment', 'PaypalController@execute');
     Route::get('get-admin-mentor-trainee-pie','ReportController@adminTraineeMentor');
     Route::post('mark-correct', 'ForumController@markCorrect');
     Route::post('give-vote', 'ForumController@giveVote');

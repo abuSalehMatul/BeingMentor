@@ -16,5 +16,6 @@ class UserPackageController extends Controller
         $userPackage->package_id = $request->package_id;
         $userPackage->user_id = auth()->id();
         $userPackage->save();
+        return redirect('/paypal-page');
     }
 }

@@ -16,7 +16,7 @@ class CreateTicketsTable extends Migration
         Schema::create('tickets', function (Blueprint $table) {
             $table->id();
             $table->string('barcode')->nullable();
-            $table->text('description')->default('system_ticket');
+            $table->text('description')->nullable();
             $table->string('inquire')->nullable();
             $table->unsignedBigInteger('opner_user_id');
             $table->string('type')->default('chat');

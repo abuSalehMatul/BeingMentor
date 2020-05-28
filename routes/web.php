@@ -3,9 +3,11 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
-// Route::get('test', function(){
-//     return view('newHome');
-// });
+
+
+Route::get('only-package', function(){
+    return view('onlyPackage');
+});
 Route::middleware('visit_count')->group(function(){
     Route::get('/', 'HomeController@index');
     Route::get('forum', 'ForumController@index')->name('forum');
@@ -23,6 +25,9 @@ Route::middleware('visit_count')->group(function(){
     Route::get('success-story', 'FrontEndController@story');
     Route::get('add-success', 'FrontEndController@addSuccess')->middleware('auth');
     Route::post('save-story', 'FrontEndController@saveStory')->middleware('auth');
+
+    //paypal page 
+    Route::get('paypal-page', 'FrontEndController@paypalPage')->middleware('auth');
 
     Route::post('submit-package', 'UserPackageController@submitPackage')->middleware('auth')->name('submit-package');
     
@@ -56,7 +61,7 @@ Route::middleware('visit_count')->group(function(){
     
     });
     
-    Route::namespace('Mentor')->prefix('mentor')->middleware(['auth', 'role:mentor'])->group(function(){
+    Route::namespace('Mentor')->prefix('mentor')->middleware(['auth', 'activation_check', 'role:mentor'])->group(function(){
         Route::get('dashboard', 'MentorHomeController@index')->name('panels.mentor.index');
         Route::get('my-trainee', 'MentorHomeController@myTrainee')->name('panels.mentor.my.trainee');
         Route::get('answer', 'MentorHomeController@answer')->name('panels.mentor.answer');
@@ -79,6 +84,7 @@ Route::middleware('visit_count')->group(function(){
     
 });
 
-// Route::get('video', function(){
-//     return view('video');
-// });
+Route::get('not-approved', function(){
+    Session::flush();
+    return 'you are not approved by admin yet!!';
+});

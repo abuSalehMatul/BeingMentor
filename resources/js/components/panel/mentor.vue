@@ -24,22 +24,23 @@
       >Deactivate mentors will not shown in user search and also they can't perfom regular mentor action</i>
     </span>
 
-    <table class="table  card">
-      <thead class="thead-dark" v-if="user_id == 'matulPermission'">
-        <th>Image</th>
-        <th>Status</th>
-        <th>First Name</th>
-        <th>Last Name</th>
-        <th>Rating</th>
-        <th>Title</th>
-        <th>Tags</th>
-        <th>Mobile</th>
-        <th>Address</th>
-        <th>Description</th>
-        <th>Created at</th>
-        <th>Action</th>
-      </thead>
+    <table class="table table-responsive card">
       <tbody>
+        <tr v-if="user_id == 'matulPermission'" class="table-dark">
+          <td>Image</td>
+          <td>Status</td>
+          <td>First Name</td>
+          <td>Last Name</td>
+          <td>Rating</td>
+          <td>Title</td>
+          <td>Tags</td>
+          <td>Mobile</td>
+          <td pre>Address</td>
+          <td>Description</td>
+          <td nowrap>Created at</td>
+          <td>Action</td>
+        </tr>
+      
         <tr v-for="mentor in mentors">
           <td>
             <img
@@ -58,17 +59,30 @@
           </td>
           <td>{{mentor.title}}</td>
           <td>
-            <i v-for="tag in mentor.tags" class="badge badge-info text-2xl" style="color:white">{{tag}}</i>
+            <i
+              v-for="tag in mentor.tags"
+              class="badge badge-info text-2xl"
+              style="color:white"
+            >{{tag}}</i>
           </td>
           <td v-if="user_id == 'matulPermission'">{{mentor.user.mobile}}</td>
           <td pre>
             <small style="font-size:10px">{{mentor.user.address}}</small>
           </td>
-          <td >
-            <p style="height: 70px; transition: height 300ms; overflow:hidden;color:skyblue" @click="displayMore(mentor.id)" :id="mentor.id"> {{mentor.description}} </p>
-            
+          <td>
+            <p
+              style="height: 70px; transition: height 300ms; overflow:hidden;color:#8b71f2"
+              @click="displayMore(mentor.id)"
+              :id="mentor.id"
+            >{{mentor.description}}</p>
           </td>
-          <td nowrap><small>Joins at: <i class="fa fa-calendar"></i></small> {{mentor.formated_date}}</td>
+          <td nowrap>
+            <small>
+              Joins at:
+              <i class="fa fa-calendar"></i>
+            </small>
+            {{mentor.formated_date}}
+          </td>
           <td v-if="user_id == 'matulPermission'">
             <button class="btn btn-sm btn-danger" @click.prevent="del(mentor.id)">Delete</button>
             <button
@@ -135,9 +149,9 @@ export default {
     this.getMentors();
   },
   methods: {
-    displayMore(mentorId){
-       let div = document.getElementById(mentorId);
-       div.style.height = "100%";
+    displayMore(mentorId) {
+      let div = document.getElementById(mentorId);
+      div.style.height = "100%";
     },
     setFromDate() {
       let currentDate = new Date();
@@ -162,6 +176,9 @@ export default {
       let data = new FormData();
       data.append("receiver_id", mentorUserId);
       client.post(chatInitializerRoute, data).then(response => {
+        if (response.data == "not") {
+          window.location.href = window.location.origin + "/only-package";
+        }
         window.location.href = response.data;
       });
     },
@@ -199,11 +216,19 @@ export default {
 .front-mentor-div {
   margin: 30px;
   color: white;
-  background-image: url("/images/used_logo.png");
+  background-image: url("/images/bg.png");
   background-position: 50% 0;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+}
+.card {
+  background-image: url("/images/bg.png");
+  background-position: 50% 0;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  font-weight: 700;
 }
 .input-icons i {
   position: absolute;

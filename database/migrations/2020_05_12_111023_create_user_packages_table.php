@@ -17,6 +17,7 @@ class CreateUserPackagesTable extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('package_id');
+            $table->integer('is_active')->default(0);
             $table->timestamps();
         });
     }

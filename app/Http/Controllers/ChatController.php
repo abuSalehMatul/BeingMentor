@@ -12,12 +12,18 @@ use App\Helper;
 use App\Model\Mentor;
 use App\Model\Rating;
 use App\Model\Solve;
+use Session;
 use App\Model\VideoChat;
 
 class ChatController extends Controller
 {
     public function initialize(Request $request)
     {
+        $message = Helper::packageActivity('chatting');
+        if($message != 'procced'){
+            Session::flash('package-message', $message);
+            return 'only-package';
+        }
         $receiver_id = $request->receiver_id;
         $ownId = auth()->id();
         $chatRoomId = ChatRoom::findChatRoom($ownId, $receiver_id);
@@ -114,8 +120,9 @@ class ChatController extends Controller
     public function goToVideo($participants, $room, $token)
     {
         $message = Helper::packageActivity('video_calling');
-        if($message != true){
-            return $message;
+        if($message != 'procced'){
+            Session::flash('package-message', $message);
+            return redirect('only-package');
         }
         return view('video')->with('participants', $participants)
         ->with('room', $room)

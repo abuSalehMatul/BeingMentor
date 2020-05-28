@@ -17,11 +17,11 @@
             <label>Address</label>
             <input type="text" class="form-control" value="{{$website->address}}" placeholder="{{$website->address}}" name="address">
 
-            <label>Quote Title 1</label>
+            {{-- <label>Quote Title 1</label>
             <input type="text" class="form-control" value="{{$website->quote_title1}}" placeholder="{{$website->quote_title1}}" name="quote_title1">
 
             <label>Quote Title 2</label>
-            <input type="text" class="form-control" value="{{$website->quote_title1}}" placeholder="{{$website->quote_title1}}" name="quote_title2">
+            <input type="text" class="form-control" value="{{$website->quote_title1}}" placeholder="{{$website->quote_title1}}" name="quote_title2"> --}}
 
             <label>How it works title 1</label>
             <input type="text" class="form-control" value="{{$website->how_it_work_title1}}" placeholder="{{$website->how_it_work_title1}}" name="how_it_work_title1">
@@ -38,7 +38,7 @@
             <label class="col-md-12">Add A new Logo</label>
             <input type="file" class="form-control" name="logo">
 
-            <h3 class="col-md-12 ">How it works image 1</h3>
+            {{-- <h3 class="col-md-12 ">How it works image 1</h3>
             <img src="{{$website->how_it_work_image_one}}" class="img-fluid img-thumbnail rounded mx-auto d-block col-md-5 col-sm-12" >
             <label class="col-md-12">Add A new Image</label>
             <input type="file" class="form-control" name="how_it_work_image_one">
@@ -51,7 +51,7 @@
             <h3 class="col-md-12 ">How it works image 3</h3>
             <img src="{{$website->how_it_work_image_three}}" class="img-fluid img-thumbnail rounded mx-auto d-block col-md-5 col-sm-12" >
             <label class="col-md-12">Add A new Image</label>
-            <input type="file" class="form-control" name="how_it_work_image_three">
+            <input type="file" class="form-control" name="how_it_work_image_three"> --}}
         </div>
         <h4>
             Index description
@@ -59,14 +59,14 @@
         <input class="form-control" value="{{$website->index_description}}" name="index_description">
 
         <div id="sample">
-            <h4>
+            {{-- <h4>
                 About Us
             </h4>
             <textarea style="width: 100%; height: 100px;" value="{{$website->about_us}}" name="about_us">
                 @php
                     print_r($website->about_us)
                 @endphp
-            </textarea>
+            </textarea> --}}
 
             <h4>
                 Quote description 2
@@ -86,7 +86,7 @@
                 @endphp
             </textarea>
             <br />
-            <h4>
+            {{-- <h4>
                 Term and policy
             </h4>
                 <textarea  style="width: 100%; height: 100px;" name="term_policy" value="{{$website->term_policy}}">
@@ -94,15 +94,15 @@
                     print_r($website->term_policy)
                 @endphp
             </textarea>
-            <br />
-            <h4>
+            <br /> --}}
+            {{-- <h4>
                 How it Works
             </h4>
             <textarea  style="width: 100%; height: 100px;" name="how_it_works">
                 @php
                     print_r($website->how_it_works)
                 @endphp
-            </textarea>
+            </textarea> --}}
 
             <br />
             <h4>

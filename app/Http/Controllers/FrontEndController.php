@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Model\ContactUs;
 use App\Model\Mentor;
+use App\Model\Package;
 use App\Model\SuccessStory;
 use App\Model\Tag;
 use App\Model\Ticket;
@@ -12,6 +13,7 @@ use App\User;
 use Illuminate\Http\Request;
 use Spatie\Permission\Traits\HasRoles;
 use App\Model\UserTag;
+use App\Model\UserPackage;
 use Symfony\Component\CssSelector\Node\FunctionNode;
 
 class FrontEndController extends Controller
@@ -22,12 +24,38 @@ class FrontEndController extends Controller
     public function mentor()
     {
         $userId = 'front';
-        return view('mentor')->with('user_id',$userId);
+        return view('mentor')->with('user_id', $userId);
+    }
+
+    public function paypalPage()
+    {
+        $userPackage =  UserPackage::where('user_id', auth()->id())
+            ->latest('created_at')->first();
+        $package = Package::findOrFail($userPackage->package_id);
+
+        if ($package->price == 0) {
+            $oldUserPackage =  UserPackage::where('user_id', auth()->id())->where('is_active', 1)
+                ->latest('created_at')->first();
+            if ($oldUserPackage) {
+                $oldPackage = Package::findOrFail($oldUserPackage->package_id);
+                if ($oldPackage->price > $package->price) {
+                    return 'you are already in higher package';
+                }
+            } else {
+                $userPackage->is_active = 1;
+                $userPackage->save();
+                return redirect('/');
+            }
+        }
+        return view('paypalPage')->with('package', $package);
     }
 
     public function aboutUs()
     {
-        return view('aboutUs');
+        $stories = SuccessStory::orderBy('created_at', 'DESC')
+            ->limit(5)
+            ->get();
+        return view('aboutUs')->with('stories', $stories);
     }
 
     public function contactUs(Request $request)
@@ -59,11 +87,10 @@ class FrontEndController extends Controller
 
     public function getSuccessStory($user)
     {
-        if($user === 'front'){
+        if ($user === 'front') {
             $stories = SuccessStory::where('status', 1)->orderBy('created_at', 'DESC')->get();
             return $stories;
-        }
-        else{
+        } else {
             $stories = SuccessStory::orderBy('created_at', 'DESC')->get();
             return $stories;
         }
@@ -86,15 +113,15 @@ class FrontEndController extends Controller
         return view('term_policy');
     }
 
-    public Function statistics()
+    public function statistics()
     {
         $mentors = Mentor::count();
         $tickets = Ticket::count();
         $solved = Ticket::where('status', 'solved')->count();
         $users = User::get();
-        $online =0;
-        foreach($users as $user){
-            if($user->isOnline()){
+        $online = 0;
+        foreach ($users as $user) {
+            if ($user->isOnline()) {
                 $online++;
             }
         }
@@ -105,5 +132,4 @@ class FrontEndController extends Controller
             'online' => $online
         ];
     }
-
 }

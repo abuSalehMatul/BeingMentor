@@ -16,7 +16,7 @@ class HomeController extends Controller
     use  HasRoles;
     public function index()
     {
-        return view('home');
+        return view('newHome');
     }
 
     public function findDashboard()

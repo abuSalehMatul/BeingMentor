@@ -12,6 +12,11 @@ class UsersTableSeeder extends Seeder
      * @return void
      */
     protected $roles = ['trainee', 'mentor'];
+    protected $jobTitle = ['Software engineer', 'Machine Engineer', 'Doctor', 'Professor'];
+    protected $des = "A Corporate Professional for 18 years and 10 years of Entrepreneurial experience.
+    Worked in the domains of Sales, Strategy, Marketing & Operations in the sectors like Media, Telecom and FMCG.
+    
+    I would like to mentor those people who are serious & passionate about their work.";
     public function run()
     {
         $this->createDataAndSeed();
@@ -40,16 +45,16 @@ class UsersTableSeeder extends Seeder
             $user->assignRole($this->roles[$index]);
             if($index == 0){
                 $user->trainee()->create([
-                    'title' => $faker->title,
-                    'description' => $faker->text,
+                    'title' => $faker->randomElement($this->jobTitle),
+                    'description' => $this->des,
                     'created_at' => now(),
                     'updated_at' => now()
                 ]);
             }
             else{
                 $user->mentor()->create([
-                    'title' => $faker->title,
-                    'description' => $faker->text,
+                    'title' => $faker->randomElement($this->jobTitle),
+                    'description' => $this->des,
                     'barcode' => '#'. rand(100234,300456),
                     'created_at' => now(),
                     'updated_at' => now()
@@ -88,7 +93,7 @@ class UsersTableSeeder extends Seeder
         $user = App\User::create($data);
         $user->assignRole('mentor');
         $user->mentor()->create([
-            'title' => $faker->title,
+            'title' => $faker->randomElement($this->jobTitle),
             'description' => $faker->text,
             'barcode' => '#'. rand(100234,300456),
             'created_at' => now(),
@@ -110,7 +115,7 @@ class UsersTableSeeder extends Seeder
         $user = App\User::create($data);
         $user->assignRole('trainee');
         $user->trainee()->create([
-            'title' => $faker->title,
+            'title' => $faker->randomElement($this->jobTitle),
             'description' => $faker->text,
             'created_at' => now(),
             'updated_at' => now()

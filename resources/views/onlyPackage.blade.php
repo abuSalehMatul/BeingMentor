@@ -4,13 +4,14 @@
     <div class="entry-content">
         <div class="et-l et-l--post">
             <div class="et_builder_inner_content et_pb_gutters3">
-                @include('index')
-                @include('howWeWork')
-                @include('mentorInfo')
-                @include('statistic')
-                @include('whyUs')
-                @include('inspiration')
-                @include('contactUs')
+            @php
+                $message = Session::get('package-message');
+            @endphp
+            @if($message)
+                <div class="card-title">
+                      <h3 class="text-center text-danger"> {{$message}} </h3>
+                 </div>
+            @endif
                 @include('packages')
             </div>
         </div>
