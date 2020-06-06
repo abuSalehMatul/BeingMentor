@@ -27,7 +27,7 @@ Route::middleware('visit_count')->group(function(){
     Route::post('save-story', 'FrontEndController@saveStory')->middleware('auth');
 
     //paypal page 
-    Route::get('paypal-page', 'FrontEndController@paypalPage')->middleware('auth');
+    Route::get('paypal-page', 'FrontEndController@paypalPage')->middleware('auth')->name('paypal.payment.page');
 
     Route::post('submit-package', 'UserPackageController@submitPackage')->middleware('auth')->name('submit-package');
     
@@ -68,7 +68,7 @@ Route::middleware('visit_count')->group(function(){
         Route::get('message', 'MentorHomeController@message')->name('panels.mentor.message');
     });
     
-    Route::namespace('Trainee')->prefix('trainee')->middleware(['auth', 'role:trainee'])->group(function(){
+    Route::namespace('Trainee')->prefix('trainee')->middleware(['auth', 'package_check', 'role:trainee'])->group(function(){
         Route::get('dashboard', 'TraineeHomeController@index')->name('panels.trainee.index');
         Route::get('question', 'TraineeHomeController@question')->name('panels.trainee.question');
         Route::get('find-mentor', 'TraineeHomeController@findMentor')->name('panels.trainee.find.mentor');

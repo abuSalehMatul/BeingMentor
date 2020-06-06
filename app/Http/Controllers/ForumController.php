@@ -11,6 +11,7 @@ use App\Model\Ticket;
 use App\Model\Vote;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class ForumController extends Controller
 {
@@ -39,6 +40,21 @@ class ForumController extends Controller
     public function getTags()
     {
         return Tag::get()->pluck('tag')->toArray();
+    }
+
+    public function getTagsForRegister(Request $request)
+    {
+        $data = [];
+        if($request->has('q')){
+            $search = $request->q;
+            $data = DB::table("tags")
+            		->select("id","tag")
+            		->where('tag','LIKE',"%$search%")
+            		->get();
+        }
+
+
+        return response()->json($data);
     }
 
     public function saveAns(Request $request)

@@ -16,6 +16,11 @@ class HomeController extends Controller
     use  HasRoles;
     public function index()
     {
+        if(auth()->check()){
+            if(auth()->user()->hasRole('trainee')){
+                
+            }
+        }
         return view('newHome');
     }
 

@@ -17,11 +17,17 @@
             <label>Address</label>
             <input type="text" class="form-control" value="{{$website->address}}" placeholder="{{$website->address}}" name="address">
 
-            {{-- <label>Quote Title 1</label>
-            <input type="text" class="form-control" value="{{$website->quote_title1}}" placeholder="{{$website->quote_title1}}" name="quote_title1">
+            <label>Facebook Link</label>
+            <input type="text" class="form-control" value="{{$website->facebook}}" placeholder="{{$website->facebook}}" name="facebook">
 
-            <label>Quote Title 2</label>
-            <input type="text" class="form-control" value="{{$website->quote_title1}}" placeholder="{{$website->quote_title1}}" name="quote_title2"> --}}
+            <label>Twitter Link</label>
+            <input type="text" class="form-control" value="{{$website->twitter}}" placeholder="{{$website->twitter}}" name="twitter">
+          
+            <label>Linkedin Link</label>
+            <input type="text" class="form-control" value="{{$website->linkedin}}" placeholder="{{$website->linkedin}}" name="linkedin">
+
+            <label>Instagram Link</label>
+            <input type="text" class="form-control" value="{{$website->instragram}}" placeholder="{{$website->instragram}}" name="instragram">
 
             <label>How it works title 1</label>
             <input type="text" class="form-control" value="{{$website->how_it_work_title1}}" placeholder="{{$website->how_it_work_title1}}" name="how_it_work_title1">

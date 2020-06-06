@@ -9,8 +9,8 @@ class Website extends Model
 
     protected $fillable = [
         'logo', 'email', 'address', 'mobile', 'mobile1',
-        'about_us', 'term_policy', 'how_it_works', 'footer_quote',
-        'how_it_work_image_one', 'how_it_work_image_two', 'how_it_work_image_three',
+        'facebook', 'instragram', 'how_it_works', 'footer_quote',
+        'linkedin', 'twitter',
         'quote_title1', 'quote_title2', 'quote_description1', 'quote_description2',
         'index_description', 'how_it_work_description1', 'how_it_work_description2',
         'how_it_work_description3', 'why_us_description', 'how_it_work_title1',

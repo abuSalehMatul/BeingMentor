@@ -292,7 +292,7 @@
               <div class="et_pb_blurb_content">
                 <div class="et_pb_main_blurb_image">
                   <span class="et_pb_image_wrap">
-                    <img :src="mentor.user.profile_image" alt class="et-waypoint et_pb_animation_top" />
+                    <img width="138px" style="border-radius: 106px;" :src="mentor.user.profile_image" alt class="et-waypoint et_pb_animation_top" />
                   </span>
                 </div>
                 <div class="et_pb_blurb_container">
@@ -321,7 +321,7 @@
               <div class="et_pb_blurb_content">
                 <div class="et_pb_main_blurb_image">
                   <span class="et_pb_image_wrap">
-                    <img :src="mentor.user.profile_image" alt class="et-waypoint et_pb_animation_top" />
+                    <img width="138px" style="border-radius: 106px;" :src="mentor.user.profile_image" alt class="et-waypoint et_pb_animation_top" />
                   </span>
                 </div>
                 <div class="et_pb_blurb_container">
@@ -350,7 +350,7 @@
               <div class="et_pb_blurb_content">
                 <div class="et_pb_main_blurb_image">
                   <span class="et_pb_image_wrap">
-                    <img :src="mentor.user.profile_image" alt class="et-waypoint et_pb_animation_top" />
+                    <img width="138px" style="border-radius: 106px;" :src="mentor.user.profile_image" alt class="et-waypoint et_pb_animation_top" />
                   </span>
                 </div>
                 <div class="et_pb_blurb_container">

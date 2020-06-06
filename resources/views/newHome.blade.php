@@ -230,6 +230,7 @@
                                                 </div> <!-- .et_pb_column -->
                                             </div> <!-- .et_pb_row -->
                                         </div> <!-- .et_pb_section -->
+                                        @include('packages')
                                     </div><!-- .et_builder_inner_content -->
                                 </div><!-- .et-l -->
                             </div> <!-- .entry-content -->

@@ -127,9 +127,9 @@ class AdminHomeController extends AdminController
     public function updateWebsite(Request $request)
     {
         $textData =  $request->only([
-            'email', 'mobile',
-            'mobile1', 'address',
-            'footer_quote', 
+            'email', 'mobile', 'facebook', 'instragram',
+            'mobile1', 'address', 'linkedin',
+            'footer_quote', 'twitter',
             'quote_description1', 'quote_description2',
             'index_description', 'how_it_work_description1', 'how_it_work_description2',
             'how_it_work_description3', 'why_us_description',

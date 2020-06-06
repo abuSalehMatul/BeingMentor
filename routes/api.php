@@ -44,6 +44,7 @@ Route::middleware('auth')->group(function () {
 });
 Route::get('get-mentor/{userId}', 'Mentor\MentorHomeController@getMentor')->name('api.get.mentor');
 Route::get('get-tags', 'ForumController@getTags');
+Route::get('get-tags-for-register', 'ForumController@getTagsForRegister');
 Route::get('statistics', 'FrontEndController@statistics');
 Route::get('get-inquires', 'ReportController@getInquires');
 Route::get('get-forum/{user}', 'ForumController@getForum');

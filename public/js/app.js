@@ -8725,6 +8725,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -101897,7 +101901,11 @@ var render = function() {
                                           _c("img", {
                                             staticClass:
                                               "et-waypoint et_pb_animation_top",
+                                            staticStyle: {
+                                              "border-radius": "106px"
+                                            },
                                             attrs: {
+                                              width: "138px",
                                               src: mentor.user.profile_image,
                                               alt: ""
                                             }
@@ -101985,7 +101993,11 @@ var render = function() {
                                           _c("img", {
                                             staticClass:
                                               "et-waypoint et_pb_animation_top",
+                                            staticStyle: {
+                                              "border-radius": "106px"
+                                            },
                                             attrs: {
+                                              width: "138px",
                                               src: mentor.user.profile_image,
                                               alt: ""
                                             }
@@ -102073,7 +102085,11 @@ var render = function() {
                                           _c("img", {
                                             staticClass:
                                               "et-waypoint et_pb_animation_top",
+                                            staticStyle: {
+                                              "border-radius": "106px"
+                                            },
                                             attrs: {
+                                              width: "138px",
                                               src: mentor.user.profile_image,
                                               alt: ""
                                             }
@@ -105565,9 +105581,9 @@ var render = function() {
                   _vm._v(" "),
                   _c("td", [_vm._v("Status")]),
                   _vm._v(" "),
-                  _c("td", [_vm._v("First Name")]),
+                  _c("td", [_vm._v("Name")]),
                   _vm._v(" "),
-                  _c("td", [_vm._v("Last Name")]),
+                  _c("td", [_vm._v("Email")]),
                   _vm._v(" "),
                   _c("td", [_vm._v("Rating")]),
                   _vm._v(" "),
@@ -105580,6 +105596,8 @@ var render = function() {
                   _c("td", { attrs: { pre: "" } }, [_vm._v("Address")]),
                   _vm._v(" "),
                   _c("td", [_vm._v("Description")]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v("Certificate")]),
                   _vm._v(" "),
                   _c("td", { attrs: { nowrap: "" } }, [_vm._v("Created at")]),
                   _vm._v(" "),
@@ -105615,7 +105633,9 @@ var render = function() {
                 _vm._v(" "),
                 _c("td", [_vm._v(_vm._s(mentor.user.first_name))]),
                 _vm._v(" "),
-                _c("td", [_vm._v(_vm._s(mentor.user.last_name))]),
+                _vm.user_id == "matulPermission"
+                  ? _c("td", [_vm._v(_vm._s(mentor.user.email))])
+                  : _vm._e(),
                 _vm._v(" "),
                 _c("td", [
                   _c("i", { staticClass: "fa fa-star" }, [
@@ -105668,6 +105688,19 @@ var render = function() {
                       }
                     },
                     [_vm._v(_vm._s(mentor.description))]
+                  )
+                ]),
+                _vm._v(" "),
+                _c("td", [
+                  _c(
+                    "a",
+                    {
+                      attrs: {
+                        target: "blank",
+                        href: mentor.user.academic_certificate
+                      }
+                    },
+                    [_vm._v(" file")]
                   )
                 ]),
                 _vm._v(" "),

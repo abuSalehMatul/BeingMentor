@@ -29,14 +29,15 @@
         <tr v-if="user_id == 'matulPermission'" class="table-dark">
           <td>Image</td>
           <td>Status</td>
-          <td>First Name</td>
-          <td>Last Name</td>
+          <td>Name</td>
+          <td>Email</td>
           <td>Rating</td>
           <td>Title</td>
           <td>Tags</td>
           <td>Mobile</td>
           <td pre>Address</td>
           <td>Description</td>
+          <td>Certificate</td>
           <td nowrap>Created at</td>
           <td>Action</td>
         </tr>
@@ -53,7 +54,7 @@
             <i v-if="mentor.user.status == 0" class="badge badge-danger">Unactive</i>
           </td>
           <td>{{mentor.user.first_name}}</td>
-          <td>{{mentor.user.last_name}}</td>
+          <td v-if="user_id == 'matulPermission'">{{mentor.user.email}}</td>
           <td>
             <i class="fa fa-star">{{mentor.rating}}</i>
           </td>
@@ -75,6 +76,9 @@
               @click="displayMore(mentor.id)"
               :id="mentor.id"
             >{{mentor.description}}</p>
+          </td>
+          <td>
+            <a target="blank" :href="mentor.user.academic_certificate"> file</a>
           </td>
           <td nowrap>
             <small>

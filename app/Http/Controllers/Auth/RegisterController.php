@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Session;
+use App\Model\UserPackage;
+use App\Model\UserTag;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use Auth;
@@ -48,21 +50,15 @@ class RegisterController extends Controller
 
     public function showRegistrationForm(Request $request)
     {
-        if ($request->session()->has('register_user_type')) {
-            return view('auth.register');
-        }
-        else{
-            return view('auth.choseForm');
-        }
-
+        return view('auth.register');
     }
 
     public function registerStepOne(Request $request)
     {
-       Session::put('register_user_type', $request->user_type);
-       if(isset($request->user_type)){
-        return view('auth.register');
-       }
+        Session::put('register_user_type', $request->user_type);
+        if (isset($request->user_type)) {
+            return view('auth.register');
+        }
     }
 
     /**
@@ -100,15 +96,21 @@ class RegisterController extends Controller
 
         $request->validate([
             'firstName' => 'required|max:255',
-            'lastName' => 'required|max:255',
+            'package' => 'required_if:user_type,Mentee|exists:packages,id',
+            'itemName' => 'required_if:user_type,Mentor',
             'email' => 'required|email|unique:users,email',
             'mobile' => 'required|min:6',
-            'password' => 'required|min:6',
-            'address' => 'required|max:300',
-            'title' => 'required'
-        ]);
+            'password' => 'required|min:6|confirmed',
+            'title' => 'required|max:150',
+            'user_type' => 'required',
+            'package' => 'required_if:user_type,Mentee',
+            'academic_certificate' => 'file',
+            'description' => 'required|min:6',
+            'sum' => 'required|confirmed'
 
-        $type = Session::get('register_user_type');
+        ]);
+      
+
         $user = User::create([
             'first_name' => $request->firstName,
             'last_name' => $request->lastName,
@@ -116,27 +118,50 @@ class RegisterController extends Controller
             'mobile' => $request->mobile,
             'password' => Hash::make($request->password),
             'address' => $request->address,
-            'status' => $type == 'mentor' ? 0 : 1
+            'status' => 0
         ]);
 
-        if($type == 'mentor'){
+        if ($request->hasFile('academic_certificate')) {
+            $file = $request->file('academic_certificate');
+            $extension = $file->getClientOriginalExtension(); // getting image extension
+            $filename = \public_path() . '/certificate/' . rand(100, 30000) . time() . '.' . $extension;
+            $file->move('certificate/', $filename);
+            User::where('id', $user->id)->update(['academic_certificate' => $filename]);
+        }
+
+        if ($request->user_type == 'Mentor') {
             $user->assignRole('mentor');
             $user->mentor()->create([
                 'description' => $request->description,
                 'title' => $request->title,
-                'barcode' => '#'. rand(1,1000000)
+                'barcode' => '#' . rand(1, 1000000)
             ]);
+            foreach($request->itemName as $tagId){
+                $ifTagExist = UserTag::where('user_id', $user->id)
+                ->where('tag_id', $tagId)->first();
+                if(!$ifTagExist){
+                    $userTag = new UserTag;
+                    $userTag->user_id = $user->id;
+                    $userTag->tag_id = $tagId;
+                    $userTag->save();
+                }
+               
+            }
             Auth::login($user);
-            return auth()->user();
-        }
-        else{
+            return redirect()->route('panels.mentor.index');
+        } else {
             $user->assignRole('trainee');
             $user->trainee()->create([
                 'description' => $request->description,
                 'title' => $request->title,
             ]);
             Auth::login($user);
-            return auth()->user();
+            $userPackage = new UserPackage();
+            $userPackage->package_id = $request->package;
+            $userPackage->user_id = $user->id;
+            $userPackage->is_active = 0;
+            $userPackage->save();
+            return redirect()->route('panels.trainee.index');
         }
     }
 }

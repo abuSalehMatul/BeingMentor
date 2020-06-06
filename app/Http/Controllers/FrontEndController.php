@@ -29,25 +29,32 @@ class FrontEndController extends Controller
 
     public function paypalPage()
     {
-        $userPackage =  UserPackage::where('user_id', auth()->id())
+        $lastUserPackage =  UserPackage::where('user_id', auth()->id())
             ->latest('created_at')->first();
-        $package = Package::findOrFail($userPackage->package_id);
+        $lastPackage = Package::findOrFail($lastUserPackage->package_id);
 
-        if ($package->price == 0) {
-            $oldUserPackage =  UserPackage::where('user_id', auth()->id())->where('is_active', 1)
-                ->latest('created_at')->first();
-            if ($oldUserPackage) {
-                $oldPackage = Package::findOrFail($oldUserPackage->package_id);
-                if ($oldPackage->price > $package->price) {
-                    return 'you are already in higher package';
-                }
-            } else {
-                $userPackage->is_active = 1;
-                $userPackage->save();
-                return redirect('/');
+        $activatedPackage  = UserPackage::where('user_id', auth()->id())
+        ->where('is_active', 1)
+        ->latest('created_at')->first();
+        if($activatedPackage){
+            $activePackage = Package::findOrFail($activatedPackage->package_id);
+            if ($activePackage->price > $lastPackage->price) {
+                return 'you are already in higher package';
+            }
+            else{
+                return view('paypalPage')->with('package', $lastPackage);
             }
         }
-        return view('paypalPage')->with('package', $package);
+        else{
+            if($lastPackage->price == 0){
+                $lastUserPackage->is_active = 1;
+                $lastUserPackage->save();
+                return redirect()->route('panels.trainee.index');
+            }
+            else{
+                return view('paypalPage')->with('package', $lastPackage);
+            }
+        }
     }
 
     public function aboutUs()
