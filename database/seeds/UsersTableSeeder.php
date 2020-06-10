@@ -77,6 +77,21 @@ class UsersTableSeeder extends Seeder
         $admin = App\User::create($data);
         $admin->assignRole('admin');
 
+        $data = [];
+        $data = [
+            'first_name' => 'Super Admin',
+            'last_name' => '',
+            'mobile' => '01737190072',
+            'email' => 'superAdmin@beingmentor.com',
+            'password' => $password,
+            'address' => $faker->address,
+            'status' => 1,
+            'created_at' => now(),
+            'updated_at' => now()
+        ];
+        $superAdmin = App\User::create($data);
+        $superAdmin->assignRole('root');
+
 
         $data = [];
         $data = [

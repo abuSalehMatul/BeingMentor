@@ -41,7 +41,7 @@
           <td nowrap>Created at</td>
           <td>Action</td>
         </tr>
-      
+
         <tr v-for="mentor in mentors">
           <td>
             <img
@@ -78,7 +78,7 @@
             >{{mentor.description}}</p>
           </td>
           <td>
-            <a target="blank" :href="mentor.user.academic_certificate"> file</a>
+            <a target="blank" :href="mentor.user.academic_certificate">file</a>
           </td>
           <td nowrap>
             <small>
@@ -167,14 +167,18 @@ export default {
       this.getMentors();
     },
     del(mentorId) {
-      client.put("del/" + mentorId).then(response => {
-        this.getMentors();
-      });
+      if (confirm("Sure about this delete!")) {
+        client.put("del/" + mentorId).then(response => {
+          this.getMentors();
+        });
+      }
     },
     active(mentorId) {
-      client.put("active/" + mentorId).then(response => {
-        this.getMentors();
-      });
+      if (confirm("Sure about this activation!")) {
+        client.put("active/" + mentorId).then(response => {
+          this.getMentors();
+        });
+      }
     },
     connect(mentorUserId) {
       let data = new FormData();

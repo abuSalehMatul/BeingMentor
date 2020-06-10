@@ -26,7 +26,7 @@ class HomeController extends Controller
 
     public function findDashboard()
     {
-        if (auth()->user()->hasRole('admin')) {
+        if (auth()->user()->hasRole('admin') || auth()->user()->hasRole('root')) {
             return redirect()->route('panels.admin.index');
         }
         if (auth()->user()->hasRole('mentor')) {
@@ -45,7 +45,7 @@ class HomeController extends Controller
     public function getProfile()
     {
         $data =[];
-        if (auth()->user()->hasRole('admin')) {
+        if (auth()->user()->hasRole('admin') || auth()->user()->hasRole('root')) {
             $data['data'] = auth()->user();
             return $data;
         }
@@ -96,6 +96,9 @@ class HomeController extends Controller
         }
         if(auth()->user()->hasRole('trainee')){
             return 'trainee';
+        }
+        if(auth()->user()->hasRole('root')){
+            return 'root';
         }
     }
 }

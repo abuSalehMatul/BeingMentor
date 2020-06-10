@@ -7,10 +7,10 @@
         </label>
         <input type="text" v-model="profile.first_name" class="form-control" />
         <hr />
-        <label class>
+        <!-- <label class>
           <b>Last Name:</b>
         </label>
-        <input type="text" v-model="profile.last_name" class="form-control" />
+        <input type="text" v-model="profile.last_name" class="form-control" />-->
         <hr />
         <label class>
           <b>Email:</b>
@@ -41,28 +41,36 @@
       <label>Title of Mine</label>
       <input type="text" v-model="profile.trainee.title" class="form-control" />
       <label>My descriptio</label>
-      <textarea v-if="profile.trainee.description" v-model="profile.trainee.description" class="form-control"></textarea>
+      <textarea
+        v-if="profile.trainee.description"
+        v-model="profile.trainee.description"
+        class="form-control"
+      ></textarea>
     </div>
 
     <div v-if="profile.roles[0].name == 'mentor'" class="col-md-12 col-sm-12">
       <label>Title of Mine</label>
       <input type="text" v-model="profile.mentor.title" class="form-control" />
       <label>My descriptio</label>
-      <textarea v-if="profile.mentor.description" v-model="profile.mentor.description" class="form-control"></textarea>
+      <textarea
+        v-if="profile.mentor.description"
+        v-model="profile.mentor.description"
+        class="form-control"
+      ></textarea>
       <div class="col-md-6">
-      <label class="typo__label">Your Tags</label>
-      <multiselect
-        v-model="value"
-        tag-placeholder="Add this as new tag"
-        placeholder="Search or add a tag"
-        label="name"
-        track-by="name"
-        :options="options"
-        :multiple="true"
-        :taggable="true"
-        @tag="addTag"
-      ></multiselect>
-    </div>
+        <label class="typo__label">Your Tags</label>
+        <multiselect
+          v-model="value"
+          tag-placeholder="Add this as new tag"
+          placeholder="Search or add a tag"
+          label="name"
+          track-by="name"
+          :options="options"
+          :multiple="true"
+          :taggable="true"
+          @tag="addTag"
+        ></multiselect>
+      </div>
     </div>
 
     <br />
@@ -83,11 +91,11 @@ export default {
       profile: "",
       image: "",
       title: "",
-      allTags : '',
-      userTags: '',
+      allTags: "",
+      userTags: "",
       value: [],
-      options: [],
-    }
+      options: []
+    };
   },
   mounted() {
     this.getProfile();
@@ -104,20 +112,20 @@ export default {
     getProfile() {
       client.get(getProfileRoute).then(response => {
         this.profile = response.data.data;
-        if(this.profile.roles[0].name == 'mentor'){
-            this.allTags= response.data.all_tags;
-            this.userTags = response.data.user_tags;
-            this.processTags();
+        if (this.profile.roles[0].name == "mentor") {
+          this.allTags = response.data.all_tags;
+          this.userTags = response.data.user_tags;
+          this.processTags();
         }
       });
     },
-    processTags(){
-        this.userTags.forEach(element => {
-            this.value.push({'name': element});
-        });
-        this.allTags.forEach(element => {
-            this.options.push({'name': element});
-        });
+    processTags() {
+      this.userTags.forEach(element => {
+        this.value.push({ name: element });
+      });
+      this.allTags.forEach(element => {
+        this.options.push({ name: element });
+      });
     },
     fileChange(event) {
       if (!_.isEmpty(event.target.files) && event.target.files.length > 0) {
@@ -128,8 +136,14 @@ export default {
       client
         .post(updateProfileRoute, this.formatProfileData())
         .then(response => {
-          this.getProfile();
-          alert("update successfull");
+          if (response.status == 200) {
+            this.getProfile();
+            alert("update successfull");
+          } else {
+            alert(
+              "something went wrong. plese check your input data and try again"
+            );
+          }
         });
     },
     formatProfileData() {
@@ -145,11 +159,11 @@ export default {
         data.append("description", self.profile.trainee.description);
       }
       if (self.profile.roles[0].name == "mentor") {
-        let selectedTag =[];
+        let selectedTag = [];
         data.append("title", self.profile.mentor.title);
         data.append("description", self.profile.mentor.description);
         self.value.forEach(element => {
-            selectedTag.push(element['name']);
+          selectedTag.push(element["name"]);
         });
         data.append("tags", selectedTag);
       }

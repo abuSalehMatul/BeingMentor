@@ -1,7 +1,7 @@
 @extends('panels.backend')
 @section('title', 'Dashboard')
 @section('content')
-    @role('admin')
+    @role('admin|root')
     <admin-dashboard></admin-dashboard>
     @endrole
     @role('mentor')

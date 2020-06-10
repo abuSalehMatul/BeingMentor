@@ -11,6 +11,10 @@ class SuccessStory extends Model
 
     protected $appends = ['user', 'formated_time'];
 
+    public function users()
+    {
+        return $this->belongsTo(User::class);
+    }
     public function getUserAttribute()
     {
         return User::find($this->user_id);

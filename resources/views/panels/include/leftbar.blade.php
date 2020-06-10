@@ -29,7 +29,7 @@
 
         <!-- ### $Sidebar Menu ### -->
         <ul class="sidebar-menu scrollable pos-r">
-            @role('admin')
+            @role('admin|root')
             <li class="nav-item">
                 <a class='sidebar-link {{ request()->is('admin/profi*') ? 'highlight' : '' }}'
                    href="{{ route('panels.admin.index') }}">
@@ -117,6 +117,17 @@
                         <span class="title">Packages</span>
                     </a>
                 </li>
+            @endrole
+            @role('root')
+            <li class="nav-item">
+                <a class='sidebar-link {{ request()->is('admin/admin-manag*') ? 'highlight' : '' }}'
+                   href="{{ route('panels.admin.admin')  }}">
+                    <span class="icon-holder">
+                        <i class="c-blue-500 ti-panel"></i>
+                    </span>
+                    <span class="title">Admin Management</span>
+                </a>
+            </li>
             @endrole
 
             @role('mentor')

@@ -44,7 +44,12 @@ Route::middleware('visit_count')->group(function(){
     Route::get('see-message/{chatroomId}', 'ChatController@seeMessage')->middleware('auth');
     Route::get('chat-room/{chatroomId}', 'ChatController@chat')->middleware(['auth', 'role:mentor|trainee'])->name('panels.chatroom');
     
-    Route::namespace('Admin')->prefix('admin')->middleware(['auth', 'role:admin'])->group(function(){
+    Route::get('admin/edit/{id}', 'Admin\AdminHomeController@edit')->middleware('role:root');
+    Route::post('admin/edit', 'Admin\AdminHomeController@editSave')->middleware('role:root');
+    Route::get('admin/create', 'Admin\AdminHomeController@create')->middleware('role:root');
+    Route::post('admin/create', 'Admin\AdminHomeController@saveAdmin')->middleware('role:root');
+    Route::post('admin/delete', 'Admin\AdminHomeController@delete')->middleware('role:root');
+    Route::namespace('Admin')->prefix('admin')->middleware(['auth', 'role:admin|root'])->group(function(){
         Route::get('profile', 'AdminHomeController@index')->name('panels.admin.index');
         Route::get('trainee', 'AdminHomeController@trainee')->name('panels.admin.trainee');
         Route::get('mentor', 'AdminHomeController@mentor')->name('panels.admin.mentor.index');
@@ -58,6 +63,7 @@ Route::middleware('visit_count')->group(function(){
         Route::get('success-story', 'AdminHomeController@story')->name('panels.admin.story');
         Route::get('packages', 'AdminHomeController@package')->name('panels.admin.package');
         Route::post('save-package', 'AdminHomeController@savePackage')->name('save.package');
+        Route::get('admin-management', 'AdminHomeController@getAdmin')->name('panels.admin.admin');
     
     });
     

@@ -1,6 +1,7 @@
 <?php
 
 use App\Model\SuccessStory;
+use App\Model\Trainee;
 use Illuminate\Database\Seeder;
 use App\User;
 
@@ -14,7 +15,7 @@ class SuccessStorySeeder extends Seeder
     public function run()
     {
         $faker = Faker\Factory::create();
-        $users = User::get()->pluck('id')->toArray();
+        $users = Trainee::get()->pluck('user_id')->toArray();
         for($i = 0 ;$i< 20 ; $i++){
             $data = [
                 'user_id' => $faker->randomElement($users),

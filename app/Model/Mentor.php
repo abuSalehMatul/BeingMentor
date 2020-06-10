@@ -73,7 +73,7 @@ class Mentor extends Model
                     }
                 })
                 ->orderBy('rating', 'DESC')
-                ->paginate(15);
+                ->paginate(7);
         }
     }
 

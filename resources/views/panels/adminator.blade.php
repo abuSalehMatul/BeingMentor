@@ -13,6 +13,7 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/adminator.css') }}" rel="stylesheet">
     @stack('css')
+    @yield('custom_css')
 </head>
 <body class="app">
 <div>
