@@ -140,7 +140,8 @@ export default {
         }
       });
       myEcho.private("send-message").listen("SendMessageEvent", e => {
-        if (e.message.receiver.id == this.own_id) {
+       
+        if (e.message.receiver.id == this.own_id && e.message.chat_room_id == this.room_id) {
           let formatedReturnMessage;
           formatedReturnMessage = {
             sender_id: e.message.sender.id,

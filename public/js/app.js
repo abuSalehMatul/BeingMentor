@@ -8245,7 +8245,7 @@ __webpack_require__.r(__webpack_exports__);
         }
       });
       myEcho["private"]("send-message").listen("SendMessageEvent", function (e) {
-        if (e.message.receiver.id == _this.own_id) {
+        if (e.message.receiver.id == _this.own_id && e.message.chat_room_id == _this.room_id) {
           var formatedReturnMessage;
           formatedReturnMessage = {
             sender_id: e.message.sender.id,

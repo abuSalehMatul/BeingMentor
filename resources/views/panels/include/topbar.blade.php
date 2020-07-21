@@ -1,25 +1,40 @@
-<div class="header navbar">
-    <div class="header-container">
+
+
+<div class="header navbar ">
+    <div class="header-container customize-header">
         <ul class="nav-left">
-            <li>
-                <a id='sidebar-toggle' class="sidebar-toggle" href="javascript:void(0);">
-                    <i class="ti-menu"></i>
-                </a>
-            </li>
-            <li class="search-box">
-                <a class="search-toggle no-pdd-right" href="javascript:void(0);">
-                    <i class="search-icon ti-search pdd-right-10"></i>
-                    <i class="search-icon-close ti-close pdd-right-10"></i>
-                </a>
-            </li>
-            <li class="search-input">
-                <input class="form-control" type="text" placeholder="Search...">
-            </li>
+           
+           
         </ul>
         <ul class="nav-right">
+            <li>
+                <a  class="" href="{{url('/')}}">
+                    Home
+                </a>
+            </li>
+            <li>
+                <a id='' class="" href="{{route('mentor')}}">
+                    Mentor
+                </a>
+            </li>
+            <li>
+                <a id='' class="" href="{{url('contact')}}">
+                    Contact
+                </a>
+            </li>
+            <li>
+                <a id='' class="" href="{{route('about.us')}}">
+                    About 
+                </a>
+            </li>
+            <li>
+                <a id='' class="" href="{{route('forum')}}">
+                    Forum
+                </a>
+            </li>
             <li class="dropdown">
                 <a href="" class="dropdown-toggle no-after peers fxw-nw ai-c lh-1" data-toggle="dropdown">
-                    {{-- @role('trainee')
+                    @role('trainee')
                     @php
                     $userPackage = App\Model\UserPackage::where('user_id', auth()->id())
                     ->where('is_active', 1)
@@ -40,7 +55,7 @@
                         </i>
                     </div>
 
-                    @endrole --}}
+                    @endrole
                     <div class="peer mR-10">
                         @auth
                         <img class="w-2r bdrs-50p" src="{{ auth()->user()->profile_image }}" alt="">
