@@ -20,7 +20,7 @@
               <h4 class="col-md-12">{{otherPerson.first_name}} {{otherPerson.last_name}}</h4>
             </div>
             <div class="row">
-              <div v-for="ticket in tickets" class v-if="ticket.status != 'solved'">
+              <div v-for="ticket in tickets" class >
                 Issue {{ticket.barcode}}
                 <i class="badge badge-info">{{ticket.status}}</i>
                 <span v-if="ticket.opner_user_id == own_id">
@@ -30,8 +30,18 @@
                     class="btn btn-sm btn-success"
                   >Solved !</button>
                 </span>
+                <span v-else>
+                  <button
+                    class="btn btn-success"
+                    @click.prevent="openTicket(ticket.id)"
+                    v-if="chatRoom.status == 'closed' && ticket.status == 'closed'"
+                  >Accept the ticket</button>
+                </span>
 
                 <h6 style="overflow: hidden;height: 40px;">{{ticket.description.substr(0, 50)}}</h6>
+              </div>
+              <div v-if="newTicketEligibility">
+                <button @click.prevent="ticketForm = true">Open new ticket</button>
               </div>
             </div>
           </div>
@@ -59,8 +69,9 @@
                 </div>
                 <div class="col-md-9">
                   <a v-if="message.is_video == 1" :href="message.message" target="blank">
-                    <b>Join in this link for Video calling: 
-                      <small> This link will expire after 1000s </small>
+                    <b>
+                      Join in this link for Video calling:
+                      <small>This link will expire after 1000s</small>
                     </b>
                     <br />
                     {{message.message}}
@@ -70,7 +81,7 @@
               </li>
             </ul>
           </div>
-          <div class="col-md-12 row">
+          <div class="col-md-12 row" v-if="chatRoom.status == 'open'">
             <textarea rows="1" class="form-control" v-model="messageText"></textarea>
           </div>
           <div class="col-md-10">
@@ -108,9 +119,11 @@ export default {
       ratingForm: false,
       messageList: [],
       ratingRoute: "",
+      chatRoom: "",
       ticketId: "",
       type: "",
-      ticketType: "chat"
+      ticketType: "chat",
+      newTicketEligibility: false
     };
   },
 
@@ -140,8 +153,10 @@ export default {
         }
       });
       myEcho.private("send-message").listen("SendMessageEvent", e => {
-       
-        if (e.message.receiver.id == this.own_id && e.message.chat_room_id == this.room_id) {
+        if (
+          e.message.receiver.id == this.own_id &&
+          e.message.chat_room_id == this.room_id
+        ) {
           let formatedReturnMessage;
           formatedReturnMessage = {
             sender_id: e.message.sender.id,
@@ -162,10 +177,21 @@ export default {
         this.messages = response.data.messages;
         this.tickets = response.data.tickets;
         this.otherPerson = response.data.other_person;
+        this.chatRoom = response.data.chat_room;
         if (Object.keys(this.tickets).length == 0) {
           this.ticketForm = true;
+        } else {
+          for (let i = 0; i < Object.keys(this.tickets).length; i++) {
+            if (this.tickets[i].status == "solved") {
+              this.newTicketEligibility = true;
+            } else {
+              this.newTicketEligibility = false;
+              break;
+            }
+          }
         }
-        this.messageList =[];
+
+        this.messageList = [];
         this.prepareMessageList();
       });
     },
@@ -212,6 +238,20 @@ export default {
       this.ticketId = ticketId;
       this.ratingRoute = postTicketRoute;
       this.ratingForm = true;
+      client.post(window.location.origin + '/api/close-chat-room', {'chat_room_id':this.chatRoom.id})
+      .then(response =>{
+
+      })
+    },
+    openTicket(ticketId) {
+      client
+        .post(window.location.origin + "/api/openticket", {
+          ticket_id: ticketId,
+          chat_room_id: this.chatRoom.id
+        })
+        .then(response => {
+          this.getAllMessage();
+        });
     },
     initialeVideo() {
       this.ticketType = "video";

@@ -18,6 +18,8 @@ class CreateChatRoomsTable extends Migration
             $table->unsignedBigInteger('small_id_participant');
             $table->unsignedBigInteger('big_id_participant');
             $table->text('tickets_json')->nullable();
+            $table->enum('status', ['open', 'closed'])->default('closed');
+            $table->unsignedBigInteger('initiator')->nullable();
             $table->timestamps();
             $table->foreign('small_id_participant')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('big_id_participant')->references('id')->on('users')->onDelete('cascade');

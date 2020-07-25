@@ -31,6 +31,7 @@ class ChatRoom extends Model
             $chatRoom = new ChatRoom;
             $chatRoom->small_id_participant = $small;
             $chatRoom->big_id_participant = $big;
+            $chatRoom->initiator = auth()->id();
             $chatRoom->save();
             return $chatRoom;
         }

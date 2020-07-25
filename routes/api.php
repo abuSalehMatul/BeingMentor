@@ -41,6 +41,8 @@ Route::middleware('auth')->group(function () {
     Route::post('chat-ticket', 'ChatController@rateSolveTicket')->name('api.panel.solve.ticket');
     Route::get('my-message/{id}', 'ChatController@myMessage')->name('api.panel.my.message');
     Route::post('chat-room-ticket/{id}', 'ChatController@setTicket')->name('api.panel.chatromm.ticket');
+    Route::post('openticket', 'ChatController@openTicket');
+    Route::post('close-chat-room', 'ChatController@closeChat');
 });
 Route::get('get-mentor/{userId}', 'Mentor\MentorHomeController@getMentor')->name('api.get.mentor');
 Route::get('get-tags', 'ForumController@getTags');

@@ -31,6 +31,16 @@ class ChatController extends Controller
         return $route;
     }
 
+    public function openTicket(Request $request)
+    {
+        $chatRoom = ChatRoom::findOrFail($request->chat_room_id);
+        $ticket = Ticket::findOrFail($request->ticket_id);
+        $ticket->status = 'pending';
+        $ticket->save();
+        $chatRoom->status = 'open';
+        return $chatRoom->save();
+    }
+
     public function chat($chatRoomId)
     {
         return view('panels.chatroom')->with('roomId', $chatRoomId)->with('ownId', auth()->id());
@@ -41,6 +51,7 @@ class ChatController extends Controller
         $data = [];
         $data['messages'] = Chat::getMessageByRoomId($chatRoomId);
         $chatRoom = ChatRoom::findOrFail($chatRoomId);
+        $data['chat_room'] = $chatRoom;
         $chatRoomTickets = json_decode($chatRoom->tickets_json);
         if (is_null($chatRoomTickets)) {
             $data['tickets'] = [];
@@ -81,6 +92,13 @@ class ChatController extends Controller
         return $rating;
     }
 
+    public function closeChat(Request $request)
+    {
+        $chatRoom = ChatRoom::findOrFail($request->chat_room_id);
+        $chatRoom->status = 'closed';
+        return $chatRoom->save();
+    }
+
 
     public function setTicket(Request $request, $chatRoomId)
     {
@@ -90,11 +108,13 @@ class ChatController extends Controller
         if ($chatRoom->tickets_json === null) {
             array_push($tickArr, $Ticket->id);
             $chatRoom->tickets_json = json_encode($tickArr);
+            $chat = Chat::saveChat("A ticket has been opened by ".auth()->user()->first_name. " ", $chatRoomId);
            
         } else {
             $tickArr = json_decode($chatRoom->tickets_json);
             array_push($tickArr, $Ticket->id);
             $chatRoom->tickets_json = json_encode($tickArr);
+            $chat = Chat::saveChat("A ticket has been opened by ".auth()->user()->first_name. " ", $chatRoomId);
         }
 
         $chatRoom->save();

@@ -60,7 +60,7 @@
     'locale' => 'en',
     'fallback_locale' => 'en',
     'faker_locale' => 'en_US',
-    'key' => 'base64:eHIQox0Hqa6qhT1NgTpaRDfYJmVwXWubWHRUU/bUfuk=',
+    'key' => 'base64:UI+UZqg+5pXcqBgVdxOyJodIpr7Gy78Kph4iWiE/NXQ=',
     'cipher' => 'AES-256-CBC',
     'providers' => 
     array (
@@ -175,18 +175,18 @@
   ),
   'broadcasting' => 
   array (
-    'default' => 'pusher',
+    'default' => 'log',
     'connections' => 
     array (
       'pusher' => 
       array (
         'driver' => 'pusher',
-        'key' => '0e5cf0c84ce38e9e8dd5',
-        'secret' => 'f286bd7fb9745921fba2',
-        'app_id' => '989424',
+        'key' => '',
+        'secret' => '',
+        'app_id' => '',
         'options' => 
         array (
-          'cluster' => 'ap2',
+          'cluster' => 'mt1',
           'useTLS' => true,
         ),
       ),
@@ -228,7 +228,7 @@
       'file' => 
       array (
         'driver' => 'file',
-        'path' => 'C:\\xampp\\htdocs\\Mentor\\storage\\framework/cache/data',
+        'path' => 'C:\\xampp\\htdocs\\BeingMentor\\storage\\framework/cache/data',
       ),
       'memcached' => 
       array (
@@ -431,12 +431,12 @@
       'local' => 
       array (
         'driver' => 'local',
-        'root' => 'C:\\xampp\\htdocs\\Mentor\\storage\\app',
+        'root' => 'C:\\xampp\\htdocs\\BeingMentor\\storage\\app',
       ),
       'public' => 
       array (
         'driver' => 'local',
-        'root' => 'C:\\xampp\\htdocs\\Mentor\\storage\\app/public',
+        'root' => 'C:\\xampp\\htdocs\\BeingMentor\\storage\\app/public',
         'url' => 'http://127.0.0.1:8000/storage',
         'visibility' => 'public',
       ),
@@ -453,7 +453,7 @@
     ),
     'links' => 
     array (
-      'C:\\xampp\\htdocs\\Mentor\\public\\storage' => 'C:\\xampp\\htdocs\\Mentor\\storage\\app/public',
+      'C:\\xampp\\htdocs\\BeingMentor\\public\\storage' => 'C:\\xampp\\htdocs\\BeingMentor\\storage\\app/public',
     ),
   ),
   'hashing' => 
@@ -487,13 +487,13 @@
       'single' => 
       array (
         'driver' => 'single',
-        'path' => 'C:\\xampp\\htdocs\\Mentor\\storage\\logs/laravel.log',
+        'path' => 'C:\\xampp\\htdocs\\BeingMentor\\storage\\logs/laravel.log',
         'level' => 'debug',
       ),
       'daily' => 
       array (
         'driver' => 'daily',
-        'path' => 'C:\\xampp\\htdocs\\Mentor\\storage\\logs/laravel.log',
+        'path' => 'C:\\xampp\\htdocs\\BeingMentor\\storage\\logs/laravel.log',
         'level' => 'debug',
         'days' => 14,
       ),
@@ -543,7 +543,7 @@
       ),
       'emergency' => 
       array (
-        'path' => 'C:\\xampp\\htdocs\\Mentor\\storage\\logs/laravel.log',
+        'path' => 'C:\\xampp\\htdocs\\BeingMentor\\storage\\logs/laravel.log',
       ),
     ),
   ),
@@ -599,7 +599,7 @@
       'theme' => 'default',
       'paths' => 
       array (
-        0 => 'C:\\xampp\\htdocs\\Mentor\\resources\\views/vendor/mail',
+        0 => 'C:\\xampp\\htdocs\\BeingMentor\\resources\\views/vendor/mail',
       ),
     ),
   ),
@@ -730,7 +730,7 @@
     'lifetime' => '120',
     'expire_on_close' => false,
     'encrypt' => false,
-    'files' => 'C:\\xampp\\htdocs\\Mentor\\storage\\framework/sessions',
+    'files' => 'C:\\xampp\\htdocs\\BeingMentor\\storage\\framework/sessions',
     'connection' => NULL,
     'table' => 'sessions',
     'store' => NULL,
@@ -750,9 +750,9 @@
   array (
     'paths' => 
     array (
-      0 => 'C:\\xampp\\htdocs\\Mentor\\resources\\views',
+      0 => 'C:\\xampp\\htdocs\\BeingMentor\\resources\\views',
     ),
-    'compiled' => 'C:\\xampp\\htdocs\\Mentor\\storage\\framework\\views',
+    'compiled' => 'C:\\xampp\\htdocs\\BeingMentor\\storage\\framework\\views',
   ),
   'flare' => 
   array (

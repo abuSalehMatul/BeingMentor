@@ -20,7 +20,7 @@ class CreateTicketsTable extends Migration
             $table->string('inquire')->nullable();
             $table->unsignedBigInteger('opner_user_id');
             $table->string('type')->default('chat');
-            $table->enum('status', ['pending', 'solved', 'canceled'])->default('pending');
+            $table->enum('status', ['closed', 'pending', 'solved', 'canceled'])->default('closed');
             $table->timestamps();
             $table->foreign('opner_user_id')->references('id')->on('users')->onDelete('cascade');
         });

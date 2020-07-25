@@ -1665,9 +1665,9 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\xampp\htdocs\Mentor\resources\js\adminator\index.js */"./resources/js/adminator/index.js");
-__webpack_require__(/*! C:\xampp\htdocs\Mentor\resources\sass\adminator\index.scss */"./resources/sass/adminator/index.scss");
-module.exports = __webpack_require__(/*! C:\xampp\htdocs\Mentor\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\xampp\htdocs\BeingMentor\resources\js\adminator\index.js */"./resources/js/adminator/index.js");
+__webpack_require__(/*! C:\xampp\htdocs\BeingMentor\resources\sass\adminator\index.scss */"./resources/sass/adminator/index.scss");
+module.exports = __webpack_require__(/*! C:\xampp\htdocs\BeingMentor\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

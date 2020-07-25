@@ -8189,6 +8189,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -8213,9 +8224,11 @@ __webpack_require__.r(__webpack_exports__);
       ratingForm: false,
       messageList: [],
       ratingRoute: "",
+      chatRoom: "",
       ticketId: "",
       type: "",
-      ticketType: "chat"
+      ticketType: "chat",
+      newTicketEligibility: false
     };
   },
   created: function created() {
@@ -8269,9 +8282,19 @@ __webpack_require__.r(__webpack_exports__);
         _this2.messages = response.data.messages;
         _this2.tickets = response.data.tickets;
         _this2.otherPerson = response.data.other_person;
+        _this2.chatRoom = response.data.chat_room;
 
         if (Object.keys(_this2.tickets).length == 0) {
           _this2.ticketForm = true;
+        } else {
+          for (var i = 0; i < Object.keys(_this2.tickets).length; i++) {
+            if (_this2.tickets[i].status == "solved") {
+              _this2.newTicketEligibility = true;
+            } else {
+              _this2.newTicketEligibility = false;
+              break;
+            }
+          }
         }
 
         _this2.messageList = [];
@@ -8326,22 +8349,35 @@ __webpack_require__.r(__webpack_exports__);
       this.ticketId = ticketId;
       this.ratingRoute = postTicketRoute;
       this.ratingForm = true;
+      _client__WEBPACK_IMPORTED_MODULE_0__["default"].post(window.location.origin + '/api/close-chat-room', {
+        'chat_room_id': this.chatRoom.id
+      }).then(function (response) {});
+    },
+    openTicket: function openTicket(ticketId) {
+      var _this4 = this;
+
+      _client__WEBPACK_IMPORTED_MODULE_0__["default"].post(window.location.origin + "/api/openticket", {
+        ticket_id: ticketId,
+        chat_room_id: this.chatRoom.id
+      }).then(function (response) {
+        _this4.getAllMessage();
+      });
     },
     initialeVideo: function initialeVideo() {
       this.ticketType = "video";
       this.ticketForm = true;
     },
     updateTic: function updateTic(ticketData) {
-      var _this4 = this;
+      var _this5 = this;
 
       var data = new FormData();
       data.append("description", ticketData[0]);
       data.append("inquire", ticketData[1]);
       data.append("type", ticketData[2]);
       _client__WEBPACK_IMPORTED_MODULE_0__["default"].post(setTicketRoute, data).then(function (response) {
-        _this4.ticketForm = false;
+        _this5.ticketForm = false;
 
-        _this4.getAllMessage();
+        _this5.getAllMessage();
       });
     }
   }
@@ -30183,7 +30219,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.fa[data-v-14a567ae] {\n  font: normal normal normal 14px/1 FontAwesome;\n  font-size: 44px;\n  color: green;\n  text-rendering: auto;\n  cursor: pointer;\n  -webkit-font-smoothing: antialiased;\n  -moz-osx-font-smoothing: grayscale;\n}\n.img-thumbnail[data-v-14a567ae] {\n  padding: 0.25rem;\n  background-color: #fff;\n  border: 1px solid #dee2e6;\n  border-radius: 0.25rem;\n  height: auto;\n  max-width: 68px !important;\n  max-height: 60px !important;\n}\n.img-thumbnail-chat-box[data-v-14a567ae] {\n  padding: 0.25rem;\n  background-color: #fff;\n  border: 1px solid #dee2e6;\n  border-radius: 0.25rem;\n  max-width: 100%;\n  height: 40px;\n}\n.messageList[data-v-14a567ae] {\n  margin: 2px;\n  border: 1px solid beige;\n  box-shadow: 1px 1px beige;\n  font-size: 14px;\n}\n.name[data-v-14a567ae] {\n  padding: 1px;\n}\n.senderLi[data-v-14a567ae] {\n  background: radial-gradient(#dde3fd, transparent);\n}\n.receiverLi[data-v-14a567ae] {\n  background: radial-gradient(rgb(250, 253, 251), transparent);\n}\n", ""]);
+exports.push([module.i, "\n.fa[data-v-14a567ae] {\r\n  font: normal normal normal 14px/1 FontAwesome;\r\n  font-size: 44px;\r\n  color: green;\r\n  text-rendering: auto;\r\n  cursor: pointer;\r\n  -webkit-font-smoothing: antialiased;\r\n  -moz-osx-font-smoothing: grayscale;\n}\n.img-thumbnail[data-v-14a567ae] {\r\n  padding: 0.25rem;\r\n  background-color: #fff;\r\n  border: 1px solid #dee2e6;\r\n  border-radius: 0.25rem;\r\n  height: auto;\r\n  max-width: 68px !important;\r\n  max-height: 60px !important;\n}\n.img-thumbnail-chat-box[data-v-14a567ae] {\r\n  padding: 0.25rem;\r\n  background-color: #fff;\r\n  border: 1px solid #dee2e6;\r\n  border-radius: 0.25rem;\r\n  max-width: 100%;\r\n  height: 40px;\n}\n.messageList[data-v-14a567ae] {\r\n  margin: 2px;\r\n  border: 1px solid beige;\r\n  box-shadow: 1px 1px beige;\r\n  font-size: 14px;\n}\n.name[data-v-14a567ae] {\r\n  padding: 1px;\n}\n.senderLi[data-v-14a567ae] {\r\n  background: radial-gradient(#dde3fd, transparent);\n}\n.receiverLi[data-v-14a567ae] {\r\n  background: radial-gradient(rgb(250, 253, 251), transparent);\n}\r\n", ""]);
 
 // exports
 
@@ -30240,7 +30276,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.front-mentor-div[data-v-13cc7012] {\n  margin: 30px;\n  color: white;\n  background-image: url(\"/images/bg.png\");\n  background-position: 50% 0;\n  background-position: center;\n  background-repeat: no-repeat;\n  background-size: cover;\n}\n.card[data-v-13cc7012] {\n  background-image: url(\"/images/bg.png\");\n  background-position: 50% 0;\n  background-position: center;\n  background-repeat: no-repeat;\n  background-size: cover;\n  font-weight: 700;\n}\n.input-icons i[data-v-13cc7012] {\n  position: absolute;\n}\n.input-icons[data-v-13cc7012] {\n  width: 100%;\n  margin-bottom: 5px;\n}\n.icon[data-v-13cc7012] {\n  padding: 10px;\n  color: green;\n  min-width: 50px;\n  text-align: center;\n}\n.input-field[data-v-13cc7012] {\n  width: 80%;\n  padding: 10px;\n  text-align: center;\n}\n.fa[data-v-13cc7012] {\n  display: inline-block;\n  font: normal normal normal 14px/1 FontAwesome;\n  font-size: inherit;\n  text-rendering: auto;\n  -webkit-font-smoothing: antialiased;\n  color: gold;\n  -moz-osx-font-smoothing: grayscale;\n}\n.img-thumbnail[data-v-13cc7012] {\n  padding: 0.25rem;\n  background-color: #f8fafc;\n  border: 1px solid #dee2e6;\n  border-radius: 0.25rem;\n  max-width: 60px;\n  height: auto;\n}\n.description[data-v-13cc7012] {\n  height: 100px;\n  transition: height 300ms;\n}\n.description.is-active[data-v-13cc7012] {\n  height: 300px;\n}\n", ""]);
+exports.push([module.i, "\n.front-mentor-div[data-v-13cc7012] {\r\n  margin: 30px;\r\n  color: white;\r\n  background-image: url(\"/images/bg.png\");\r\n  background-position: 50% 0;\r\n  background-position: center;\r\n  background-repeat: no-repeat;\r\n  background-size: cover;\n}\n.card[data-v-13cc7012] {\r\n  background-image: url(\"/images/bg.png\");\r\n  background-position: 50% 0;\r\n  background-position: center;\r\n  background-repeat: no-repeat;\r\n  background-size: cover;\r\n  font-weight: 700;\n}\n.input-icons i[data-v-13cc7012] {\r\n  position: absolute;\n}\n.input-icons[data-v-13cc7012] {\r\n  width: 100%;\r\n  margin-bottom: 5px;\n}\n.icon[data-v-13cc7012] {\r\n  padding: 10px;\r\n  color: green;\r\n  min-width: 50px;\r\n  text-align: center;\n}\n.input-field[data-v-13cc7012] {\r\n  width: 80%;\r\n  padding: 10px;\r\n  text-align: center;\n}\n.fa[data-v-13cc7012] {\r\n  display: inline-block;\r\n  font: normal normal normal 14px/1 FontAwesome;\r\n  font-size: inherit;\r\n  text-rendering: auto;\r\n  -webkit-font-smoothing: antialiased;\r\n  color: gold;\r\n  -moz-osx-font-smoothing: grayscale;\n}\n.img-thumbnail[data-v-13cc7012] {\r\n  padding: 0.25rem;\r\n  background-color: #f8fafc;\r\n  border: 1px solid #dee2e6;\r\n  border-radius: 0.25rem;\r\n  max-width: 60px;\r\n  height: auto;\n}\n.description[data-v-13cc7012] {\r\n  height: 100px;\r\n  transition: height 300ms;\n}\n.description.is-active[data-v-13cc7012] {\r\n  height: 300px;\n}\r\n", ""]);
 
 // exports
 
@@ -105079,47 +105115,81 @@ var render = function() {
             _c(
               "div",
               { staticClass: "row" },
-              _vm._l(_vm.tickets, function(ticket) {
-                return ticket.status != "solved"
-                  ? _c("div", {}, [
-                      _vm._v(
-                        "\n              Issue " +
-                          _vm._s(ticket.barcode) +
-                          "\n              "
-                      ),
-                      _c("i", { staticClass: "badge badge-info" }, [
-                        _vm._v(_vm._s(ticket.status))
-                      ]),
-                      _vm._v(" "),
-                      ticket.opner_user_id == _vm.own_id
-                        ? _c("span", [
-                            ticket.status != "solved"
-                              ? _c(
-                                  "button",
-                                  {
-                                    staticClass: "btn btn-sm btn-success",
-                                    on: {
-                                      click: function($event) {
-                                        $event.preventDefault()
-                                        return _vm.solveTicket(ticket.id)
-                                      }
+              [
+                _vm._l(_vm.tickets, function(ticket) {
+                  return _c("div", {}, [
+                    _vm._v(
+                      "\n              Issue " +
+                        _vm._s(ticket.barcode) +
+                        "\n              "
+                    ),
+                    _c("i", { staticClass: "badge badge-info" }, [
+                      _vm._v(_vm._s(ticket.status))
+                    ]),
+                    _vm._v(" "),
+                    ticket.opner_user_id == _vm.own_id
+                      ? _c("span", [
+                          ticket.status != "solved"
+                            ? _c(
+                                "button",
+                                {
+                                  staticClass: "btn btn-sm btn-success",
+                                  on: {
+                                    click: function($event) {
+                                      $event.preventDefault()
+                                      return _vm.solveTicket(ticket.id)
                                     }
-                                  },
-                                  [_vm._v("Solved !")]
-                                )
-                              : _vm._e()
-                          ])
-                        : _vm._e(),
-                      _vm._v(" "),
+                                  }
+                                },
+                                [_vm._v("Solved !")]
+                              )
+                            : _vm._e()
+                        ])
+                      : _c("span", [
+                          _vm.chatRoom.status == "closed" &&
+                          ticket.status == "closed"
+                            ? _c(
+                                "button",
+                                {
+                                  staticClass: "btn btn-success",
+                                  on: {
+                                    click: function($event) {
+                                      $event.preventDefault()
+                                      return _vm.openTicket(ticket.id)
+                                    }
+                                  }
+                                },
+                                [_vm._v("Accept the ticket")]
+                              )
+                            : _vm._e()
+                        ]),
+                    _vm._v(" "),
+                    _c(
+                      "h6",
+                      { staticStyle: { overflow: "hidden", height: "40px" } },
+                      [_vm._v(_vm._s(ticket.description.substr(0, 50)))]
+                    )
+                  ])
+                }),
+                _vm._v(" "),
+                _vm.newTicketEligibility
+                  ? _c("div", [
                       _c(
-                        "h6",
-                        { staticStyle: { overflow: "hidden", height: "40px" } },
-                        [_vm._v(_vm._s(ticket.description.substr(0, 50)))]
+                        "button",
+                        {
+                          on: {
+                            click: function($event) {
+                              $event.preventDefault()
+                              _vm.ticketForm = true
+                            }
+                          }
+                        },
+                        [_vm._v("Open new ticket")]
                       )
                     ])
                   : _vm._e()
-              }),
-              0
+              ],
+              2
             )
           ]),
           _vm._v(" "),
@@ -105188,29 +105258,31 @@ var render = function() {
             )
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "col-md-12 row" }, [
-            _c("textarea", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.messageText,
-                  expression: "messageText"
-                }
-              ],
-              staticClass: "form-control",
-              attrs: { rows: "1" },
-              domProps: { value: _vm.messageText },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
+          _vm.chatRoom.status == "open"
+            ? _c("div", { staticClass: "col-md-12 row" }, [
+                _c("textarea", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.messageText,
+                      expression: "messageText"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { rows: "1" },
+                  domProps: { value: _vm.messageText },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.messageText = $event.target.value
+                    }
                   }
-                  _vm.messageText = $event.target.value
-                }
-              }
-            })
-          ]),
+                })
+              ])
+            : _vm._e(),
           _vm._v(" "),
           _c("div", { staticClass: "col-md-10" }, [
             _c("i", {
@@ -105242,8 +105314,10 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("b", [
-      _vm._v("Join in this link for Video calling: \n                    "),
-      _c("small", [_vm._v(" This link will expire after 1000s ")])
+      _vm._v(
+        "\n                    Join in this link for Video calling:\n                    "
+      ),
+      _c("small", [_vm._v("This link will expire after 1000s")])
     ])
   }
 ]
@@ -121768,7 +121842,7 @@ vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('success-story', __webpack
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\xampp\htdocs\Mentor\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\xampp\htdocs\BeingMentor\resources\js\app.js */"./resources/js/app.js");
 
 
 /***/ })
