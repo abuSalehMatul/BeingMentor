@@ -21,7 +21,7 @@ class QuestionTableSeeder extends Seeder
         for($i=0; $i<50; $i++){
             $data = [
                 'user_id' => $faker->randomElement($userIds),
-                'title' => $faker->title,
+                'title' => $faker->sentence(6, true),
                 'question' => $faker->text,
                 'tag'=> $faker->randomElement($tagNames),
                 'created_at' => now(),

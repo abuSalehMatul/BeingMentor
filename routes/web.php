@@ -15,7 +15,7 @@ Route::middleware('visit_count')->group(function(){
     // registering route //
     Route::post('register/step-one', 'Auth\RegisterController@registerStepOne');
     Route::post('register-save', 'Auth\RegisterController@storeUser')->name('register.user.store');
-    
+   
     //front end route.......
     Route::get('mentor', 'FrontEndController@mentor')->name('mentor');
     Route::get('about-us', 'FrontEndController@aboutUs')->name('about.us');
@@ -83,6 +83,8 @@ Route::middleware('visit_count')->group(function(){
         Route::post('save-question', 'TraineeHomeController@saveQuestion')->name('save.question');
     });
     Route::get('video-room/{participants}/{room}/{token}', 'ChatController@goToVideo')->name('video.room');
+
+    Route::get('single-question/{id}', 'ForumController@showQuestion');
     
     // Route::get('test', function(Request $request){
     //    return dd(Carbon::now());

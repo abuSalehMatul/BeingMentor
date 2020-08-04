@@ -27,11 +27,7 @@ class TraineeHomeController extends TraineeController
 
     public function ask()
     {
-        $message = Helper::packageActivity('questions');
-        if($message != 'procced'){
-            Session::flash('package-message', $message);
-            return redirect('only-package');
-        }
+        
         $inquires = [
             'School', 'College', 'University', 'Non-profit', 'Academic', 'Others',
             'Freelance', 'IT', 'Business', 'Health', 'Engineering', 'Medicine',
@@ -49,6 +45,11 @@ class TraineeHomeController extends TraineeController
             'tag' => 'required',
             'title' => 'required'
         ]);
+        $message = Helper::packageActivity('questions');
+        if($message != 'procced'){
+            Session::flash('package-message', $message);
+            return redirect('only-package');
+        }
         $ticket = Ticket::setTicket($request->title, $request->inquire, '', 'forum');
         $question = new Question;
         $question->user_id = auth()->id();

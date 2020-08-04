@@ -22,3 +22,4 @@ Vue.component('why-us', require('@comp/WhyUs').default);
 Vue.component('index', require('@comp/Index').default);
 Vue.component('statistic', require('@comp/Statistic').default);
 Vue.component('success-story', require('@comp/SuccessStory').default);
+Vue.component('fforum', require('@comp/fforum').default);

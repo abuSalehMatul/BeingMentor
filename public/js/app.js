@@ -7585,6 +7585,244 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/fforum.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/fforum.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _client__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/client */ "./resources/js/client.js");
+/* harmony import */ var _comp_panel_Answer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @comp/panel/Answer */ "./resources/js/components/panel/Answer.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "fforum",
+  props: ["question"],
+  components: {
+    Answer: _comp_panel_Answer__WEBPACK_IMPORTED_MODULE_1__["default"]
+  },
+  data: function data() {
+    return {
+      showAns: false,
+      answer: ""
+    };
+  },
+  computed: {
+    styleObject: function styleObject() {
+      return this.showAns == true ? "display:block" : "display:none";
+    }
+  },
+  mounted: function mounted() {},
+  methods: {
+    getUpVoteCount: function getUpVoteCount(vote) {
+      if (Object.keys(vote).length == 0) return 0;
+      var upVote = 0;
+      vote.forEach(function (element) {
+        if (element.vote == 1) upVote++;
+      });
+      return upVote;
+    },
+    getDownVoteCount: function getDownVoteCount(vote) {
+      if (Object.keys(vote).length == 0) return 0;
+      var downVote = 0;
+      vote.forEach(function (element) {
+        if (element.vote == 0) downVote++;
+      });
+      return downVote;
+    },
+    giveVote: function giveVote(answerId, questionId, vote) {
+      var data = new FormData();
+      data.append("question_id", questionId);
+      data.append("answer_id", answerId);
+      data.append("vote", vote);
+      _client__WEBPACK_IMPORTED_MODULE_0__["default"].post(window.location.origin + "/api/give-vote", data).then(function (response) {
+        alert(response.data);
+      });
+    },
+    vote: function vote(_vote, answerId, questionId) {
+      if (confirm("Sure?")) {
+        this.giveVote(answerId, questionId, _vote);
+      }
+    },
+    giveAns: function giveAns(qId, q) {
+      this.selectedQuestion = q;
+      this.selectedQuestionId = qId;
+      this.showAns = !this.showAns;
+    },
+    markCorrect: function markCorrect(answerId, questionId) {
+      var data = new FormData();
+      data.append("question_id", questionId);
+      data.append("answer_id", answerId);
+      _client__WEBPACK_IMPORTED_MODULE_0__["default"].post(window.location.origin + "/api/mark-correct", data).then(function (response) {
+        alert(response.data);
+      });
+    },
+    submitAns: function submitAns() {
+      var data = new FormData();
+      data.append("question_id", this.question.id);
+      data.append("answer", this.answer);
+      _client__WEBPACK_IMPORTED_MODULE_0__["default"].post(window.location.origin + "/api/save-answer", data).then(function (response) {
+        if (response.status >= 200 && response.status < 300) {
+          location.reload();
+        }
+      });
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/lib/Modal.vue?vue&type=script&lang=js&":
 /*!********************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/lib/Modal.vue?vue&type=script&lang=js& ***!
@@ -104412,6 +104650,417 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/fforum.vue?vue&type=template&id=59a60df4&scoped=true&style=background%3Awhite&":
+/*!**********************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/fforum.vue?vue&type=template&id=59a60df4&scoped=true&style=background%3Awhite& ***!
+  \**********************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    {
+      staticClass:
+        "et_pb_section et_pb_section_3 et_section_regular et_pb_bottom_divider"
+    },
+    [
+      _c(
+        "main",
+        { staticStyle: { background: "white", "margin-top": "20px" } },
+        [
+          _c("div", { staticClass: "container" }, [
+            _c("div", { staticClass: "nav" }, [
+              _c("div", { staticClass: "nav__thread" }, [
+                _c(
+                  "a",
+                  {
+                    staticClass: "nav__thread-btn nav__thread-btn--prev",
+                    attrs: { href: _vm.question.id - 1 }
+                  },
+                  [
+                    _c("i", { staticClass: "icon-Arrow_Left" }),
+                    _vm._v("Previous\n          ")
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "a",
+                  {
+                    staticClass: "nav__thread-btn nav__thread-btn--next",
+                    attrs: { href: parseInt(_vm.question.id + 1) }
+                  },
+                  [
+                    _vm._v("\n            Next\n            "),
+                    _c("i", { staticClass: "icon-Arrow_Right" })
+                  ]
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { style: _vm.styleObject }, [
+              _c("div", { staticClass: "topics__heading-title" }, [
+                _vm._v(_vm._s(_vm.question.question))
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-12 col-sm-12 p-5" }, [
+                _c("div", { staticClass: "form-group" }, [
+                  _c("i"),
+                  _vm._v(" "),
+                  _c(
+                    "textarea",
+                    {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.answer,
+                          expression: "answer"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: { rows: "10", cols: "100" },
+                      domProps: { value: _vm.answer },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.answer = $event.target.value
+                        }
+                      }
+                    },
+                    [_vm._v("Please Write your answer ")]
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "create__btn-create btn btn--type-02",
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                          return _vm.submitAns($event)
+                        }
+                      }
+                    },
+                    [_vm._v("Submit ...........")]
+                  )
+                ])
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "topics" }, [
+              _c("div", { staticClass: "topics__heading" }, [
+                _c("h2", { staticClass: "topics__heading-title" }, [
+                  _vm._v(_vm._s(_vm.question.title))
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "topics__heading-info" }, [
+                  _c("a", { staticClass: "category", attrs: { href: "#" } }, [
+                    _c("i", { staticClass: "bg-3ebafa" }),
+                    _vm._v(
+                      "\n              " +
+                        _vm._s(
+                          _vm.question.ticket != null
+                            ? _vm.question.ticket.inquire
+                            : ""
+                        ) +
+                        "\n            "
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "tags" }, [
+                    _c(
+                      "a",
+                      { staticClass: "bg-4f80b0", attrs: { href: "#" } },
+                      [_vm._v(_vm._s(_vm.question.tag))]
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "i",
+                    {
+                      staticClass: "fa fa-paper-plane",
+                      staticStyle: { cursor: "pointer" },
+                      on: {
+                        click: function($event) {
+                          return _vm.giveAns(
+                            _vm.question.id,
+                            _vm.question.question
+                          )
+                        }
+                      }
+                    },
+                    [_vm._v("Give Answer")]
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "topics__body" }, [
+                _c(
+                  "div",
+                  { staticClass: "topics__content" },
+                  [
+                    _c("div", { staticClass: "topic" }, [
+                      _c("div", { staticClass: "topic__head" }, [
+                        _c("div", { staticClass: "topic__avatar" }, [
+                          _c(
+                            "a",
+                            { staticClass: "avatar", attrs: { href: "#" } },
+                            [
+                              _c("img", {
+                                attrs: {
+                                  src: _vm.question.user.profile_image,
+                                  alt: "avatar"
+                                }
+                              })
+                            ]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "topic__caption" }, [
+                          _c("div", { staticClass: "topic__name" }, [
+                            _c("a", { attrs: { href: "#" } }, [
+                              _vm._v(_vm._s(_vm.question.user.first_name))
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "topic__date" }, [
+                            _c("i", { staticClass: "icon-Watch_Later" }),
+                            _vm._v(
+                              "\n                    " +
+                                _vm._s(_vm.question.formated_time) +
+                                "\n                  "
+                            )
+                          ])
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "topic__content" }, [
+                        _c("div", { staticClass: "topic__text" }, [
+                          _c("p", [_vm._v(_vm._s(_vm.question.question))])
+                        ]),
+                        _vm._v(" "),
+                        _vm._m(0)
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _vm._l(_vm.question.answers, function(answer) {
+                      return _c(
+                        "div",
+                        { staticClass: "topic topic--comment" },
+                        [
+                          _c("div", { staticClass: "topic__head" }, [
+                            _c("div", { staticClass: "topic__avatar" }, [
+                              _c(
+                                "a",
+                                { staticClass: "avatar", attrs: { href: "#" } },
+                                [
+                                  _c("img", {
+                                    attrs: {
+                                      src: answer.user.profile_image,
+                                      alt: "avatar"
+                                    }
+                                  })
+                                ]
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "topic__caption" }, [
+                              _c("div", { staticClass: "topic__name" }, [
+                                _c("a", { attrs: { href: "#" } }, [
+                                  _vm._v(_vm._s(answer.user.first_name))
+                                ])
+                              ]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "topic__date" }, [
+                                _c("i", { staticClass: "icon-Watch_Later" }),
+                                _vm._v(
+                                  "\n                    " +
+                                    _vm._s(answer.formated_time) +
+                                    "\n                  "
+                                )
+                              ])
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "topic__content" }, [
+                            _c("div", { staticClass: "topic__text" }, [
+                              _c("p", [_vm._v(_vm._s(answer.answer))])
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "topic__footer" }, [
+                              _c(
+                                "div",
+                                { staticClass: "topic__footer-likes" },
+                                [
+                                  _c("div", [
+                                    _vm._m(1, true),
+                                    _vm._v(" "),
+                                    _c("span", [
+                                      _vm._v(
+                                        _vm._s(_vm.getUpVoteCount(answer.vote))
+                                      )
+                                    ])
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("div", [
+                                    _vm._m(2, true),
+                                    _vm._v(" "),
+                                    _c("span", [
+                                      _vm._v(
+                                        _vm._s(
+                                          _vm.getDownVoteCount(answer.vote)
+                                        )
+                                      )
+                                    ])
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("div", [
+                                    _c("a", { attrs: { href: "#" } }, [
+                                      answer.is_solver == 1
+                                        ? _c(
+                                            "i",
+                                            { staticClass: "fas fa-check" },
+                                            [_vm._v("Solved!!")]
+                                          )
+                                        : _c(
+                                            "i",
+                                            {
+                                              staticStyle: {
+                                                postion: "relative",
+                                                left: "80%"
+                                              },
+                                              on: {
+                                                click: function($event) {
+                                                  $event.preventDefault()
+                                                  return _vm.markCorrect(
+                                                    answer.id,
+                                                    _vm.question.id
+                                                  )
+                                                }
+                                              }
+                                            },
+                                            [_vm._v("Mark corerct")]
+                                          )
+                                    ])
+                                  ]),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    {
+                                      staticStyle: {
+                                        position: "relative",
+                                        left: "60%",
+                                        cursor: "pointer",
+                                        color: "green"
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.vote(
+                                            1,
+                                            answer.id,
+                                            _vm.question.id
+                                          )
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _c(
+                                        "i",
+                                        { staticClass: "fas fa-chevron-up" },
+                                        [_vm._v("Up-vote")]
+                                      )
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    {
+                                      staticStyle: {
+                                        position: "relative",
+                                        left: "70%",
+                                        cursor: "pointer",
+                                        color: "red"
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.vote(
+                                            0,
+                                            answer.id,
+                                            _vm.question.id
+                                          )
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _c(
+                                        "i",
+                                        { staticClass: "fas fa-chevron-down" },
+                                        [_vm._v("Down-vote")]
+                                      )
+                                    ]
+                                  )
+                                ]
+                              )
+                            ])
+                          ])
+                        ]
+                      )
+                    })
+                  ],
+                  2
+                )
+              ])
+            ])
+          ])
+        ]
+      )
+    ]
+  )
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "topic__footer" }, [
+      _c("div", { staticClass: "topic__footer-likes" })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("a", { attrs: { href: "#" } }, [
+      _c("i", { staticClass: "fa fa-thumbs-up" })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("a", { attrs: { href: "#" } }, [
+      _c("i", { staticClass: "fa fa-thumbs-down" })
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/lib/Modal.vue?vue&type=template&id=d1e38970&scoped=true&":
 /*!************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/lib/Modal.vue?vue&type=template&id=d1e38970&scoped=true& ***!
@@ -120708,6 +121357,75 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/fforum.vue":
+/*!********************************************!*\
+  !*** ./resources/js/components/fforum.vue ***!
+  \********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _fforum_vue_vue_type_template_id_59a60df4_scoped_true_style_background_3Awhite___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./fforum.vue?vue&type=template&id=59a60df4&scoped=true&style=background%3Awhite& */ "./resources/js/components/fforum.vue?vue&type=template&id=59a60df4&scoped=true&style=background%3Awhite&");
+/* harmony import */ var _fforum_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./fforum.vue?vue&type=script&lang=js& */ "./resources/js/components/fforum.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _fforum_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _fforum_vue_vue_type_template_id_59a60df4_scoped_true_style_background_3Awhite___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _fforum_vue_vue_type_template_id_59a60df4_scoped_true_style_background_3Awhite___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "59a60df4",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/fforum.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/fforum.vue?vue&type=script&lang=js&":
+/*!*********************************************************************!*\
+  !*** ./resources/js/components/fforum.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_fforum_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./fforum.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/fforum.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_fforum_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/fforum.vue?vue&type=template&id=59a60df4&scoped=true&style=background%3Awhite&":
+/*!****************************************************************************************************************!*\
+  !*** ./resources/js/components/fforum.vue?vue&type=template&id=59a60df4&scoped=true&style=background%3Awhite& ***!
+  \****************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_fforum_vue_vue_type_template_id_59a60df4_scoped_true_style_background_3Awhite___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./fforum.vue?vue&type=template&id=59a60df4&scoped=true&style=background%3Awhite& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/fforum.vue?vue&type=template&id=59a60df4&scoped=true&style=background%3Awhite&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_fforum_vue_vue_type_template_id_59a60df4_scoped_true_style_background_3Awhite___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_fforum_vue_vue_type_template_id_59a60df4_scoped_true_style_background_3Awhite___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/lib/Modal.vue":
 /*!***********************************************!*\
   !*** ./resources/js/components/lib/Modal.vue ***!
@@ -121832,6 +122550,7 @@ vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('why-us', __webpack_requir
 vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('index', __webpack_require__(/*! @comp/Index */ "./resources/js/components/Index.vue")["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('statistic', __webpack_require__(/*! @comp/Statistic */ "./resources/js/components/Statistic.vue")["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('success-story', __webpack_require__(/*! @comp/SuccessStory */ "./resources/js/components/SuccessStory.vue")["default"]);
+vue__WEBPACK_IMPORTED_MODULE_0__["default"].component('fforum', __webpack_require__(/*! @comp/fforum */ "./resources/js/components/fforum.vue")["default"]);
 
 /***/ }),
 

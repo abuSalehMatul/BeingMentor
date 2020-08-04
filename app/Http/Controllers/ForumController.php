@@ -15,9 +15,28 @@ use Illuminate\Support\Facades\DB;
 
 class ForumController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        $tag = $request->get('tag');
+        $inquiry = $request->get('inquiry');
+        $key = $request->get('key');
+        if(!isset($key) && !isset($inquiry) && !isset($tag)){
+            $questions = Question::orderBy('created_at', 'DESC')
+            ->with(['answers.vote', 'user', 'ticket'])->paginate(10);
+           // return $questions;
+            return view('forum')->with('questions', $questions);
+        }
+        else{
+
+        }
         return view('forum');
+    }
+
+    public function showQuestion($questionId)
+    {
+        $question = Question::where('id',$questionId)->with(['answers.vote', 'user','ticket'])->first();
+        views($question)->record();
+        return view('singleForum')->with('question', $question);
     }
 
     private function formatDate(string $fromDate, string $toDate)
@@ -79,7 +98,7 @@ class ForumController extends Controller
         ]);
         $question = Question::findOrFail($request->question_id);
         if ($question->user_id != auth()->id()) {
-            return 'You Can not perform this action';
+            return 'You Can not perform this action, only questioner can do this';
         }
         $answer = Answer::findOrFail($request->answer_id);
         if ($answer->is_solver == 1) {

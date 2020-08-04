@@ -6,9 +6,13 @@ use App\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use CyrildeWit\EloquentViewable\InteractsWithViews;
+use CyrildeWit\EloquentViewable\Contracts\Viewable;
 
-class Question extends Model
+class Question extends Model implements Viewable
 {
+    use InteractsWithViews;
+
     protected $fillable = ['user_id', 'title', 'question', 'is_solved', 'tag', 'status', 'created_at'];
 
     protected $appends = ['formated_time'];
@@ -21,6 +25,11 @@ class Question extends Model
     public function answers()
     {
         return $this->hasMany(Answer::class);
+    }
+
+    public function ticket()
+    {
+        return $this->belongsTo(Ticket::class);
     }
 
     public function getFormatedTimeAttribute()
