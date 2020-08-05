@@ -18,18 +18,30 @@ class ForumController extends Controller
     public function index(Request $request)
     {
         $tag = $request->get('tag');
-        $inquiry = $request->get('inquiry');
+        $inquiry = $request->get('inquire');
         $key = $request->get('key');
         if(!isset($key) && !isset($inquiry) && !isset($tag)){
             $questions = Question::orderBy('created_at', 'DESC')
             ->with(['answers.vote', 'user', 'ticket'])->paginate(10);
-           // return $questions;
             return view('forum')->with('questions', $questions);
         }
         else{
-
+            $questions = Question::orderBy('created_at', 'DESC')
+            ->where(function ($query) use ($tag) {
+                if ($tag != 'anytag') {
+                    return $query->where('tag', 'like', '%' . $tag . '%');
+                }
+            })
+            ->with(['answers.vote', 'user', 'ticket'])
+            ->whereHas('ticket', function ($query) use ($inquiry) {
+                if ($inquiry != 'allcategory') {
+                    $query->where('inquire', $inquiry);
+                }
+            })
+            ->paginate(10);
+           // return $questions;
+            return view('forum')->with('questions', $questions);
         }
-        return view('forum');
     }
 
     public function showQuestion($questionId)

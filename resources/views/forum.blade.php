@@ -19,17 +19,19 @@
             background: none !important;
             padding: 0 !important;
         }
+
         .pagination {
-    clear: both;
-    display: flex;
-    padding: 10px;
-    }
-    .page-item{
-        padding: 10px;
-    font-size: 20px;
-    margin: 2px;
-    border: 1px solid beige;
-    }
+            clear: both;
+            display: flex;
+            padding: 10px;
+        }
+
+        .page-item {
+            padding: 10px;
+            font-size: 20px;
+            margin: 2px;
+            border: 1px solid beige;
+        }
 
     </style>
     <link rel="stylesheet" href="{{ asset('style.css') }}">
@@ -205,26 +207,32 @@
                                             alt="New Topic"></a>
                                 </div>
                                 @php
-                                     $inquires = [
-            'School', 'College', 'University', 'Non-profit', 'Academic', 'Others',
-            'Freelance', 'IT', 'Business', 'Health', 'Engineering', 'Medicine',
-            'Law'
-        ];
-        $tags = App\Model\Tag::get()->pluck('tag')->toArray();
-       
+                                $inquires = [
+                                'School', 'College', 'University', 'Non-profit', 'Academic', 'Others',
+                                'Freelance', 'IT', 'Business', 'Health', 'Engineering', 'Medicine',
+                                'Law'
+                                ];
+                                $tags = App\Model\Tag::get()->pluck('tag')->toArray();
+
                                 @endphp
                                 <div class="nav__categories js-dropdown">
                                     <div class="nav__select">
-                                       
-                                        <select id="category"  name="inquire" required>
+
+                                        <select  name="inquire" onchange="searchForum()" id="forumInquire" required>
+                                           
+                                            <option value="allcategory">{{$_GET['inquire']?? 'All Category'}}</option>
+                                           
                                             @foreach ($inquires as $inquire)
                                                 <option value="{{ $inquire }}"> {{ $inquire }} </option>
                                             @endforeach
                                         </select>
                                     </div>
                                     <div class="nav__select">
-                                       
-                                        <select id="sub-category" name="tag" required>
+
+                                        <select name="tag" onchange="searchForum()" id="forumTag"  required>
+                                         
+                                            <option value="anytag">{{$_GET['tag']?? 'Any Tag'}}</option>
+                                           
                                             @foreach ($tags as $tag)
                                                 <option value="{{ $tag }}"> {{ $tag }} </option>
                                             @endforeach
@@ -240,45 +248,48 @@
                                     <div class="posts__users">Users</div>
                                     <div class="posts__replies">Replies</div>
                                     <div class="posts__views">Views</div>
-                                    <div class="posts__activity">Activity</div>
+                                    <div class="posts__activity">Activity Since</div>
                                 </div>
                                 <div class="posts__body">
-                                    
-                                 @foreach($questions as $question)
-                                    <div class="posts__item bg-f2f4f6">
-                                        <div class="posts__section-left">
-                                            <div class="posts__topic">
-                                                <div class="posts__content">
-                                                    <a href="{{url('/single-question/'.$question->id)}}">
-                                                        <h3>{{$question->title}}</h3>
-                                                    </a>
-                                                    <div class="posts__tags tags">
-                                                        <a href="#" class="bg-4f80b0">{{$question->tag}}</a>
-                                                        
+
+                                    @foreach ($questions as $question)
+                                        <div class="posts__item bg-f2f4f6">
+                                            <div class="posts__section-left">
+                                                <div class="posts__topic">
+                                                    <div class="posts__content">
+                                                        <a href="{{ url('/single-question/' . $question->id) }}">
+                                                            <h3>{{ $question->title }}</h3>
+                                                        </a>
+                                                        <div class="posts__tags tags">
+                                                            <a href="#" class="bg-4f80b0">{{ $question->tag }}</a>
+
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="posts__category"><a href="#" class="category"><i
-                                                        class="bg-4436f8"></i>{{ $question->ticket != null ? $question->ticket->inquire: ''}}</a></div>
-                                        </div>
-                                        <div class="posts__section-right">
-                                            <div class="posts__users">
-                                                @foreach($question->answers as $ans)
-                                                <div>
-                                                    <a href="#" class="avatar"><img src="{{$ans->user->profile_image}}"
-                                                            alt="avatar"></a>
+                                                <div class="posts__category"><a href="#" class="category"><i
+                                                            class="bg-4436f8"></i>{{ $question->ticket != null ? $question->ticket->inquire : '' }}</a>
                                                 </div>
-                                                @endforeach
                                             </div>
-                                            <div class="posts__replies">{{$question->answers->count()}}</div>
-                                            <div class="posts__views">396</div>
-                                            <div class="posts__activity">{{$question->created_at->format('Y-m-d')}}</div>
+                                            <div class="posts__section-right">
+                                                <div class="posts__users">
+                                                    @foreach ($question->answers as $ans)
+                                                        <div>
+                                                            <a href="#" class="avatar"><img
+                                                                    src="{{ $ans->user->profile_image }}"
+                                                                    alt="avatar"></a>
+                                                        </div>
+                                                    @endforeach
+                                                </div>
+                                                <div class="posts__replies">{{ $question->answers->count() }}</div>
+                                                <div class="posts__views">{{views($question)->count()}}</div>
+                                                <div class="posts__activity">
+                                                    {{ $question->created_at->format('Y-m-d') }}</div>
+                                            </div>
                                         </div>
-                                    </div>
                                     @endforeach
 
-                                  
-                                    
+
+
                                 </div>
                                 {{ $questions->links() }}
                             </div>
@@ -297,6 +308,15 @@
 
 
     <span class="et_pb_scroll_top et-pb-icon"></span>
+    <script>
+        function searchForum(){
+            var tag = document.getElementById('forumTag');
+            var inquire = document.getElementById('forumInquire');
+            console.log(tag);
+            var key = "";
+            location.href=window.location.origin+"/forum?tag="+tag.value+"&inquire="+inquire.value+"&key="+key;
+        }
+    </script>
 </body>
 
 </html>
